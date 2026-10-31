@@ -10,7 +10,7 @@ npm ci
 npm run build      # the server serves dist/
 npm start          # http://127.0.0.1:5300 (Docker publishes 5301)
 npm run dev        # same port, Vite hot reload inside the server
-npm test           # node --test test/*.test.js (Node 22); test servers use ports 4770-4779 only
+npm test           # node --test test/*.test.js (Node 26); test servers use ports 4770-4779 only
 npm run doctor     # needs the app running
 npm run reset      # run state only; settings kept
 ```

@@ -57,21 +57,21 @@ test('the content pack is consistent with the stories, diagrams and glossary', (
   assert.doesNotMatch(JSON.stringify(pack), /eyJ[A-Za-z0-9_-]{10,}\./);
 });
 
-test('CI runs on hosted ubuntu runners, Node 22 only, with gitleaks and a secret-backed forbidden-strings job', () => {
+test('CI runs on hosted ubuntu runners, Node 26 only, with gitleaks and a secret-backed forbidden-strings job', () => {
   const ci = read('.github/workflows/ci.yml');
   assert.doesNotMatch(ci, /self-hosted/);
   assert.match(ci, /runs-on: ubuntu-latest/);
-  assert.match(ci, /node-version: 22/);
-  assert.doesNotMatch(ci, /node-version: (18|20|24|26)/);
+  assert.match(ci, /node-version: 26/);
+  assert.doesNotMatch(ci, /node-version: (18|20|22|24)/);
   assert.match(ci, /gitleaks/);
   assert.match(ci, /secrets\.FORBIDDEN_STRINGS/);
   assert.match(ci, /npm run doctor/);
   assert.match(ci, /actions\/checkout@v5/);
 });
 
-test('package.json requires Node 22 and names the scripts the standard asks for', () => {
+test('package.json requires Node 26 and names the scripts the standard asks for', () => {
   const p = json('package.json');
-  assert.match(p.engines.node, />=\s*22/);
+  assert.match(p.engines.node, />=\s*26/);
   for (const s of ['start', 'dev', 'build', 'test', 'doctor', 'reset']) assert.ok(p.scripts[s], s);
   assert.match(p.scripts.test, /test\/\*\.test\.js/, 'node --test uses a glob, not a directory');
 });

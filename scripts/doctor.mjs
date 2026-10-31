@@ -30,7 +30,7 @@ const attempt = (label, fn) => {
   }
 };
 
-line(Number(process.versions.node.split('.')[0]) >= 22, 'Node 22 or newer', process.version);
+line(Number(process.versions.node.split('.')[0]) >=26, 'Node 26 or newer', process.version);
 attempt('MODE is valid', () => resolveMode(process.env.MODE));
 attempt('WORKSPACE_ID is valid', () => resolveWorkspace(process.env.WORKSPACE_ID));
 if (shared.found) line(!shared.looseMode, 'shared settings file is mode 600', shared.looseMode ? `chmod 600 ${shared.file}` : shared.file);

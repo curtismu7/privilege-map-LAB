@@ -14,7 +14,7 @@ Catalog: none yet. No catalog row matches this app, so `docs/shelf-entry.json` h
 
 ## Run from a clone
 
-Prerequisites: Node 22 or newer. Docker only if you use the Docker form.
+Prerequisites: Node 26 or newer. Docker only if you use the Docker form.
 
 ```sh
 git clone https://github.com/ping-sandbox/privilege-map-LAB.git
@@ -88,7 +88,7 @@ This publishes 127.0.0.1:5301 only, runs as a non-root user on a read-only file 
 npm test
 ```
 
-A good run on Node 22 is **85 tests, 85 pass, 0 fail**. The suite builds the page first if `dist/` is missing and starts real test servers on ports 4770-4779 only.
+A good run on Node 26 is **85 tests, 85 pass, 0 fail**. The suite builds the page first if `dist/` is missing and starts real test servers on ports 4770-4779 only.
 
 ## Troubleshooting
 
