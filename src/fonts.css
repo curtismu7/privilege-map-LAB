@@ -1,0 +1,25 @@
+/* Montserrat (text) and IBM Plex Mono (code), served from this app. Both are SIL Open Font License 1.1.
+   They are bundled so the page makes no request to any outside font host. */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url("../node_modules/@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+}

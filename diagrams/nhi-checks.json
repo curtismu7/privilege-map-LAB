@@ -152,27 +152,27 @@
     {
       "source": "c1",
       "target": "c2",
-      "label": "pass"
+      "label": "key is valid"
     },
     {
       "source": "c2",
       "target": "c3",
-      "label": "pass"
+      "label": "scope is granted"
     },
     {
       "source": "c3",
       "target": "c4",
-      "label": "pass"
+      "label": "app or model is granted"
     },
     {
       "source": "c4",
       "target": "c5",
-      "label": "pass"
+      "label": "within limits"
     },
     {
       "source": "c5",
       "target": "ok",
-      "label": "pass: the call reaches the app or model"
+      "label": "guardrail passes: the call reaches the app or model"
     },
     {
       "source": "c1",
