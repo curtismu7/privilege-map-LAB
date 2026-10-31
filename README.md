@@ -4,7 +4,7 @@ ReactFlow diagrams and feature cards for PingOne Privilege's Federated Identity 
 
 Tier: Demo
 Repo: https://github.com/ping-sandbox/privilege-map-LAB
-Catalog: none yet. No catalog row matches this app, so `docs/shelf-entry.json` has no `catalogId`. `content-pack.json` carries the provisional id D101 because the pack schema requires one; the owner assigns the real one.
+Catalog: none yet. No catalog row matches this app, so `docs/shelf-entry.json` has no `catalogId`. `content-pack.json` carries the placeholder id D0 (the Privilege-deck labs own D101 to D109) because the pack schema requires one; the owner assigns the real one.
 
 ## What is simulated
 
