@@ -1,0 +1,8 @@
+{
+  "custodian": "the custodian",
+  "agent": "the AI agent",
+  "key": "the agent access key",
+  "gateway": "the Privilege gateway",
+  "app": "the MCP app",
+  "operator": "the operator"
+}

@@ -1,0 +1,11 @@
+{
+  "branding": {
+    "productName": "Privilege Map LAB",
+    "tagline": "The PingOne Privilege Federated Identity model, drawn as diagrams you can walk through.",
+    "footer": "Mock mode: everything on this page is documentation and simulation."
+  },
+  "vocabulary": {
+    "agent": "the claims agent",
+    "custodian": "the team lead"
+  }
+}

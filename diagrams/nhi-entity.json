@@ -1,0 +1,200 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "nhi-entity",
+  "title": "What an agent identity is made of",
+  "lede": "An agent access key is the agent's whole identity: who it acts as, what is attached to it, and what it can reach. The workload-identity path is drawn as the design, not a tested flow.",
+  "groups": {
+    "who": {
+      "label": "Who the key acts as",
+      "color": "blue"
+    },
+    "core": {
+      "label": "Agent identity",
+      "color": "dark"
+    },
+    "attr": {
+      "label": "Attached to the key",
+      "color": "green"
+    },
+    "target": {
+      "label": "Reachable",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "custodian",
+      "group": "who",
+      "label": "Custodian",
+      "sub": [
+        "the human the agent acts as",
+        "policy is issued to them"
+      ],
+      "x": 0,
+      "y": 40
+    },
+    {
+      "id": "nhi",
+      "group": "who",
+      "label": "NonHumanIdentity",
+      "sub": [
+        "secretless: issuer, audience,",
+        "subject, expiry"
+      ],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "key",
+      "group": "core",
+      "label": "Agent access key",
+      "sub": [
+        "the agent's whole identity",
+        "Bearer key on every call"
+      ],
+      "x": 300,
+      "y": 170
+    },
+    {
+      "id": "apps",
+      "group": "target",
+      "label": "Apps and models",
+      "sub": [
+        "MCP servers, A2A agents,",
+        "LLM providers"
+      ],
+      "x": 0,
+      "y": 170
+    },
+    {
+      "id": "scopes",
+      "group": "attr",
+      "label": "Scopes",
+      "sub": [
+        "llm · mcp · a2a"
+      ],
+      "x": 600,
+      "y": 40
+    },
+    {
+      "id": "limits",
+      "group": "attr",
+      "label": "Limits",
+      "sub": [
+        "models · RPM/TPM · budget",
+        "NotAfter"
+      ],
+      "x": 600,
+      "y": 170
+    },
+    {
+      "id": "guard",
+      "group": "attr",
+      "label": "Guardrail (AI Guard)",
+      "sub": [
+        "per key, not per app"
+      ],
+      "x": 600,
+      "y": 300
+    },
+    {
+      "id": "grant",
+      "group": "attr",
+      "label": "Grant (pacpolicys)",
+      "sub": [
+        "created when apps are",
+        "selected on the key"
+      ],
+      "x": 600,
+      "y": 430
+    }
+  ],
+  "edges": [
+    {
+      "source": "custodian",
+      "target": "key",
+      "label": "acts as: policy is issued to the custodian"
+    },
+    {
+      "source": "nhi",
+      "target": "key",
+      "label": "or supplies federation: no static secret",
+      "dashed": true
+    },
+    {
+      "source": "key",
+      "target": "apps",
+      "label": "reaches, through the grant"
+    },
+    {
+      "source": "key",
+      "target": "scopes",
+      "label": "limits which surfaces it can reach"
+    },
+    {
+      "source": "key",
+      "target": "limits",
+      "label": "caps models, rate, budget, expiry"
+    },
+    {
+      "source": "key",
+      "target": "guard",
+      "label": "screens its traffic (AI Guard)"
+    },
+    {
+      "source": "key",
+      "target": "grant",
+      "label": "selecting apps on the key creates this"
+    },
+    {
+      "source": "grant",
+      "target": "apps",
+      "label": "which apps and tools it covers"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Who the key acts as",
+      "what": "Every agent key has a custodian: the human it acts as. Policy is issued to them and the gateway log names them. A key can instead be owned by a NonHumanIdentity, which proves itself with a platform token and holds no static secret.",
+      "why": "If the custodian goes inactive, the key stops working. Pick someone who will stay.",
+      "edges": [
+        0,
+        1
+      ]
+    },
+    {
+      "title": "Selecting apps creates the grant",
+      "what": "When apps are selected on the key, Privilege creates a policy issued to the custodian and tied to this key. For MCP apps the grant can list individual tools.",
+      "why": "Selecting the app is the grant. Nothing else needs writing.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "What it can reach",
+      "what": "The key reaches the apps and models its grant covers, and the grant decides which tools are visible.",
+      "why": "Tools not in the grant are hidden and refused.",
+      "edges": [
+        2,
+        7
+      ]
+    },
+    {
+      "title": "Scopes and limits",
+      "what": "Scopes (llm, mcp, a2a) set which gateway surfaces the key can use. Limits cap models, requests and tokens per minute, budget and expiry.",
+      "why": "Give only the scopes the agent uses. A three-scope key is one secret that reaches models, tools and agents.",
+      "edges": [
+        3,
+        4
+      ]
+    },
+    {
+      "title": "The guardrail",
+      "what": "AI Guard is configured on the key, not on the app. It is the only screen on agent-to-agent calls.",
+      "why": "Defaults mostly alert rather than block, so thresholds are set on purpose.",
+      "edges": [
+        5
+      ]
+    }
+  ]
+}

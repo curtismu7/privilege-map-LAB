@@ -1,0 +1,257 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "nhi-checks",
+  "title": "What the gateway checks on each call",
+  "lede": "Five checks run in a fixed order on every call. The first one that fails refuses the call, and its status code says which check it was.",
+  "groups": {
+    "caller": {
+      "label": "Caller",
+      "color": "blue"
+    },
+    "check": {
+      "label": "Gateway check",
+      "color": "dark"
+    },
+    "pass": {
+      "label": "Reaches target",
+      "color": "green"
+    },
+    "refuse": {
+      "label": "Refusal",
+      "color": "amber"
+    }
+  },
+  "nodes": [
+    {
+      "id": "agent",
+      "group": "caller",
+      "label": "Agent",
+      "sub": [
+        "sends Bearer key"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "check",
+      "label": "1. Key valid?",
+      "sub": [
+        "exists, not revoked, not expired"
+      ],
+      "x": 0,
+      "y": 120
+    },
+    {
+      "id": "c2",
+      "group": "check",
+      "label": "2. Scope granted?",
+      "sub": [
+        "llm / mcp / a2a on the key"
+      ],
+      "x": 0,
+      "y": 240
+    },
+    {
+      "id": "c3",
+      "group": "check",
+      "label": "3. App or model granted?",
+      "sub": [
+        "policy rule + model allowlist"
+      ],
+      "x": 0,
+      "y": 360
+    },
+    {
+      "id": "c4",
+      "group": "check",
+      "label": "4. Within limits?",
+      "sub": [
+        "RPM, TPM, budget"
+      ],
+      "x": 0,
+      "y": 480
+    },
+    {
+      "id": "c5",
+      "group": "check",
+      "label": "5. Guardrail passes?",
+      "sub": [
+        "AI Guard on this key"
+      ],
+      "x": 0,
+      "y": 600
+    },
+    {
+      "id": "ok",
+      "group": "pass",
+      "label": "Reaches app or model",
+      "sub": [
+        "the call goes through"
+      ],
+      "x": 0,
+      "y": 720
+    },
+    {
+      "id": "r1",
+      "group": "refuse",
+      "label": "401 invalid virtual key",
+      "sub": [
+        "unknown, revoked or expired"
+      ],
+      "x": 420,
+      "y": 120
+    },
+    {
+      "id": "r2",
+      "group": "refuse",
+      "label": "403 key not scoped",
+      "sub": [
+        "key lacks the scope (mcp access)"
+      ],
+      "x": 420,
+      "y": 240
+    },
+    {
+      "id": "r3",
+      "group": "refuse",
+      "label": "403 Forbidden or model not allowed",
+      "sub": [
+        "gateway log: policy denied"
+      ],
+      "x": 420,
+      "y": 360
+    },
+    {
+      "id": "r4",
+      "group": "refuse",
+      "label": "429 rate limit",
+      "sub": [
+        "retry-after header"
+      ],
+      "x": 420,
+      "y": 480
+    },
+    {
+      "id": "r5",
+      "group": "refuse",
+      "label": "400 content_blocked",
+      "sub": [
+        "JSON-RPC -32600 security policy"
+      ],
+      "x": 420,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "agent",
+      "target": "c1",
+      "label": "Bearer key on every call"
+    },
+    {
+      "source": "c1",
+      "target": "c2",
+      "label": "key is valid"
+    },
+    {
+      "source": "c2",
+      "target": "c3",
+      "label": "scope is granted"
+    },
+    {
+      "source": "c3",
+      "target": "c4",
+      "label": "app or model is granted"
+    },
+    {
+      "source": "c4",
+      "target": "c5",
+      "label": "within limits"
+    },
+    {
+      "source": "c5",
+      "target": "ok",
+      "label": "guardrail passes: the call reaches the app or model"
+    },
+    {
+      "source": "c1",
+      "target": "r1",
+      "label": "fail: unknown, revoked or expired",
+      "dashed": true
+    },
+    {
+      "source": "c2",
+      "target": "r2",
+      "label": "fail: no scope for this surface",
+      "dashed": true
+    },
+    {
+      "source": "c3",
+      "target": "r3",
+      "label": "fail: no grant, or model not allowed",
+      "dashed": true
+    },
+    {
+      "source": "c4",
+      "target": "r4",
+      "label": "fail: a cap is hit",
+      "dashed": true
+    },
+    {
+      "source": "c5",
+      "target": "r5",
+      "label": "fail: guardrail blocks the text",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Is the key alive?",
+      "what": "The gateway looks the key up. An unknown, revoked or expired key gets 401 invalid virtual key.",
+      "why": "Nothing else is checked for a key that does not exist.",
+      "edges": [
+        0,
+        1,
+        6
+      ]
+    },
+    {
+      "title": "Does it have the scope?",
+      "what": "The key must carry the scope for the surface being called. A missing scope gets 403 key not scoped for mcp access, the only refusal that names its cause.",
+      "why": "Scope is the coarse gate; grants refine it.",
+      "edges": [
+        1,
+        7
+      ]
+    },
+    {
+      "title": "Is the app or model granted?",
+      "what": "The target app must be selected on the key, and the model must be on the allowlist. A bare 403 here usually means the grant is missing; the gateway log says policy denied.",
+      "why": "Most \"it does not work\" reports are a grant missing on this step.",
+      "edges": [
+        2,
+        8
+      ]
+    },
+    {
+      "title": "Is it within its limits?",
+      "what": "Requests per minute, tokens per minute and budget are enforced by the gateway. A hit returns 429 with retry-after.",
+      "why": "Caps protect the budget and the upstream provider.",
+      "edges": [
+        3,
+        9
+      ]
+    },
+    {
+      "title": "Does the guardrail pass the text?",
+      "what": "AI Guard screens the request on this key. A block returns 400 content_blocked, or a JSON-RPC -32600 error for MCP. The call that passes reaches the app or model.",
+      "why": "Working as designed: check the key AI Guard events before blaming the app.",
+      "edges": [
+        4,
+        5,
+        10
+      ]
+    }
+  ]
+}

@@ -1,0 +1,288 @@
+/* Diagram view styles. Tokens only (standalone-ui.css); no colours here, no purple.
+   ReactFlow's own defaults use a navy-purple handle and selection colour; they are replaced below. */
+
+.dcanvas .react-flow {
+  --xy-edge-stroke-default: var(--muted);
+  --xy-edge-stroke-selected-default: var(--text);
+  --xy-node-border-default: 1px solid var(--border);
+  --xy-node-boxshadow-selected-default: 0 0 0 2px var(--focus);
+  --xy-handle-background-color-default: var(--muted);
+  --xy-handle-border-color-default: var(--surface);
+  --xy-edge-label-background-color-default: var(--surface);
+  --xy-edge-label-color-default: var(--text-body);
+  --xy-controls-button-background-color-default: var(--surface);
+  --xy-controls-button-background-color-hover-default: var(--surface-2);
+  --xy-controls-button-border-color-default: var(--border);
+  --xy-minimap-background-color-default: var(--surface);
+}
+
+.dview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dtools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 140px) auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.dtools label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 0;
+}
+
+.dtools select {
+  width: 100%;
+}
+
+.dbuttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dnote {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-body);
+}
+
+.dcanvas {
+  /* The shape follows the diagram (aspect-ratio is set from its size); these keep it usable on any screen. */
+  min-height: 320px;
+  max-height: 760px;
+  width: 100%;
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.dstep {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+  color: var(--text-body);
+  font-size: 13px;
+  min-height: 56px;
+}
+
+.dstep strong {
+  color: var(--text);
+}
+
+.dstep p {
+  margin: 4px 0 0;
+}
+
+.dbox {
+  width: 210px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--muted);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.dbox.dg-red {
+  border-color: var(--accent);
+}
+
+.dbox.dg-dark {
+  border-color: var(--text);
+}
+
+.dbox.dg-grey {
+  border-color: var(--muted);
+}
+
+.dbox.dg-blue {
+  border-color: var(--status-info);
+}
+
+.dbox.dg-green {
+  border-color: var(--status-ok);
+}
+
+.dbox.dg-amber {
+  border-color: var(--status-warn);
+}
+
+.dbox[data-state="active"] {
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+.dbox__group {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dbox__label {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dbox__sub {
+  color: var(--text-body);
+}
+
+.react-flow__edge-path {
+  stroke: var(--muted);
+}
+
+.react-flow__edge-path {
+  stroke-width: 1.5;
+}
+
+/* A refusal arrow is dashed and amber, and its label says "fail", so colour is never the only signal. */
+.react-flow__edge.is-refusal .react-flow__edge-path {
+  stroke: var(--status-warn);
+  stroke-dasharray: 6 4;
+}
+
+.react-flow__edge.is-active .react-flow__edge-path {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.react-flow__arrowhead polyline {
+  stroke: var(--muted);
+  fill: var(--muted);
+}
+
+.dbox .react-flow__handle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Edge labels: drawn in screen space over the canvas (see LabelLayer), so the text stays at one readable size at any zoom. */
+.diagram-labels {
+  z-index: 6;
+}
+
+.diagram-labels__leaders {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.diagram-labels__leaders line {
+  stroke: var(--text-body);
+  stroke-width: 1.5;
+}
+
+.diagram-labels__probe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.diagram-label {
+  position: absolute;
+  width: max-content;
+  max-width: 132px;
+  box-sizing: border-box;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+
+.diagram-label[data-state="active"] {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.diagram-label[data-mode="badge"] {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid var(--text);
+  border-radius: 50%;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.diagram-label[data-mode="badge"][data-state="active"] {
+  border-color: var(--accent-deep);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.diagram-legend {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: var(--surface);
+  color: var(--text-body);
+  font-size: 13px;
+}
+
+.diagram-legend summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.diagram-legend__list {
+  margin: 8px 0 0;
+  padding-left: 24px;
+}
+
+.diagram-legend__list li[data-state="active"] {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.react-flow__background {
+  background: var(--surface-2);
+}
+
+.react-flow__background pattern circle {
+  fill: var(--border);
+}
+
+.react-flow__controls-button {
+  background: var(--surface);
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .dtools {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dcanvas {
+    min-height: 360px;
+  }
+}
