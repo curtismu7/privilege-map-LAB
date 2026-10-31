@@ -50,10 +50,17 @@ export async function startServer(extraEnv = {}) {
     });
     const base = `http://127.0.0.1:${port}`;
     let up = false;
+    let foreign = false;
     for (let i = 0; i < 100 && !exited; i += 1) {
       try {
-        if ((await fetch(`${base}/api/health`)).ok) {
+        // Another test file may already own this port, so only a server that reports our workspace counts as ours.
+        const state = await fetch(`${base}/api/state`);
+        if (state.ok && (await state.json()).workspace === workspace) {
           up = true;
+          break;
+        }
+        if (state.ok) {
+          foreign = true;
           break;
         }
       } catch {
@@ -63,8 +70,9 @@ export async function startServer(extraEnv = {}) {
     }
     if (!up) {
       child.kill('SIGTERM');
+      await new Promise((r) => (exited ? r() : child.once('exit', r)));
       fs.rmSync(dataRoot, { recursive: true, force: true });
-      if (/EADDRINUSE/.test(output)) continue;
+      if (foreign || /EADDRINUSE/.test(output)) continue;
       throw new Error(`server did not start on ${port}: ${output}`);
     }
     return {

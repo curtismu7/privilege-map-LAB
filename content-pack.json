@@ -1,0 +1,235 @@
+{
+  "schema": "demo-content-pack/1",
+  "id": "privilege-map",
+  "title": "Privilege Map LAB",
+  "version": "1.0.0",
+  "source": {
+    "repo": "ping-sandbox/privilege-map-LAB",
+    "commit": "0000000",
+    "generated": "2026-10-31"
+  },
+  "demo": {
+    "id": "privilege-map",
+    "name": "Privilege Map LAB",
+    "catalog": "D101",
+    "baseUrl": "http://127.0.0.1:5301",
+    "doctor": "/api/health",
+    "tags": [
+      "privilege",
+      "nhi",
+      "agent",
+      "gateway",
+      "mock"
+    ]
+  },
+  "glossary": [
+    {
+      "id": "nhi",
+      "term": "Non-human identity (NHI)",
+      "definition": "An identity for software, such as an AI agent, rather than a person. In Privilege it is either an agent access key tied to a custodian, or a NonHumanIdentity that proves itself with a platform token and holds no static secret.",
+      "aliases": [
+        "NonHumanIdentity"
+      ]
+    },
+    {
+      "id": "agent-access-key",
+      "term": "Agent access key",
+      "definition": "The key an agent sends as a Bearer token on every call. It is the whole identity of the agent: it names a custodian and carries scopes, limits, a guardrail and an expiry.",
+      "aliases": [
+        "virtual key"
+      ]
+    },
+    {
+      "id": "custodian",
+      "term": "Custodian",
+      "definition": "The human an agent key acts as. Policy is issued to the custodian and the gateway log names them. If the custodian goes inactive, the key stops working."
+    },
+    {
+      "id": "grant",
+      "term": "Grant",
+      "definition": "The policy Privilege creates when apps are selected on a key. Selecting the app is the grant; for MCP apps the grant can list individual tools.",
+      "aliases": [
+        "pacpolicys"
+      ]
+    },
+    {
+      "id": "scope",
+      "term": "Scope",
+      "definition": "The coarse gate on a key: llm, mcp or a2a. A key can only use the gateway surfaces it has a scope for."
+    },
+    {
+      "id": "ai-guard",
+      "term": "AI Guard",
+      "definition": "The guardrail screen configured on a key, not on an app. It is the only screen on agent-to-agent calls. Defaults mostly alert rather than block.",
+      "aliases": [
+        "guardrail"
+      ]
+    },
+    {
+      "id": "gateway-checks",
+      "term": "Gateway checks",
+      "definition": "The five checks the gateway runs in order on every call: key valid, scope granted, app or model granted, within limits, guardrail passes. Each failure has its own status code."
+    }
+  ],
+  "sources": [
+    {
+      "id": "ping-docs",
+      "title": "Ping Identity documentation",
+      "url": "https://docs.pingidentity.com/",
+      "kind": "Documentation",
+      "use": "Product documentation behind the feature cards. Each card lists what was not verified.",
+      "status": "not-read",
+      "checked": "2026-10-31"
+    }
+  ],
+  "cards": [
+    {
+      "id": "map",
+      "label": "The identity map and the gateway checks",
+      "description": "Two ReactFlow diagrams: what an agent key is made of, and the five checks on every call. Drag, Simulate, Reset.",
+      "group": "try-it",
+      "terms": [
+        "nhi",
+        "agent-access-key",
+        "gateway-checks"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/map"
+      }
+    },
+    {
+      "id": "identity",
+      "label": "Identity features",
+      "description": "Agent Registry, the desktop device-bound identity and CIMD client documents.",
+      "group": "concept",
+      "terms": [
+        "custodian",
+        "agent-access-key"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/identity"
+      }
+    },
+    {
+      "id": "llm",
+      "label": "LLM features",
+      "description": "Virtual keys, model allowlists, provider routes and attributable denial.",
+      "group": "concept",
+      "terms": [
+        "scope",
+        "agent-access-key"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/llm"
+      }
+    },
+    {
+      "id": "mcp",
+      "label": "MCP and A2A features",
+      "description": "Policy union, tool-call policy, discovery gating, aggregate apps and A2A through the gateway.",
+      "group": "concept",
+      "terms": [
+        "grant",
+        "scope"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/mcp"
+      }
+    },
+    {
+      "id": "oversight",
+      "label": "Oversight features",
+      "description": "AI Guard, Cedar per-call policy, human approvals, the attack lab and audit evidence.",
+      "group": "concept",
+      "terms": [
+        "ai-guard"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/oversight"
+      }
+    },
+    {
+      "id": "platform",
+      "label": "Platform features",
+      "description": "Secrets Hub connections and sensor enforcement on host workloads.",
+      "group": "reference",
+      "action": {
+        "type": "route",
+        "href": "/#/platform"
+      }
+    },
+    {
+      "id": "story-identity",
+      "label": "Story: an agent gets its own identity",
+      "group": "try-it",
+      "story": "S01",
+      "terms": [
+        "custodian"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/stories"
+      }
+    },
+    {
+      "id": "story-checks",
+      "label": "Story: a call walks the gateway checks",
+      "group": "try-it",
+      "story": "S02",
+      "terms": [
+        "gateway-checks"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/stories"
+      }
+    },
+    {
+      "id": "story-refusal",
+      "label": "Story: a refusal tells you where to look",
+      "group": "try-it",
+      "story": "S03",
+      "terms": [
+        "gateway-checks"
+      ],
+      "action": {
+        "type": "route",
+        "href": "/#/stories"
+      }
+    }
+  ],
+  "diagrams": [
+    {
+      "id": "nhi-entity",
+      "label": "What an agent identity is made of",
+      "href": "/#/map?diagram=nhi-entity"
+    },
+    {
+      "id": "nhi-checks",
+      "label": "What the gateway checks on each call",
+      "href": "/#/map?diagram=nhi-checks"
+    }
+  ],
+  "stories": [
+    {
+      "id": "S01",
+      "title": "An agent gets its own identity",
+      "say": "The key names a custodian and carries scopes, limits and an expiry."
+    },
+    {
+      "id": "S02",
+      "title": "A call walks the gateway checks",
+      "say": "Five checks run in a fixed order and each failure has its own status code."
+    },
+    {
+      "id": "S03",
+      "title": "A refusal tells you where to look",
+      "say": "The status code points at the check that said no."
+    }
+  ]
+}

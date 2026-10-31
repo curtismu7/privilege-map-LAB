@@ -1,13 +1,15 @@
-# Local Docker form: serves the Privilege Map LAB on 127.0.0.1 only. Mock only: no tenant, no credentials, no outbound calls.
+# Local Docker form. Publishes 127.0.0.1 only. Mock only: no tenant, no credentials, no outbound calls.
+# Change the published port with HOST_PORT=<port> docker compose up --build -d
 services:
   privilege-map:
     build: .
     image: privilege-map-lab:local
+    environment:
+      MODE: mock
+      HOST_PORT: "${HOST_PORT:-5301}"
     ports:
-      - "127.0.0.1:${HOST_PORT:-5301}:8080"
+      - "127.0.0.1:${HOST_PORT:-5301}:5301"
     read_only: true
     tmpfs:
       - /tmp
-      - /var/cache/nginx
-      - /var/run
     restart: unless-stopped
