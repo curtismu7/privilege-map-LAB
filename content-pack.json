@@ -11,7 +11,7 @@
   "demo": {
     "id": "privilege-map",
     "name": "Privilege Map LAB",
-    "catalog": "D101",
+    "catalog": "D0",
     "baseUrl": "http://127.0.0.1:5301",
     "doctor": "/api/health",
     "tags": [
