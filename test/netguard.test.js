@@ -75,6 +75,50 @@ test('the process guard refuses a non-loopback fetch and socket, and lets loopba
   assert.equal(connects, 2);
 });
 
+test('the process guard sees the normalized-args shape that net.connect, net.createConnection and http hand to connect()', () => {
+  let connects = 0;
+  const connectGuard = wrapConnect(() => {
+    connects += 1;
+  });
+  assert.throws(() => connectGuard([{ host: '203.0.113.9', port: 80 }, null]), NetguardError);
+  assert.throws(() => connectGuard([{ port: 53, host: 'public.example.invalid' }]), NetguardError);
+  assert.throws(() => connectGuard('443', '203.0.113.9'), NetguardError);
+  assert.equal(connects, 0);
+  connectGuard([{ port: 1, host: '127.0.0.1' }, null]);
+  connectGuard([{ port: 1 }, null]);
+  connectGuard([{ path: '/tmp/some.sock' }, null]);
+  connectGuard('/tmp/some.sock');
+  assert.equal(connects, 4);
+});
+
+test('in a real process, net.connect, net.createConnection and http.get to a public address are refused before the connect', () => {
+  // A spy replaces Socket.prototype.connect UNDER the guard and sends nothing, so a hole shows as "reached".
+  const script = `
+    import net from 'node:net';
+    import http from 'node:http';
+    const reached = [];
+    net.Socket.prototype.connect = function (...a) { reached.push(1); return this; };
+    const { installProcessGuard, NetguardError } = await import('./lib/netguard.js');
+    installProcessGuard(net);
+    const attempts = {
+      'net.connect(port, host)': () => net.connect(53, '203.0.113.9'),
+      'net.createConnection(options)': () => net.createConnection({ host: '203.0.113.9', port: 80 }),
+      'http.get(url)': () => http.get('http://203.0.113.9/').on('error', () => {}),
+      'new Socket().connect(options)': () => new net.Socket().connect({ host: '203.0.113.9', port: 80 })
+    };
+    for (const [name, run] of Object.entries(attempts)) {
+      try { run(); console.log('ALLOWED ' + name); } catch (e) { console.log((e instanceof NetguardError ? 'REFUSED ' : 'OTHER ') + name); }
+    }
+    net.connect(1, '127.0.0.1');
+    console.log('loopback reached=' + reached.length);
+  `;
+  const run = spawnSync(process.execPath, ['--input-type=module', '-e', script], { cwd: ROOT, encoding: 'utf8' });
+  assert.equal(run.status, 0, run.stderr);
+  assert.doesNotMatch(run.stdout, /ALLOWED|OTHER/, run.stdout);
+  assert.equal((run.stdout.match(/REFUSED/g) || []).length, 4, run.stdout);
+  assert.match(run.stdout, /loopback reached=1/);
+});
+
 test('in a real process, a fetch to a public name is refused before any socket opens', () => {
   const log = path.join(os.tmpdir(), `guard-proof-${process.pid}.log`);
   fs.rmSync(log, { force: true });
@@ -100,7 +144,8 @@ const MUTATIONS = [
   ['redirects are followed', 'if (response.status >= 300 && response.status < 400) {', 'if (false) {'],
   ['the body size cap is gone', 'if (total > maxBytes) {', 'if (false) {'],
   ['the process fetch guard lets public names through', 'if (!isLoopbackHost(host)) {\n      netguardCounters.refused += 1;\n      throw new NetguardError(`outbound fetch', 'if (false) {\n      netguardCounters.refused += 1;\n      throw new NetguardError(`outbound fetch'],
-  ['the process socket guard lets public hosts through', "if (!isLoopbackHost(host || 'localhost')) {", 'if (false) {'],
+  ['the process socket guard lets public hosts through', 'if (host !== null && !isLoopbackHost(host)) {', 'if (false) {'],
+  ['the process socket guard stops unwrapping the normalized args from net.connect', 'const list = Array.isArray(args[0]) ? args[0] : args;', 'const list = args;'],
   ['credentials in the URL are accepted', 'if (url.username || url.password) throw', 'if (false) throw']
 ];
 

@@ -107,3 +107,9 @@ test('no licence file, key or env file is part of the repo', () => {
   }
   assert.match(read('.gitignore'), /customer\.config\.json/);
 });
+
+test('grids that auto-fit have a real minimum column width, so cards wrap at 375px instead of squeezing', () => {
+  const css = read('src/styles.css');
+  assert.doesNotMatch(css, /auto-(fit|fill),\s*minmax\(0[a-z%]*,/, 'a zero minimum never wraps');
+  assert.match(css, /\.story-list\s*\{[^}]*minmax\(min\(100%,\s*\d+px\),\s*1fr\)/);
+});
