@@ -72,6 +72,8 @@ test('the whole API runs with zero outbound attempts: the guard counters and the
   assert.equal(net.mode, 'mock');
   assert.deepEqual(net.counters, { attempts: 0, refused: 0, sent: 0 });
   assert.equal(net.selfTest.ok, true);
+  // The running server must have the process guard installed on fetch and on sockets (server.js calls installProcessGuard).
+  assert.deepEqual(net.processGuard, { fetch: true, connect: true });
   const outbound = fs.existsSync(app.outboundLog) ? fs.readFileSync(app.outboundLog, 'utf8').trim() : '';
   assert.equal(outbound, '', `outbound attempts in mock mode:\n${outbound}`);
 });

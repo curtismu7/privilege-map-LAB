@@ -6,7 +6,7 @@ import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadSharedSettings } from './lib/settings.js';
-import { installProcessGuard, netguardCounters, netguardSelfTest } from './lib/netguard.js';
+import { installProcessGuard, processGuardInstalled, netguardCounters, netguardSelfTest } from './lib/netguard.js';
 import { resolveMode, LIVE_AVAILABLE, NO_LIVE_REASON } from './lib/mode.js';
 import { loadCustomerConfig } from './lib/customer.js';
 import { loadCast, loadStories, resolveDeep } from './lib/stories.js';
@@ -183,7 +183,7 @@ async function handleApi(req, res, url) {
     case 'GET /api/diagrams':
       return json(res, 200, { source: 'diagrams/*.json (diagram-studio/1 data)', diagrams: listDiagrams() });
     case 'GET /api/netguard':
-      return json(res, 200, { mode: MODE, counters: { ...netguardCounters }, selfTest: await netguardSelfTest() });
+      return json(res, 200, { mode: MODE, processGuard: processGuardInstalled(net), counters: { ...netguardCounters }, selfTest: await netguardSelfTest() });
     case 'GET /api/trace':
       return json(res, 200, { workspace: WORKSPACE, lines: readTrace(DATA_DIR) });
     case 'POST /api/reset':
