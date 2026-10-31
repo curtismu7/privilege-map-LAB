@@ -4,9 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 5300 --strictPort",
+    "start": "node server.js",
+    "dev": "node server.js --dev",
     "build": "vite build",
     "test": "node --test test/*.test.js",
+    "doctor": "node scripts/doctor.mjs",
+    "reset": "node scripts/reset.mjs",
     "spec": "node scripts/gen-spec.mjs"
   },
   "dependencies": {
