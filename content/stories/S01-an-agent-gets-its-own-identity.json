@@ -1,0 +1,28 @@
+{
+  "id": "S01",
+  "title": "An agent gets its own identity",
+  "diagram": "nhi-entity",
+  "goal": "{{cast.operator}} wants {{cast.agent}} to call tools, and wants to know afterwards who was accountable.",
+  "obstacle": "A shared API key says nothing about who owns it, what it may reach or when it should stop working.",
+  "control": "{{cast.key}} is the agent's whole identity. It names {{cast.custodian}}, carries scopes and limits, and expires.",
+  "steps": [
+    {
+      "n": 1,
+      "title": "Pick the custodian",
+      "tell": "{{cast.operator}} registers {{cast.agent}} and names {{cast.custodian}} as the human it acts as.",
+      "say": "Policy is issued to the custodian, and the gateway log names them. If they go inactive, the key stops working, so pick someone who will stay."
+    },
+    {
+      "n": 2,
+      "title": "Select the apps",
+      "tell": "{{cast.operator}} selects {{cast.app}} on {{cast.key}}.",
+      "say": "Selecting the app is the grant. Privilege creates the policy tied to this key; nothing else needs writing."
+    },
+    {
+      "n": 3,
+      "title": "Set scopes and limits",
+      "tell": "{{cast.operator}} gives {{cast.key}} only the scopes {{cast.agent}} uses, plus rate, budget and expiry limits.",
+      "say": "A key with all three scopes is one secret that reaches models, tools and agents. Give only what the agent uses."
+    }
+  ]
+}
