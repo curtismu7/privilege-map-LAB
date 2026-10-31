@@ -1,0 +1,28 @@
+{
+  "id": "S02",
+  "title": "A call walks the gateway checks",
+  "diagram": "nhi-checks",
+  "goal": "{{cast.agent}} makes a call and it should reach {{cast.app}} only if every check passes.",
+  "obstacle": "Without a fixed order of checks, a refusal could come from any layer and nobody could say which.",
+  "control": "{{cast.gateway}} runs the same five checks in the same order on every call.",
+  "steps": [
+    {
+      "n": 1,
+      "title": "Key and scope",
+      "tell": "{{cast.agent}} sends {{cast.key}} as a Bearer key. {{cast.gateway}} looks it up and checks the scope for the surface being called.",
+      "say": "An unknown, revoked or expired key gets 401. A missing scope gets 403."
+    },
+    {
+      "n": 2,
+      "title": "Grant and limits",
+      "tell": "{{cast.gateway}} checks that {{cast.app}} is granted and that the call is within its rate and budget limits.",
+      "say": "A bare 403 here usually means the grant is missing. A hit limit returns 429 with a retry-after header."
+    },
+    {
+      "n": 3,
+      "title": "Guardrail",
+      "tell": "{{cast.gateway}} lets the guardrail on {{cast.key}} screen the text, and a call that passes reaches {{cast.app}}.",
+      "say": "A block returns 400 content_blocked. The guardrail is set on the key, not on the app."
+    }
+  ]
+}

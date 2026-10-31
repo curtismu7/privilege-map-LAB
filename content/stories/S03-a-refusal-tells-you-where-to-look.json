@@ -1,0 +1,28 @@
+{
+  "id": "S03",
+  "title": "A refusal tells you where to look",
+  "diagram": "nhi-checks",
+  "goal": "{{cast.operator}} gets a report that {{cast.agent}} \"does not work\" and needs to find the cause quickly.",
+  "obstacle": "Most refusals look alike from the agent's side: a status code and a short body.",
+  "control": "Each check refuses with its own status code, so the code points at the check that said no.",
+  "steps": [
+    {
+      "n": 1,
+      "title": "Read the status",
+      "tell": "{{cast.operator}} reads the status {{cast.agent}} received from {{cast.gateway}}.",
+      "say": "401 is the key, 403 is scope or grant, 429 is a limit, 400 is the guardrail."
+    },
+    {
+      "n": 2,
+      "title": "Check the grant first",
+      "tell": "For a bare 403, {{cast.operator}} checks that {{cast.app}} is selected on {{cast.key}}.",
+      "say": "Most reports of a broken agent turn out to be a grant that was never made."
+    },
+    {
+      "n": 3,
+      "title": "Look at the key, not the app",
+      "tell": "For a 400, {{cast.operator}} opens the guardrail events for {{cast.key}}.",
+      "say": "The block is working as designed. Check the key's guardrail events before blaming the app."
+    }
+  ]
+}
