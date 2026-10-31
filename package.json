@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prestart": "node scripts/shelf-register.mjs",
     "start": "node server.js",
     "dev": "node server.js --dev",
     "build": "vite build",
