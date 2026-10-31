@@ -1,6 +1,6 @@
 # Privilege Map LAB
 
-Tier: Demo. ReactFlow diagrams and 21 feature cards for the PingOne Privilege non-human identity model.
+Tier: Demo. ReactFlow diagrams and 21 feature cards for the PingOne Privilege Federated Identity model.
 Plain `node:http` server (`server.js`) serving a Vite + React page built into `dist/`. Mock only: this app has no live mode.
 
 ## Run and test

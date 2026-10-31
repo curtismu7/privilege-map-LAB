@@ -21,7 +21,7 @@ function MapPage({ diagram, speed, onSpeed }) {
   return (
     <section aria-label="Map">
       <h2>Map</h2>
-      <p className="page-purpose">Two diagrams of the non-human identity model. Drag a box, press Simulate to walk the steps, press Reset to put everything back.</p>
+      <p className="page-purpose">Two diagrams of the Federated Identity model. Drag a box, press Simulate to walk the steps, press Reset to put everything back.</p>
       <DiagramView initialId={diagram} initialSpeed={speed} onSpeed={onSpeed} />
     </section>
   );

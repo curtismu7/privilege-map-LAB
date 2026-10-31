@@ -1,6 +1,6 @@
 # Privilege Map LAB
 
-ReactFlow diagrams and feature cards for PingOne Privilege's non-human identity (NHI) model: what an agent access key is made of, and the five checks the gateway runs on every call.
+ReactFlow diagrams and feature cards for PingOne Privilege's Federated Identity (formerly Federated Identity, NHI) model: what an agent access key is made of, and the five checks the gateway runs on every call.
 
 Tier: Demo
 Repo: https://github.com/ping-sandbox/privilege-map-LAB
