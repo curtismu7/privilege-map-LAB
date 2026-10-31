@@ -88,7 +88,7 @@ This publishes 127.0.0.1:5301 only, runs as a non-root user on a read-only file 
 npm test
 ```
 
-A good run on Node 26 is **85 tests, 85 pass, 0 fail**. The suite builds the page first if `dist/` is missing and starts real test servers on ports 4770-4779 only.
+A good run on Node 26 is **89 tests, 89 pass, 0 fail**. The suite builds the page first if `dist/` is missing and starts real test servers on ports 4770-4779 only.
 
 ## Troubleshooting
 
