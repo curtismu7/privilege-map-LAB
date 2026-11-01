@@ -122,3 +122,27 @@ test('grids that auto-fit have a real minimum column width, so cards wrap at 375
   assert.doesNotMatch(css, /auto-(fit|fill),\s*minmax\(0[a-z%]*,/, 'a zero minimum never wraps');
   assert.match(css, /\.story-list\s*\{[^}]*minmax\(min\(100%,\s*\d+px\),\s*1fr\)/);
 });
+
+test('the version is the same in package.json, server.js and the content pack', () => {
+  const server = read('server.js').match(/version: '([^']+)'/)[1];
+  assert.equal(json('package.json').version, server);
+  assert.equal(json('content-pack.json').version, server);
+});
+
+test('the runtime image carries the feature list the server reads to know which diagrams exist', () => {
+  assert.match(read('Dockerfile'), /^COPY src\/data\/features\.json \.\/src\/data\/features\.json$/m);
+});
+
+test('the shelf entry states the real feature count and internal count', () => {
+  const features = json('src/data/features.json');
+  const internal = features.filter((f) => f.sources.some((x) => /Ping deck/i.test(x))).length;
+  const d = json('docs/shelf-entry.json').description;
+  assert.match(d, new RegExp(`\\b${features.length} Privilege feature cards`));
+  assert.match(d, new RegExp(`\\b${internal} are internal and confidential`));
+});
+
+test('the feature page shows the Internal, confidential badge and opens the diagram in a new tab', () => {
+  const page = read('src/pages/FeaturePage.jsx');
+  assert.match(page, /isDeckSourced\(feature\)\s*\?\s*<span className="badge" data-kind="confidential">Internal, confidential<\/span>/);
+  assert.match(page, /<a href=\{`#\/diagram\/\$\{feature\.id\}`\} target="_blank" rel="noopener noreferrer">/);
+});

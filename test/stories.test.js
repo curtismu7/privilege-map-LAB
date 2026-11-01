@@ -62,3 +62,10 @@ test('the talk track has the steps a presenter needs, each with a script', () =>
   assert.ok(steps.every((s) => s.body.length > 20), 'every step has a script');
   assert.ok(steps.some((s) => /unverified/i.test(s.title)), 'one step covers what is unverified');
 });
+
+test('the talk track tells the presenter to open a feature diagram and to say what is internal', () => {
+  const titles = parseTalkTrack(talkText).map((s) => s.title);
+  assert.ok(titles.some((t) => /feature's diagram/i.test(t)), titles.join(' | '));
+  assert.ok(titles.some((t) => /what is internal/i.test(t)), titles.join(' | '));
+  assert.equal(titles.length, 10, 'talk track step count');
+});
