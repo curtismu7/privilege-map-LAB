@@ -1,0 +1,303 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "human-in-the-loop-approvals",
+  "title": "Human-in-the-loop approvals: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Human-in-the-loop approvals",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 375
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway",
+      "sub": [
+        "hold path"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "Privilege console",
+      "sub": [
+        "Access Request Approvals, HITL",
+        "Requests"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Approval request API",
+      "sub": [
+        "MCP tool grants"
+      ],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "policy",
+      "label": "Agent approvals",
+      "sub": [
+        "per-call hold by policy; a",
+        "different path from approval",
+        "requests"
+      ],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "policy",
+      "label": "Cedar AI policy with approvers and approval c…",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Agent key",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Audit log",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Attended and unattended evaluation",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "policy",
+      "label": "Single-use bound approval",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "policy",
+      "label": "Slack DM approval",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    },
+    {
+      "id": "c10",
+      "group": "policy",
+      "label": "Ping push approval",
+      "sub": [],
+      "x": 660,
+      "y": 750
+    },
+    {
+      "id": "c11",
+      "group": "other",
+      "label": "Jira and ServiceNow tickets",
+      "sub": [],
+      "x": 0,
+      "y": 750
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege console"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Approval request API"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Agent approvals"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Cedar AI policy with approvers…"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Agent key"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Audit log"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Attended and unattended evaluat…"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Single-use bound approval"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Slack DM approval"
+    },
+    {
+      "source": "feature",
+      "target": "c10",
+      "label": "uses Ping push approval"
+    },
+    {
+      "source": "feature",
+      "target": "c11",
+      "label": "uses Jira and ServiceNow tickets"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway",
+      "what": "Policy hold: a Cedar policy can hold a tool call for a human instead of refusing it, and the hold is written to the gateway log.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege console",
+      "what": "The named approver opens Access Request Approvals, then HITL Requests, finds the request under Awaiting, and approves or denies it.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Approval request API",
+      "what": "Demo approval path: an approval request is created through the Privilege API (type App, an MCP action on an application, approvers set, one hour expiry) and its status moves from New to Pending.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Agent approvals",
+      "what": "Policy hold: a Cedar policy can hold a tool call for a human instead of refusing it, and the hold is written to the gateway log.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Cedar AI policy with approvers and approval c…",
+      "what": "Policy hold: a Cedar policy can hold a tool call for a human instead of refusing it, and the hold is written to the gateway log.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Agent key",
+      "what": "No connection is held open, because an approval takes minutes to hours: the request is refused with a reason, a reference and an expiry, an approver signs, and the agent retries and proceeds.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Audit log",
+      "what": "Audit log is one of the components this feature uses.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Attended and unattended evaluation",
+      "what": "Policy is asked two questions about every request: may this proceed attended, and may it proceed unattended.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Single-use bound approval",
+      "what": "An approval is single-use and bound to the exact call, or to an action for a fixed period, with a configurable number of approvers, named roles and a minimum authentication strength, so one approval cannot be replayed for a second transaction.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Slack DM approval",
+      "what": "Demo approval path: an approval request is created through the Privilege API (type App, an MCP action on an application, approvers set, one hour expiry) and its status moves from New to Pending.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        9
+      ]
+    },
+    {
+      "title": "Ping push approval",
+      "what": "The Ping deck frames approval as a third outcome beside allow and block.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        10
+      ]
+    },
+    {
+      "title": "Jira and ServiceNow tickets",
+      "what": "Requests reach approvers as a Slack DM, a Ping push, or a Jira or ServiceNow ticket.",
+      "why": "Some agent actions are too high-risk to let an agent finish alone.",
+      "edges": [
+        11
+      ]
+    }
+  ]
+}

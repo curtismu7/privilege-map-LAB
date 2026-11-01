@@ -1,0 +1,187 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "coding-agents",
+  "title": "Coding Agents: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Coding Agents",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 225
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Agent hook interface",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Machine-level managed configuration",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Shared gateway policy and detection",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Native allow, deny or ask response",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Secret stop on prompts",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Device certificate identity",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "gateway",
+      "label": "Gateway-unreachable handling, with per-tenant…",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Agent hook interface"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Machine-level managed configura…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Shared gateway policy and detec…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Native allow, deny or ask respo…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Secret stop on prompts"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Device certificate identity"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Gateway-unreachable handling, w…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Agent hook interface",
+      "what": "Each agent is covered through its own hook interface, written to the machine-level managed configuration that agent reads, so there is nothing for a developer to install.",
+      "why": "A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Machine-level managed configuration",
+      "what": "Each agent is covered through its own hook interface, written to the machine-level managed configuration that agent reads, so there is nothing for a developer to install.",
+      "why": "A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Shared gateway policy and detection",
+      "what": "Prompts, shell commands, file reads, MCP calls and tool results are evaluated by the same gateway, policies and detection as LLM and MCP traffic, with one place to author and one audit trail.",
+      "why": "A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Native allow, deny or ask response",
+      "what": "A decision returns as that agent's native allow, deny or ask response, so a refusal appears in the developer's normal permission dialog carrying your reason, not as an error.",
+      "why": "A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Secret stop on prompts",
+      "what": "Prompts, shell commands, file reads, MCP calls and tool results are evaluated by the same gateway, policies and detection as LLM and MCP traffic, with one place to author and one audit trail.",
+      "why": "A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Device certificate identity",
+      "what": "Every evaluation carries the developer's identity and device, taken from the machine's certificate, so the audit trail says who ran what on which laptop.",
+      "why": "A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Gateway-unreachable handling, with per-tenant…",
+      "what": "A decision returns as that agent's native allow, deny or ask response, so a refusal appears in the developer's normal permission dialog carrying your reason, not as an error.",
+      "why": "A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "edges": [
+        6
+      ]
+    }
+  ]
+}

@@ -17,6 +17,8 @@ COPY package.json server.js ./
 COPY lib ./lib
 COPY diagrams ./diagrams
 COPY content ./content
+# lib/diagrams.js reads the feature list to know which diagrams exist.
+COPY src/data/features.json ./src/data/features.json
 COPY docs/talk-track.md ./docs/talk-track.md
 COPY --from=build /app/dist ./dist
 USER node

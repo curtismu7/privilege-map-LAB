@@ -47,7 +47,7 @@ attempt('diagrams load and validate', () => {
   const list = listDiagrams();
   const bad = list.filter((d) => !d.available);
   if (bad.length) throw new Error(bad[0].error);
-  return list.map((d) => d.id).join(', ');
+  return `${list.length} diagrams: ${list.filter((d) => d.kind === 'map').map((d) => d.id).join(', ')} and ${list.filter((d) => d.kind === 'feature').length} feature diagrams`;
 });
 attempt('workspace data folder is writable', () => {
   const dir = workspaceDir(process.env.DATA_ROOT || ROOT, resolveWorkspace(process.env.WORKSPACE_ID));

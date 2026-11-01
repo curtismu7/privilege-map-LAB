@@ -1,0 +1,156 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "mcp-discovery-gating",
+  "title": "MCP discovery gating: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "MCP discovery gating",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Agent Privilege gateway",
+      "sub": [
+        "tool list filter"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "Privilege console: MCP Server application and…",
+      "sub": [
+        "users or groups, permitted tools,",
+        "time window"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "console",
+      "label": "Agent Registry agent key with mcp scope",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Aggregate app",
+      "sub": [
+        "per-member tool filter"
+      ],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Agent Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege console: MCP Server a…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Agent Registry agent key with m…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Aggregate app"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Gateway log"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Agent Privilege gateway",
+      "what": "The gateway is designed to filter the tool list to the set the caller's policy grants.",
+      "why": "An agent that can see every tool on a server learns what exists and may try to reach tools it should not use.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege console: MCP Server application and…",
+      "what": "The gateway is designed to filter the tool list to the set the caller's policy grants.",
+      "why": "An agent that can see every tool on a server learns what exists and may try to reach tools it should not use.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Agent Registry agent key with mcp scope",
+      "what": "The same filtering was observed with an agent key against an aggregate app, which returned only the granted tools.",
+      "why": "An agent that can see every tool on a server learns what exists and may try to reach tools it should not use.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Aggregate app",
+      "what": "The gateway is designed to filter the tool list to the set the caller's policy grants.",
+      "why": "An agent that can see every tool on a server learns what exists and may try to reach tools it should not use.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "The gateway is designed to filter the tool list to the set the caller's policy grants.",
+      "why": "An agent that can see every tool on a server learns what exists and may try to reach tools it should not use.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

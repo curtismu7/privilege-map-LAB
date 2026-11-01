@@ -1,0 +1,231 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "agent-insights",
+  "title": "Agent Insights: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Agent Insights",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "policy",
+      "label": "Guard view",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "console",
+      "label": "Compliance view",
+      "sub": [
+        "OWASP, MITRE ATLAS, NIST AI RMF"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "console",
+      "label": "Alerts view",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "console",
+      "label": "Prompts view",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Sealed prompt content",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Clear-text searchable metadata",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Filters by agent, application, category, deci…",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "console",
+      "label": "Live view and 24-hour to 30-day windows",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "In-browser decryption with your private key",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Guard view"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Compliance view"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Alerts view"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Prompts view"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Sealed prompt content"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Clear-text searchable metadata"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Filters by agent, application,…"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Live view and 24-hour to 30-day…"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses In-browser decryption with your…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Guard view",
+      "what": "Guard shows every inspection result: the category that fired, the rule that corroborated it, the direction, the decision taken and the agent and person behind it.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Compliance view",
+      "what": "A compliance view cross-references each finding to the OWASP taxonomies alongside MITRE ATLAS and NIST AI RMF, so evidence leaves in the shape an assessor asked for.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Alerts view",
+      "what": "A compliance view cross-references each finding to the OWASP taxonomies alongside MITRE ATLAS and NIST AI RMF, so evidence leaves in the shape an assessor asked for.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Prompts view",
+      "what": "A compliance view cross-references each finding to the OWASP taxonomies alongside MITRE ATLAS and NIST AI RMF, so evidence leaves in the shape an assessor asked for.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Sealed prompt content",
+      "what": "Content is sealed to your key and shown as sealed until you load the private half, while the searchable detail around it (who ran it, which agent, which application, what was detected, what was decided) stays in the clear so you can find the one record you need before decrypting it.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Clear-text searchable metadata",
+      "what": "Content is sealed to your key and shown as sealed until you load the private half, while the searchable detail around it (who ran it, which agent, which application, what was detected, what was decided) stays in the clear so you can find the one record you need before decrypting it.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Filters by agent, application, category, deci…",
+      "what": "Records can be filtered by agent, application, category, decision, flow and event, over a live view or a fixed window from the last 24 hours to the last 30 days, with archive beyond that.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Live view and 24-hour to 30-day windows",
+      "what": "Records can be filtered by agent, application, category, decision, flow and event, over a live view or a fixed window from the last 24 hours to the last 30 days, with archive beyond that.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "In-browser decryption with your private key",
+      "what": "Content is sealed to your key and shown as sealed until you load the private half, while the searchable detail around it (who ran it, which agent, which application, what was detected, what was decided) stays in the clear so you can find the one record you need before decrypting it.",
+      "why": "Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "edges": [
+        8
+      ]
+    }
+  ]
+}

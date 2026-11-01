@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import features from '../data/features.json';
 import { PAGES } from '../data/pages.js';
+import { isDeckSourced } from '../../lib/feature-diagram.js';
 
 function Section({ title, children }) {
   return (
@@ -15,6 +16,15 @@ function FeatureDetail({ feature }) {
   return (
     <article className="feature" aria-labelledby={`f-${feature.id}`}>
       <h3 id={`f-${feature.id}`}>{feature.name}</h3>
+      <p className="feature__badges">
+        {feature.status ? <span className="badge" data-kind="status">{feature.status}</span> : null}
+        {isDeckSourced(feature) ? <span className="badge" data-kind="confidential">Internal, confidential</span> : null}
+      </p>
+      <p className="feature__diagram-link">
+        <a href={`#/diagram/${feature.id}`} target="_blank" rel="noopener noreferrer">
+          Open the diagram in a new tab <span aria-hidden="true">&#8599;</span>
+        </a>
+      </p>
       <Section title="Why we need it">
         <p>{feature.why}</p>
       </Section>
@@ -53,10 +63,10 @@ function FeatureDetail({ feature }) {
   );
 }
 
-export default function FeaturePage({ pageId }) {
+export default function FeaturePage({ pageId, featureId = '' }) {
   const page = PAGES.find((p) => p.id === pageId);
   const list = features.filter((f) => f.page === pageId);
-  const [selected, setSelected] = useState(list[0]?.id);
+  const [selected, setSelected] = useState(list.some((f) => f.id === featureId) ? featureId : list[0]?.id);
   const current = list.find((f) => f.id === selected) || list[0];
   return (
     <section aria-label={page.title}>
@@ -65,6 +75,11 @@ export default function FeaturePage({ pageId }) {
       <p className="draft-note" role="note">
         Draft content compiled from Ping documentation and our own tests. Open &ldquo;Sources and what is not verified&rdquo; on a feature before presenting it.
       </p>
+      {list.some(isDeckSourced) ? (
+        <p className="draft-note" role="note" data-kind="confidential">
+          <strong>Internal and confidential.</strong> Features marked Internal, confidential use text from an internal Ping deck, including unreleased and roadmap items. They are stated by the deck and not tested on our tenant. Do not share them outside Ping.
+        </p>
+      ) : null}
       <div className="split">
         <nav className="feature-list" aria-label={`${page.title} features`}>
           {list.map((f) => (

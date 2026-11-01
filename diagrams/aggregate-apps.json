@@ -1,0 +1,238 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "aggregate-apps",
+  "title": "Aggregate apps: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Aggregate apps",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Agent Privilege gateway",
+      "sub": [
+        "MCP aggregate"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "console",
+      "label": "Privilege console: MCP Aggregate application…",
+      "sub": [
+        "name, member list, per-member tool",
+        "filter"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Member MCP Server applications, each with its…",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "console",
+      "label": "Agent Registry agent key with mcp scope",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Member alias prefix",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "policy",
+      "label": "Aggregate policy cap",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Lazy member connections",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "Per-user upstream OAuth",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Agent Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege console: MCP Aggregat…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Member MCP Server applications,…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Agent Registry agent key with m…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Member alias prefix"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Aggregate policy cap"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Lazy member connections"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Per-user upstream OAuth"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Agent Privilege gateway",
+      "what": "Edits to the aggregate or its policy take about 4 minutes to reach the gateway.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege console: MCP Aggregate application…",
+      "what": "An MCP Aggregate application has a name that becomes its address and a list of member MCP Server apps.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Member MCP Server applications, each with its…",
+      "what": "According to the documentation, when a call arrives the aggregate strips the prefix and opens a session to that member as the calling user, so each member's own policy and Auth Mode still apply.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Agent Registry agent key with mcp scope",
+      "what": "In testing with an agent key, the tools listed matched the grant, were prefixed correctly, and ungranted or nonexistent tools were refused identically.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "Edits to the aggregate or its policy take about 4 minutes to reach the gateway.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Member alias prefix",
+      "what": "Each tool is listed as member alias, two underscores, tool name, and the alias defaults to the member app name.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Aggregate policy cap",
+      "what": "According to the documentation, when a call arrives the aggregate strips the prefix and opens a session to that member as the calling user, so each member's own policy and Auth Mode still apply.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Lazy member connections",
+      "what": "An MCP Aggregate application has a name that becomes its address and a list of member MCP Server apps.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Per-user upstream OAuth",
+      "what": "When a member is itself OAuth-protected, upstream authorization completes per calling user using the same two-IdP brokering and token refresh as any fronted server.",
+      "why": "A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "edges": [
+        8
+      ]
+    }
+  ]
+}

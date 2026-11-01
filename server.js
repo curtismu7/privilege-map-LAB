@@ -15,7 +15,7 @@ import { listDiagrams, loadDiagramByName, DEMO_DIAGRAMS } from './lib/diagrams.j
 import { resolveWorkspace, workspaceDir, appendTrace, readTrace, clearRunState, readRun, writeRun, readSettings, writeSettings } from './lib/workspace.js';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
-const APP = { id: 'privilege-map', name: 'Privilege Map LAB', version: '1.0.0' };
+const APP = { id: 'privilege-map', name: 'Privilege Map LAB', version: '1.1.0' };
 
 // Shared settings: ~/Development/.env, or STANDALONE_ENV. Only this app's keys are read (lib/settings.js).
 const shared = loadSharedSettings();

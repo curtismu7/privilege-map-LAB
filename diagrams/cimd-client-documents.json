@@ -1,0 +1,145 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "cimd-client-documents",
+  "title": "CIMD client documents: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "CIMD client documents",
+      "sub": [
+        "Privilege Map · Identity"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "console",
+      "label": "Privilege console MCP Client Documents settin…",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Privilege central fetcher for public documents",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "gateway",
+      "label": "Gateway cache for private documents",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Demo-hosted public client metadata documents",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "PKCE with a public client and no secret",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege console MCP Client Do…"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege central fetcher for p…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Gateway cache for private docum…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Demo-hosted public client metad…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses PKCE with a public client and n…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege console MCP Client Documents settin…",
+      "what": "In the Privilege console, the MCP Client Documents settings hold the list of accepted document URLs.",
+      "why": "Each AI client must be known to the authorization server before it can ask a user to sign in.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege central fetcher for public documents",
+      "what": "For the demo, public client documents are hosted so that Privilege can fetch them anonymously (read-only requests, rate limited) without a sign-in redirect.",
+      "why": "Each AI client must be known to the authorization server before it can ask a user to sign in.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Gateway cache for private documents",
+      "what": "As documented, each entry has a document URL, a type (Public, where Privilege fetches centrally, or Private, where the gateway fetches and caches), a status showing whether the fetch worked and what it contained, and a gateway cache period with a documented default of 24 hours.",
+      "why": "Each AI client must be known to the authorization server before it can ask a user to sign in.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Demo-hosted public client metadata documents",
+      "what": "For the demo, public client documents are hosted so that Privilege can fetch them anonymously (read-only requests, rate limited) without a sign-in redirect.",
+      "why": "Each AI client must be known to the authorization server before it can ask a user to sign in.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "PKCE with a public client and no secret",
+      "what": "Privilege fetches that URL and reads a small JSON document describing the client: name, redirect URIs, grant types, response types, and a token endpoint authentication method of none for a public client that uses PKCE.",
+      "why": "Each AI client must be known to the authorization server before it can ask a user to sign in.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

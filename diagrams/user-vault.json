@@ -1,0 +1,204 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "user-vault",
+  "title": "User Vault: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "User Vault",
+      "sub": [
+        "Privilege Map · Platform"
+      ],
+      "x": 330,
+      "y": 225
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Per-user vault",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Self-service only, no admin override",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "AES-GCM encryption at rest",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "AWS Secrets Manager with KMS or HashiCorp Vau…",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "gateway",
+      "label": "MCP gateway",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "gateway",
+      "label": "Agent-to-agent gateway",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Per-user credentials application mode",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Staged deletion",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Per-user vault"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Self-service only, no admin ove…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses AES-GCM encryption at rest"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses AWS Secrets Manager with KMS or…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses MCP gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Agent-to-agent gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Per-user credentials applicatio…"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Staged deletion"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Per-user vault",
+      "what": "User Vault is a private credential store per user, injected into that user's backend calls at request time, so the backend sees who actually acted.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Self-service only, no admin override",
+      "what": "There is no administrator override, and no admin, auditor or support role can read another user's credentials through the API.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "AES-GCM encryption at rest",
+      "what": "Values are encrypted at rest with AES-GCM and a unique nonce per value.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "AWS Secrets Manager with KMS or HashiCorp Vau…",
+      "what": "The key is resolved at startup from AWS Secrets Manager with KMS envelope decryption, or from HashiCorp Vault on premises, with a compiled-in development key only as fallback.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "MCP gateway",
+      "what": "MCP gateway is one of the components this feature uses.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Agent-to-agent gateway",
+      "what": "The MCP and agent-to-agent gateways consume the credentials when an application is set to per-user credentials.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Per-user credentials application mode",
+      "what": "The MCP and agent-to-agent gateways consume the credentials when an application is set to per-user credentials.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Staged deletion",
+      "what": "Deletions are staged, then purged after 24 hours.",
+      "why": "Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "edges": [
+        7
+      ]
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "mcp-gateway",
+  "title": "MCP Gateway: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "MCP Gateway",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "OAuth 2.1 authorization server",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "CIMD client registration",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Per-tool policy",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Entitlement-aware discovery",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "gateway",
+      "label": "Backend credential injection",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "gateway",
+      "label": "Hosted MCP servers",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Headless agents",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Token pass-through",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "policy",
+      "label": "Approval-gated creation",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "Path-based deployment",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses OAuth 2.1 authorization server"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses CIMD client registration"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Per-tool policy"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Entitlement-aware discovery"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Backend credential injection"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Hosted MCP servers"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Headless agents"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Token pass-through"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Approval-gated creation"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Path-based deployment"
+    }
+  ],
+  "steps": [
+    {
+      "title": "OAuth 2.1 authorization server",
+      "what": "The gateway is a full OAuth 2.1 authorization server with dynamic client registration, mandatory PKCE (S256) and refresh tokens, and it publishes discovery metadata so compliant MCP clients connect without custom configuration.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "CIMD client registration",
+      "what": "It also supports CIMD client registration, the mechanism the MCP specification now prefers: a client identifies itself by a document URL the tenant has allowlisted, and the gateway fetches, validates and caches it and advertises support in its discovery metadata.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Per-tool policy",
+      "what": "Agents without a browser authenticate with a scoped access key or with Federated Identity and act as their owning user, so the same policy and audit apply.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Entitlement-aware discovery",
+      "what": "The gateway is a full OAuth 2.1 authorization server with dynamic client registration, mandatory PKCE (S256) and refresh tokens, and it publishes discovery metadata so compliant MCP clients connect without custom configuration.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Backend credential injection",
+      "what": "The gateway holds the credential the MCP server expects, with modes of none, an app-wide static token, a per-user credential from the User Vault, or a full second OAuth flow completed on the user's behalf for OAuth-protected servers such as Jira and Monday.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Hosted MCP servers",
+      "what": "The gateway holds the credential the MCP server expects, with modes of none, an app-wide static token, a per-user credential from the User Vault, or a full second OAuth flow completed on the user's behalf for OAuth-protected servers such as Jira and Monday.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Headless agents",
+      "what": "Agents without a browser authenticate with a scoped access key or with Federated Identity and act as their owning user, so the same policy and audit apply.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Token pass-through",
+      "what": "Token pass-through is a fifth backend-credential mode: a front-end application acting as an agent mints a short-lived signed assertion naming the end user, itself and the target backend, and the gateway verifies it and forwards it unchanged so the backend can scope its response to that user.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Approval-gated creation",
+      "what": "Approval-gated creation is one of the components this feature uses.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Path-based deployment",
+      "what": "Path-based deployment is one of the components this feature uses.",
+      "why": "An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "edges": [
+        9
+      ]
+    }
+  ]
+}

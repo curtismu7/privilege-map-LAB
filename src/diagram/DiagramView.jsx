@@ -176,9 +176,10 @@ function FitView({ diagramId, tick }) {
 
 const NONE = new Set();
 
-export default function DiagramView({ initialId = '', initialSpeed = 'normal', onSpeed }) {
+// fixedId shows exactly one diagram by name (a feature's page opens one in its own tab) and hides the picker.
+export default function DiagramView({ initialId = '', fixedId = '', initialSpeed = 'normal', onSpeed }) {
   const [list, setList] = useState([]);
-  const [id, setId] = useState('');
+  const [id, setId] = useState(fixedId);
   const [diagram, setDiagram] = useState(null);
   const [error, setError] = useState('');
   const [stepIndex, setStepIndex] = useState(-1);
@@ -189,11 +190,14 @@ export default function DiagramView({ initialId = '', initialSpeed = 'normal', o
   const [fitTick, setFitTick] = useState(0);
 
   useEffect(() => {
+    if (fixedId) return;
     getJson('/api/diagrams')
       .then((data) => {
-        setList(data.diagrams || []);
-        const wanted = (data.diagrams || []).find((d) => d.available && d.id === initialId);
-        const first = wanted || (data.diagrams || []).find((d) => d.available);
+        // The picker lists the Map diagrams; each feature's own diagram is opened from its feature page.
+        const maps = (data.diagrams || []).filter((d) => d.kind === 'map');
+        setList(maps);
+        const wanted = maps.find((d) => d.available && d.id === initialId);
+        const first = wanted || maps.find((d) => d.available);
         if (first) setId(first.id);
         else setError('No diagram data is available. Run npm run doctor.');
       })
@@ -284,17 +288,19 @@ export default function DiagramView({ initialId = '', initialSpeed = 'normal', o
 
   return (
     <div className="dview">
-      <div className="dtools">
-        <label>
-          Diagram
-          <select value={id} onChange={(e) => setId(e.target.value)}>
-            {list.map((d) => (
-              <option key={d.id} value={d.id} disabled={!d.available}>
-                {d.title}
-              </option>
-            ))}
-          </select>
-        </label>
+      <div className={fixedId ? 'dtools dtools--fixed' : 'dtools'}>
+        {fixedId ? null : (
+          <label>
+            Diagram
+            <select value={id} onChange={(e) => setId(e.target.value)}>
+              {list.map((d) => (
+                <option key={d.id} value={d.id} disabled={!d.available}>
+                  {d.title}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <label>
           Speed
           <select value={speed} onChange={(e) => chooseSpeed(e.target.value)}>

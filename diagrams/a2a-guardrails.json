@@ -1,0 +1,151 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "a2a-guardrails",
+  "title": "A2A guardrails: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "A2A guardrails",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway",
+      "sub": [
+        "A2A inspection path"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "AI Guard on the calling agent's key",
+      "sub": [
+        "Runtime Protection: enable switch,",
+        "Fail Closed, detectors and",
+        "thresholds"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Remote Agent application and the agent key's…",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Demo chain of main agent, worker agent and MC…",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Gateway log and AI Guard records",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses AI Guard on the calling agent's…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Remote Agent application and th…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Demo chain of main agent, worke…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Gateway log and AI Guard records"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway",
+      "what": "When an agent calls a Remote Agent through the gateway, the gateway inspects the whole request body (every text part, data part and the metadata, for both single and streaming messages) using the AI Guard settings on the calling agent's key.",
+      "why": "An agent that receives text from another agent can be hit with prompt injection, impersonation, jailbreak or data-exfiltration requests.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "AI Guard on the calling agent's key",
+      "what": "When an agent calls a Remote Agent through the gateway, the gateway inspects the whole request body (every text part, data part and the metadata, for both single and streaming messages) using the AI Guard settings on the calling agent's key.",
+      "why": "An agent that receives text from another agent can be hit with prompt injection, impersonation, jailbreak or data-exfiltration requests.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Remote Agent application and the agent key's…",
+      "what": "When an agent calls a Remote Agent through the gateway, the gateway inspects the whole request body (every text part, data part and the metadata, for both single and streaming messages) using the AI Guard settings on the calling agent's key.",
+      "why": "An agent that receives text from another agent can be hit with prompt injection, impersonation, jailbreak or data-exfiltration requests.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Demo chain of main agent, worker agent and MC…",
+      "what": "When an agent calls a Remote Agent through the gateway, the gateway inspects the whole request body (every text part, data part and the metadata, for both single and streaming messages) using the AI Guard settings on the calling agent's key.",
+      "why": "An agent that receives text from another agent can be hit with prompt injection, impersonation, jailbreak or data-exfiltration requests.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Gateway log and AI Guard records",
+      "what": "When an agent calls a Remote Agent through the gateway, the gateway inspects the whole request body (every text part, data part and the metadata, for both single and streaming messages) using the AI Guard settings on the calling agent's key.",
+      "why": "An agent that receives text from another agent can be hit with prompt injection, impersonation, jailbreak or data-exfiltration requests.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

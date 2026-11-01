@@ -1,0 +1,266 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "agent-to-agent-a2a-through-the-gateway",
+  "title": "Agent-to-agent (A2A) through the gateway: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Agent-to-agent (A2A) through the gateway",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway",
+      "sub": [
+        "Remote Agent application with A2A",
+        "route"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "console",
+      "label": "Privilege console: Remote Agent application s…",
+      "sub": [
+        "front-end path, backend address,",
+        "agent card discovery, Auth Mode"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "console",
+      "label": "Agent Registry",
+      "sub": [
+        "calling agent with the a2a scope,",
+        "custodian, expiry and tool and",
+        "agent access step"
+      ],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Agent key",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "policy",
+      "label": "AI Guard on the calling agent's key",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "gateway",
+      "label": "Remote agent backend",
+      "sub": [
+        "demo A2A agent"
+      ],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "AgentCard discovery",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "Distinct A2A key scope",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "Per-user credential injection",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege console: Remote Agent…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Agent Registry"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Agent key"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses AI Guard on the calling agent's…"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Remote agent backend"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses AgentCard discovery"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Distinct A2A key scope"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Per-user credential injection"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway",
+      "what": "A Remote Agent application fronts an A2A agent, which publishes a public agent card and a JSON-RPC endpoint.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege console: Remote Agent application s…",
+      "what": "A Remote Agent application fronts an A2A agent, which publishes a public agent card and a JSON-RPC endpoint.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Agent Registry",
+      "what": "A calling agent identifies itself with an agent key (sent as a bearer token) that has the a2a scope and is selected per remote agent.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Agent key",
+      "what": "A Remote Agent application fronts an A2A agent, which publishes a public agent card and a JSON-RPC endpoint.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "AI Guard on the calling agent's key",
+      "what": "A calling agent identifies itself with an agent key (sent as a bearer token) that has the a2a scope and is selected per remote agent.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Remote agent backend",
+      "what": "A Remote Agent application fronts an A2A agent, which publishes a public agent card and a JSON-RPC endpoint.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "The gateway runs three checks in order: sign-in or a valid key, a policy covering the caller and the app, then the app's Auth Mode check.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "AgentCard discovery",
+      "what": "AgentCard discovery is one of the components this feature uses.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Distinct A2A key scope",
+      "what": "The Ping deck adds that A2A endpoints run through the same gateway as MCP, with agent access keys carrying a distinct scope, so a key permitted to reach a peer agent does not thereby reach every MCP server in the tenant.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Per-user credential injection",
+      "what": "The caller's gateway key is never forwarded to the agent; only the credential the Auth Mode supplies reaches it.",
+      "why": "Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "edges": [
+        9
+      ]
+    }
+  ]
+}

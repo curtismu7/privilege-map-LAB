@@ -1,0 +1,235 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "backend-auth-modes",
+  "title": "Backend auth modes: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Backend auth modes",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway",
+      "sub": [
+        "credential forwarding per app"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "console",
+      "label": "Privilege console: Add and Edit application,…",
+      "sub": [
+        "Remote Agent and MCP Server apps"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Static Token field on the application",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Privilege vault",
+      "sub": [
+        "per user and app, for User Token"
+      ],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "gateway",
+      "label": "Backend agents and MCP servers that require a…",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "MCP Aggregate member apps",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Token pass-through",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "User Vault credential",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege console: Add and Edit…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Static Token field on the appli…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Privilege vault"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Backend agents and MCP servers…"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses MCP Aggregate member apps"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Token pass-through"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses User Vault credential"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway",
+      "what": "User Token is documented to send the credential in the user's Privilege vault, and nothing if the vault is empty.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege console: Add and Edit application,…",
+      "what": "Each MCP Server or Remote Agent application has an Auth Mode that decides what the backend receives after sign-in and policy pass.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Static Token field on the application",
+      "what": "Static Token sends a configured bearer token.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Privilege vault",
+      "what": "User Token is documented to send the credential in the user's Privilege vault, and nothing if the vault is empty.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Backend agents and MCP servers that require a…",
+      "what": "On an MCP aggregate, a member whose backend required a bearer stopped failing as Unauthorized once it was switched to Static Token with a matching backend value.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "MCP Aggregate member apps",
+      "what": "On an MCP aggregate, a member whose backend required a bearer stopped failing as Unauthorized once it was switched to Static Token with a matching backend value.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "The caller's gateway key is never forwarded.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Token pass-through",
+      "what": "A fifth mode, token pass-through, has a front-end application acting as an agent mint a short-lived signed assertion naming the end user, itself and the target backend; the gateway verifies it and forwards it unchanged.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "User Vault credential",
+      "what": "User Token is documented to send the credential in the user's Privilege vault, and nothing if the vault is empty.",
+      "why": "Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "edges": [
+        8
+      ]
+    }
+  ]
+}

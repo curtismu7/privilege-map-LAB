@@ -1,0 +1,258 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "ai-platform-agents",
+  "title": "AI Platform Agents: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "AI Platform Agents",
+      "sub": [
+        "Privilege Map · Platform"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Thirteen agent sources",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Cross-cloud inventory",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "AWS Organizations onboarding",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "console",
+      "label": "Permission review",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Risk scoring, five levels and 46 findings",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Custodian ownership",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Delete and quarantine remediation",
+      "sub": [
+        "Databricks delete in development"
+      ],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "gateway",
+      "label": "NEW",
+      "sub": [
+        "Bedrock AgentCore gateway",
+        "governance"
+      ],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "NEW",
+      "sub": [
+        "Private-network workload connector",
+        "and scanner"
+      ],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "Audit log with approval for custodian actions",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Thirteen agent sources"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Cross-cloud inventory"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses AWS Organizations onboarding"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Permission review"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Risk scoring, five levels and 4…"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Custodian ownership"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Delete and quarantine remediati…"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses NEW"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses NEW"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Audit log with approval for cus…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Thirteen agent sources",
+      "what": "AI Platform Agents gives inventory, permission review and remediation for AI agents across thirteen sources: AWS Bedrock Agents, AWS Bedrock AgentCore, Amazon Lex, Amazon Bedrock Flows, Google Vertex AI Agent Engine, Google Agent Builder, Google Agent Registry, Dialogflow CX, Azure AI Foundry, Microsoft Copilot Studio, Salesforce Agentforce, Databricks Mosaic AI and Snowflake Cortex AI.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Cross-cloud inventory",
+      "what": "The cross-cloud inventory lists every agent with its identity, model, configuration and owner, including A2A-native agents from the GCP Agent Registry with their agent cards.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "AWS Organizations onboarding",
+      "what": "AWS Organizations member accounts are enumerated and onboarded automatically, scoped by organizational unit.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Permission review",
+      "what": "AI Platform Agents gives inventory, permission review and remediation for AI agents across thirteen sources: AWS Bedrock Agents, AWS Bedrock AgentCore, Amazon Lex, Amazon Bedrock Flows, Google Vertex AI Agent Engine, Google Agent Builder, Google Agent Registry, Dialogflow CX, Azure AI Foundry, Microsoft Copilot Studio, Salesforce Agentforce, Databricks Mosaic AI and Snowflake Cortex AI.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Risk scoring, five levels and 46 findings",
+      "what": "Risk scoring gives a five-level score built from 46 specific findings, among them administrative privilege, publicly reachable and unauthenticated agents, over-privileged identity, lateral-movement and credential-exfiltration paths, dangling roles, missing guardrails and deprecated models, and more.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Custodian ownership",
+      "what": "Every agent can be assigned a custodian, so an orphaned agent has a named owner.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Delete and quarantine remediation",
+      "what": "Remediation offers delete on twelve of thirteen sources (Databricks in development) and quarantine on nine (the slide names Bedrock Agents, AgentCore, Lex, Vertex AI, Copilot Studio, Agentforce and Snowflake Cortex), plus targeted fixes: strip over-privileged roles, stop a privileged flow, disable a named credential, retag or reconfigure.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "NEW",
+      "what": "NEW, governing the gateway itself: on Bedrock AgentCore the gateway is an object of policy, not just a route.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "NEW",
+      "what": "NEW, private-network discovery: a workload connector and scanner reach agents inside your own network and cloud accounts (Bedrock, AgentCore and Lex), polling outbound through your proxy.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Audit log with approval for custodian actions",
+      "what": "Operations are restricted to administrators and each agent's assigned custodian and are written to the audit log with the acting user.",
+      "why": "Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "edges": [
+        9
+      ]
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "sensor-enforcement",
+  "title": "Sensor enforcement: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Sensor enforcement",
+      "sub": [
+        "Privilege Map · Platform"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege sensor",
+      "sub": [
+        "Docker image, or Helm chart on",
+        "Kubernetes"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "Privilege controller",
+      "sub": [
+        "supplies enforcement policy"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Shadow AI policy in the console",
+      "sub": [
+        "Allow, Deny, Monitor or Warn;",
+        "kinds, names, process paths,",
+        "hosts, tools, namespaces, users …"
+      ],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "gateway",
+      "label": "Sensor command-line flags for mode, deny, sco…",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "gateway",
+      "label": "Sensor stats line",
+      "sub": [
+        "read, reported, killed,",
+        "would-kill, tracked"
+      ],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Kernel capabilities needed to attach kernel p…",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege sensor"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege controller"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Shadow AI policy in the console"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Sensor command-line flags for m…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Sensor stats line"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Kernel capabilities needed to a…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege sensor",
+      "what": "The Privilege sensor runs on the host, documented as either a Docker container or a Helm-installed daemonset on Kubernetes, and attaches kernel programs to watch process starts.",
+      "why": "Detecting AI workloads on a host is not enough when an unapproved program must stop running.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege controller",
+      "what": "The Privilege sensor runs on the host, documented as either a Docker container or a Helm-installed daemonset on Kubernetes, and attaches kernel programs to watch process starts.",
+      "why": "Detecting AI workloads on a host is not enough when an unapproved program must stop running.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Shadow AI policy in the console",
+      "what": "The Privilege sensor runs on the host, documented as either a Docker container or a Helm-installed daemonset on Kubernetes, and attaches kernel programs to watch process starts.",
+      "why": "Detecting AI workloads on a host is not enough when an unapproved program must stop running.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Sensor command-line flags for mode, deny, sco…",
+      "what": "Its enforcement mode is set by command-line flags (off, audit or enforce; default off).",
+      "why": "Detecting AI workloads on a host is not enough when an unapproved program must stop running.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Sensor stats line",
+      "what": "In audit mode a denied process runs and is counted as would-kill; in enforce mode it is terminated and counted as killed.",
+      "why": "Detecting AI workloads on a host is not enough when an unapproved program must stop running.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Kernel capabilities needed to attach kernel p…",
+      "what": "The Privilege sensor runs on the host, documented as either a Docker container or a Helm-installed daemonset on Kubernetes, and attaches kernel programs to watch process starts.",
+      "why": "Detecting AI workloads on a host is not enough when an unapproved program must stop running.",
+      "edges": [
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "mcp-tool-call-inspection",
+  "title": "MCP tool-call policy: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "MCP tool-call policy",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 75
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Agent Privilege gateway",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "Privilege console",
+      "sub": [
+        "MCP Server application and its",
+        "policy"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "gateway",
+      "label": "Hostile MCP server",
+      "sub": [
+        "demo backend"
+      ],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Agent Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Privilege console"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Hostile MCP server"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Gateway log"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Agent Privilege gateway",
+      "what": "The gateway allows or denies MCP tool calls by tool name according to the app's policy.",
+      "why": "Customers need to stop an agent's dangerous tool actions even when a tool server is poisoned.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege console",
+      "what": "The gateway allows or denies MCP tool calls by tool name according to the app's policy.",
+      "why": "Customers need to stop an agent's dangerous tool actions even when a tool server is poisoned.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Hostile MCP server",
+      "what": "In one side-by-side test, two identical hostile MCP servers sat behind two apps: a governed one whose policy permits every tool except three dangerous ones, and an ungoverned one with an explicit allow-all policy.",
+      "why": "Customers need to stop an agent's dangerous tool actions even when a tool server is poisoned.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "The gateway allows or denies MCP tool calls by tool name according to the app's policy.",
+      "why": "Customers need to stop an agent's dangerous tool actions even when a tool server is poisoned.",
+      "edges": [
+        3
+      ]
+    }
+  ]
+}

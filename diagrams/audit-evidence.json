@@ -1,0 +1,185 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "audit-evidence",
+  "title": "Audit evidence: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Audit evidence",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 225
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "AI Guard",
+      "sub": [
+        "request and response verdicts"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Cedar AI policy denials",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Search index and dashboard used for the SIEM…",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "SIEM console-audit feed",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Trace correlation ids",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Attack Lab",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses AI Guard"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Cedar AI policy denials"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Search index and dashboard used…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses SIEM console-audit feed"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Trace correlation ids"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Attack Lab"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Gateway log",
+      "what": "The gateway writes structured events.",
+      "why": "At audit close the customer needs evidence of what the gateway decided.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "AI Guard",
+      "what": "A request-side block by AI Guard carries compliance mappings (MITRE ATLAS, NIST AI RMF, OWASP LLM), findings, and request, span and trace ids for joining to the trace view.",
+      "why": "At audit close the customer needs evidence of what the gateway decided.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Cedar AI policy denials",
+      "what": "A Cedar policy denial of an LLM reply is a different mechanism from the AI Guard withhold; its event carries the decision, policy ids, principal, agent key and grant shape, and no compliance mapping was shown on it.",
+      "why": "At audit close the customer needs evidence of what the gateway decided.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Search index and dashboard used for the SIEM…",
+      "what": "The gateway traffic log is kept apart from the SIEM console-audit feed, which is documented as recording who changed a policy or key but not traffic.",
+      "why": "At audit close the customer needs evidence of what the gateway decided.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "SIEM console-audit feed",
+      "what": "The gateway traffic log is kept apart from the SIEM console-audit feed, which is documented as recording who changed a policy or key but not traffic.",
+      "why": "At audit close the customer needs evidence of what the gateway decided.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Trace correlation ids",
+      "what": "A request-side block by AI Guard carries compliance mappings (MITRE ATLAS, NIST AI RMF, OWASP LLM), findings, and request, span and trace ids for joining to the trace view.",
+      "why": "At audit close the customer needs evidence of what the gateway decided.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Attack Lab",
+      "what": "The demo's Attack Lab is designed to produce these events so they can be shown in the audit feed.",
+      "why": "At audit close the customer needs evidence of what the gateway decided.",
+      "edges": [
+        6
+      ]
+    }
+  ]
+}

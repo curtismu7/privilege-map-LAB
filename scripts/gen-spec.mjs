@@ -1,6 +1,7 @@
 // Regenerates docs/standard-ui.md from src/data/features.json so the spec and the UI cannot drift.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { PAGES } from '../src/data/pages.js';
+import { isDeckSourced } from '../lib/feature-diagram.js';
 
 const features = JSON.parse(readFileSync(new URL('../src/data/features.json', import.meta.url), 'utf8'));
 const lines = [];
@@ -15,6 +16,8 @@ for (const p of PAGES) {
 lines.push('## Features', '');
 for (const f of features) {
   lines.push(`### ${f.name}`, '');
+  if (f.status) lines.push(`Status: ${f.status}`, '');
+  if (isDeckSourced(f)) lines.push('Internal and confidential: text from an internal Ping deck, stated by the deck and not tested on our tenant.', '');
   lines.push('#### Why we need it', f.why, '');
   lines.push('#### How it works', f.how, '');
   lines.push('#### Value to the end user', f.userValue, '');

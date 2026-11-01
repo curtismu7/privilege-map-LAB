@@ -1,0 +1,204 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "intent-purpose-and-behaviour",
+  "title": "Intent, Purpose and Behaviour: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Intent, Purpose and Behaviour",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 225
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Intent classification",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Deterministic intent patterns",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Semantic similarity scoring",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Purpose declaration on the agent key",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Behaviour baseline",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Anomaly scoring",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "policy",
+      "label": "Alert and human approval",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Hard refusal tier",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Intent classification"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Deterministic intent patterns"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Semantic similarity scoring"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Purpose declaration on the agen…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Behaviour baseline"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Anomaly scoring"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Alert and human approval"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Hard refusal tier"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Intent classification",
+      "what": "Intent classifies what a request is actually trying to do, such as exfiltrating data, changing a payee or looking up a single record, rather than what it literally says, combining deterministic patterns with semantic similarity.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Deterministic intent patterns",
+      "what": "Intent classifies what a request is actually trying to do, such as exfiltrating data, changing a payee or looking up a single record, rather than what it literally says, combining deterministic patterns with semantic similarity.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Semantic similarity scoring",
+      "what": "Intent classifies what a request is actually trying to do, such as exfiltrating data, changing a payee or looking up a single record, rather than what it literally says, combining deterministic patterns with semantic similarity.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Purpose declaration on the agent key",
+      "what": "Policy can refuse calls that fall outside that declaration, violate a specific axis of it, or arrive from a key that declares no purpose at all, which turns \"this agent was issued for invoice reconciliation\" from documentation into something enforceable.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Behaviour baseline",
+      "what": "Behaviour: Privilege learns each agent's normal pattern of calls and scores how far a request departs from it, by anomaly level, a target it has never touched, or an argument shape it has never used.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Anomaly scoring",
+      "what": "Behaviour: Privilege learns each agent's normal pattern of calls and scores how far a request departs from it, by anomaly level, a target it has never touched, or an argument shape it has never used.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Alert and human approval",
+      "what": "A policy can refuse on a pattern match outright, or alert and ask for a person above a similarity score.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Hard refusal tier",
+      "what": "Hard refusals rest on the deterministic tier, while the scored signals drive alerts and human-in-the-loop approval, so a model's judgement never silently becomes the enforcement decision.",
+      "why": "A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "edges": [
+        7
+      ]
+    }
+  ]
+}

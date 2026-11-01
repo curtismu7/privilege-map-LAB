@@ -54,6 +54,15 @@ test('the content pack is consistent with the stories, diagrams and glossary', (
   assert.deepEqual(pack.stories.map((s) => s.id), storyIds);
   for (const c of pack.cards) if (c.story) assert.ok(storyIds.includes(c.story));
   assert.deepEqual(pack.diagrams.map((d) => d.id), DEMO_DIAGRAMS);
+  const features = json('src/data/features.json');
+  for (const f of features) {
+    const card = pack.cards.find((c) => c.id === `feature-${f.id}`);
+    assert.ok(card, `no card for feature ${f.id}`);
+    assert.equal(card.action.href, `/#/${f.page}?feature=${f.id}`);
+    if (f.sources.some((x) => /Ping deck/i.test(x))) assert.match(card.description, /Internal and confidential/, `${f.id} card lacks the marking`);
+    assert.equal(pack.diagrams.find((d) => d.id === f.id)?.href, `/#/diagram/${f.id}`);
+  }
+  assert.ok(pack.sources.some((s) => s.id === 'ping-deck' && /confidential/i.test(s.kind)));
   assert.doesNotMatch(JSON.stringify(pack), /eyJ[A-Za-z0-9_-]{10,}\./);
 });
 

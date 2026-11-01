@@ -1,0 +1,241 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "model-allowlists",
+  "title": "Model allowlists: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Model allowlists",
+      "sub": [
+        "Privilege Map · LLM"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway",
+      "sub": [
+        "enforces the check"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Virtual key with an Allowed models setting",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Provider model-list endpoint",
+      "sub": [
+        "returns the full catalog, not the",
+        "allowlist"
+      ],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Model field in the request body",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "console",
+      "label": "Demo chat console model selector",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "console",
+      "label": "Demo raw request tab",
+      "sub": [
+        "can send a model id the provider",
+        "does not have"
+      ],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Model remapping",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "Per-end-user narrowing",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Virtual key with an Allowed mod…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Provider model-list endpoint"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Model field in the request body"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Demo chat console model selector"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Demo raw request tab"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Model remapping"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Per-end-user narrowing"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway",
+      "what": "The gateway reads the model field of each request and compares it with the key's list.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Virtual key with an Allowed models setting",
+      "what": "A virtual key carries an Allowed models list, which is a subset of its provider's model catalog.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Provider model-list endpoint",
+      "what": "The provider's model-list endpoint returns the provider's whole catalog, not the key's list, so a model dropdown built from it does not show which ids are allowed.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Model field in the request body",
+      "what": "The gateway reads the model field of each request and compares it with the key's list.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "The gateway reads the model field of each request and compares it with the key's list.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Demo chat console model selector",
+      "what": "In the demo chat console, the chosen id is sent as the model field; the demo is designed so that an allowed model answers and a blocked one shows a refusal and 'Reached the model: no'.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Demo raw request tab",
+      "what": "A virtual key carries an Allowed models list, which is a subset of its provider's model catalog.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Model remapping",
+      "what": "A virtual key carries an Allowed models list, which is a subset of its provider's model catalog.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Per-end-user narrowing",
+      "what": "Per-end-user narrowing is one of the components this feature uses.",
+      "why": "A virtual key should not be able to reach every model its provider offers.",
+      "edges": [
+        8
+      ]
+    }
+  ]
+}

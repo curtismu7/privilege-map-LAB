@@ -1,0 +1,141 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "governing-agentcore-gateway",
+  "title": "Governing the AgentCore gateway: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Governing the AgentCore gateway",
+      "sub": [
+        "Privilege Map · Platform"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Tool targets",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "WAF failure mode",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "gateway",
+      "label": "Bypass routes",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "gateway",
+      "label": "Endpoint pinning",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Log-only to enforcing",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Tool targets"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses WAF failure mode"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Bypass routes"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Endpoint pinning"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Log-only to enforcing"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Tool targets",
+      "what": "Tool targets, WAF failure mode, bypass routes and endpoint pinning can be governed, and the gateway can move from log-only to enforcing.",
+      "why": "The release slide describes this as the gateway itself being an object of policy.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "WAF failure mode",
+      "what": "Tool targets, WAF failure mode, bypass routes and endpoint pinning can be governed, and the gateway can move from log-only to enforcing.",
+      "why": "The release slide describes this as the gateway itself being an object of policy.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Bypass routes",
+      "what": "Tool targets, WAF failure mode, bypass routes and endpoint pinning can be governed, and the gateway can move from log-only to enforcing.",
+      "why": "The release slide describes this as the gateway itself being an object of policy.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Endpoint pinning",
+      "what": "Tool targets, WAF failure mode, bypass routes and endpoint pinning can be governed, and the gateway can move from log-only to enforcing.",
+      "why": "The release slide describes this as the gateway itself being an object of policy.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Log-only to enforcing",
+      "what": "Tool targets, WAF failure mode, bypass routes and endpoint pinning can be governed, and the gateway can move from log-only to enforcing.",
+      "why": "The release slide describes this as the gateway itself being an object of policy.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

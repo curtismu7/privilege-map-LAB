@@ -2,11 +2,11 @@
   "schema": "demo-content-pack/1",
   "id": "privilege-map",
   "title": "Privilege Map LAB",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "source": {
     "repo": "ping-sandbox/privilege-map-LAB",
-    "commit": "0519e07",
-    "generated": "2026-10-31"
+    "commit": "f53c9a3",
+    "generated": "2026-11-01"
   },
   "demo": {
     "id": "privilege-map",
@@ -80,13 +80,22 @@
       "use": "Product documentation behind the feature cards. Each card lists what was not verified.",
       "status": "not-read",
       "checked": "2026-10-31"
+    },
+    {
+      "id": "ping-deck",
+      "title": "Ping Identity for Digital Workforce, H2 2026 (internal deck)",
+      "url": "https://www.pingidentity.com/",
+      "kind": "Internal deck, confidential",
+      "use": "Source of 33 of the 41 feature cards (20 new features and 13 updates). Internal and confidential, not public; the url is the public home page because the deck has none. Stated by the deck, not tested on our tenant.",
+      "status": "read",
+      "checked": "2026-11-01"
     }
   ],
   "cards": [
     {
       "id": "map",
       "label": "The identity map and the gateway checks",
-      "description": "Two ReactFlow diagrams: what an agent key is made of, and the five checks on every call. Drag, Simulate, Reset.",
+      "description": "Two ReactFlow diagrams: what an agent key is made of, and the five checks on every call. Drag, Simulate, Reset. Each of the 41 features also has its own diagram, opened from its page.",
       "group": "try-it",
       "terms": [
         "nhi",
@@ -101,7 +110,7 @@
     {
       "id": "identity",
       "label": "Identity features",
-      "description": "Agent Registry, the desktop device-bound identity and CIMD client documents.",
+      "description": "Agent Registry, Privilege Agent (desktop device-bound identity), CIMD client documents, Federated Identity, Self-Hosted Agents, On-behalf-of, ID-JAG, Agent Governance.",
       "group": "concept",
       "terms": [
         "custodian",
@@ -115,7 +124,7 @@
     {
       "id": "llm",
       "label": "LLM features",
-      "description": "Virtual keys, model allowlists, provider routes and attributable denial.",
+      "description": "Virtual keys, Model allowlists, LLM provider routes and wire shapes, Attributable denial.",
       "group": "concept",
       "terms": [
         "scope",
@@ -129,7 +138,7 @@
     {
       "id": "mcp",
       "label": "MCP and A2A features",
-      "description": "Policy union, tool-call policy, discovery gating, aggregate apps and A2A through the gateway.",
+      "description": "Policy union model, MCP tool-call policy, MCP discovery gating, Aggregate apps, Agent-to-agent (A2A) through the gateway, A2A guardrails, Backend auth modes, MCP Gateway, OpenAPI to MCP, MCP Catalog.",
       "group": "concept",
       "terms": [
         "grant",
@@ -143,7 +152,7 @@
     {
       "id": "oversight",
       "label": "Oversight features",
-      "description": "AI Guard, Cedar per-call policy, human approvals, the attack lab and audit evidence.",
+      "description": "Per-credential inspection policy (AI Guard), Cedar per-call policy, Human-in-the-loop approvals, Attack Lab, Audit evidence, Data protection, Intent, Purpose and Behaviour, Coding Agents, Prompt Logging, Agent Insights, OWASP Agentic AI Top 10.",
       "group": "concept",
       "terms": [
         "ai-guard"
@@ -156,11 +165,421 @@
     {
       "id": "platform",
       "label": "Platform features",
-      "description": "Secrets Hub connections and sensor enforcement on host workloads.",
+      "description": "Secrets Hub, Sensor enforcement, Governing the AgentCore gateway, Private-network discovery, User Vault, Personal Agent Discovery & Enforcement, AI Platform Agents, SaaS Access Management.",
       "group": "reference",
       "action": {
         "type": "route",
         "href": "/#/platform"
+      }
+    },
+    {
+      "id": "feature-agent-registry",
+      "label": "Agent Registry",
+      "description": "Identity. Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=agent-registry"
+      }
+    },
+    {
+      "id": "feature-privilege-agent-desktop-device-bound-identity",
+      "label": "Privilege Agent (desktop device-bound identity)",
+      "description": "Identity. Privilege is designed to refuse access from a machine that is not a paired device, so that access is tied to a specific workstation and a specific person.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=privilege-agent-desktop-device-bound-identity"
+      }
+    },
+    {
+      "id": "feature-cimd-client-documents",
+      "label": "CIMD client documents",
+      "description": "Identity. Internal and confidential. Each AI client must be known to the authorization server before it can ask a user to sign in.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=cimd-client-documents"
+      }
+    },
+    {
+      "id": "feature-federated-identity",
+      "label": "Federated Identity",
+      "description": "Identity. GA. Internal and confidential. Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=federated-identity"
+      }
+    },
+    {
+      "id": "feature-self-hosted-agents",
+      "label": "Self-Hosted Agents",
+      "description": "Identity. GA. Internal and confidential. Platform components are implicitly trusted infrastructure.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=self-hosted-agents"
+      }
+    },
+    {
+      "id": "feature-on-behalf-of",
+      "label": "On-behalf-of",
+      "description": "Identity. New in 2026-11-02 release (GA). Internal and confidential. The deck gives no separate problem statement for this row.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=on-behalf-of"
+      }
+    },
+    {
+      "id": "feature-id-jag",
+      "label": "ID-JAG",
+      "description": "Identity. New in 2026-11-02 release (GA). Internal and confidential. The deck gives no problem statement for this row.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=id-jag"
+      }
+    },
+    {
+      "id": "feature-agent-governance",
+      "label": "Agent Governance",
+      "description": "Identity. Part GA, part roadmap. Internal and confidential. There is no understanding of where AI agents can reach.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/identity?feature=agent-governance"
+      }
+    },
+    {
+      "id": "feature-virtual-keys",
+      "label": "Virtual keys",
+      "description": "LLM. Internal and confidential. Applications and agents should never hold a model provider's API key.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/llm?feature=virtual-keys"
+      }
+    },
+    {
+      "id": "feature-model-allowlists",
+      "label": "Model allowlists",
+      "description": "LLM. Internal and confidential. A virtual key should not be able to reach every model its provider offers.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/llm?feature=model-allowlists"
+      }
+    },
+    {
+      "id": "feature-llm-provider-routes-and-wire-shapes",
+      "label": "LLM provider routes and wire shapes",
+      "description": "LLM. Internal and confidential. Applications built for different provider APIs should not each need their own governance.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/llm?feature=llm-provider-routes-and-wire-shapes"
+      }
+    },
+    {
+      "id": "feature-attributable-denial",
+      "label": "Attributable denial",
+      "description": "LLM. When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/llm?feature=attributable-denial"
+      }
+    },
+    {
+      "id": "feature-policy-union-model",
+      "label": "Policy union model",
+      "description": "MCP and A2A. Admins need to know why a change to one policy may not remove access.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=policy-union-model"
+      }
+    },
+    {
+      "id": "feature-mcp-tool-call-inspection",
+      "label": "MCP tool-call policy",
+      "description": "MCP and A2A. Internal and confidential. Customers need to stop an agent's dangerous tool actions even when a tool server is poisoned.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=mcp-tool-call-inspection"
+      }
+    },
+    {
+      "id": "feature-mcp-discovery-gating",
+      "label": "MCP discovery gating",
+      "description": "MCP and A2A. Internal and confidential. An agent that can see every tool on a server learns what exists and may try to reach tools it should not use.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=mcp-discovery-gating"
+      }
+    },
+    {
+      "id": "feature-aggregate-apps",
+      "label": "Aggregate apps",
+      "description": "MCP and A2A. Internal and confidential. A client that can hold only a few MCP connections, or an operator who wants one address and one central decision about which tools an agent gets, needs many MCP servers behind a single endpoint.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=aggregate-apps"
+      }
+    },
+    {
+      "id": "feature-agent-to-agent-a2a-through-the-gateway",
+      "label": "Agent-to-agent (A2A) through the gateway",
+      "description": "MCP and A2A. Internal and confidential. Agents that call other agents need the same sign-in, policy and logging as tool traffic, so agent-to-agent calls are not an ungoverned side channel.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=agent-to-agent-a2a-through-the-gateway"
+      }
+    },
+    {
+      "id": "feature-a2a-guardrails",
+      "label": "A2A guardrails",
+      "description": "MCP and A2A. An agent that receives text from another agent can be hit with prompt injection, impersonation, jailbreak or data-exfiltration requests.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=a2a-guardrails"
+      }
+    },
+    {
+      "id": "feature-backend-auth-modes",
+      "label": "Backend auth modes",
+      "description": "MCP and A2A. Internal and confidential. Backends need a credential the gateway can send, but the caller's own gateway key must never reach the backend.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=backend-auth-modes"
+      }
+    },
+    {
+      "id": "feature-mcp-gateway",
+      "label": "MCP Gateway",
+      "description": "MCP and A2A. GA. Internal and confidential. An MCP server typically authenticates with one shared token and exposes every tool to every caller, so there is no attribution and no per-tool control.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=mcp-gateway"
+      }
+    },
+    {
+      "id": "feature-openapi-to-mcp",
+      "label": "OpenAPI to MCP",
+      "description": "MCP and A2A. GA. Internal and confidential. Agents speak MCP but enterprise capability lives in REST APIs, so every exposure demands a development project.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=openapi-to-mcp"
+      }
+    },
+    {
+      "id": "feature-mcp-catalog",
+      "label": "MCP Catalog",
+      "description": "MCP and A2A. GA. Internal and confidential. Servers found on the open internet are an unvetted supply-chain decision, and security review has nothing to base approval on.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/mcp?feature=mcp-catalog"
+      }
+    },
+    {
+      "id": "feature-per-credential-inspection-policy-aiguard",
+      "label": "Per-credential inspection policy (AI Guard)",
+      "description": "Oversight. Internal and confidential. A single gateway-wide guardrail cannot fit every caller.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=per-credential-inspection-policy-aiguard"
+      }
+    },
+    {
+      "id": "feature-cedar-per-call-policy",
+      "label": "Cedar per-call policy",
+      "description": "Oversight. Internal and confidential. The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=cedar-per-call-policy"
+      }
+    },
+    {
+      "id": "feature-human-in-the-loop-approvals",
+      "label": "Human-in-the-loop approvals",
+      "description": "Oversight. Internal and confidential. Some agent actions are too high-risk to let an agent finish alone.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=human-in-the-loop-approvals"
+      }
+    },
+    {
+      "id": "feature-attack-lab",
+      "label": "Attack Lab",
+      "description": "Oversight. A customer needs to see attacks run against the demo agent and to know which component stopped each one.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=attack-lab"
+      }
+    },
+    {
+      "id": "feature-audit-evidence",
+      "label": "Audit evidence",
+      "description": "Oversight. At audit close the customer needs evidence of what the gateway decided.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=audit-evidence"
+      }
+    },
+    {
+      "id": "feature-data-protection",
+      "label": "Data protection",
+      "description": "Oversight. New in 2026-11-02 release. Internal and confidential. The release slide describes this as expanded detection of personal data and of secrets and credentials in LLM, MCP, A2A and coding-agent traffic.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=data-protection"
+      }
+    },
+    {
+      "id": "feature-intent-purpose-and-behaviour",
+      "label": "Intent, Purpose and Behaviour",
+      "description": "Oversight. New in 2026-11-02 release (GA). Internal and confidential. A tool name and its arguments say what was asked for, not what it was for, whether this agent was ever meant to do it, or whether it normally behaves this way.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=intent-purpose-and-behaviour"
+      }
+    },
+    {
+      "id": "feature-coding-agents",
+      "label": "Coding Agents",
+      "description": "Oversight. New in 2026-11-02 release (GA). Internal and confidential. A coding agent reads the repository, takes instructions from files in it, calls internal tools and holds the developer's credentials, yet its traffic bypasses every gateway control, so prompts and source leave uninspected.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=coding-agents"
+      }
+    },
+    {
+      "id": "feature-prompt-logging",
+      "label": "Prompt Logging",
+      "description": "Oversight. New in 2026-11-02 release (GA). Internal and confidential. Prompts and responses are exactly the content an investigation needs, and exactly the content a vendor should not be able to read.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=prompt-logging"
+      }
+    },
+    {
+      "id": "feature-agent-insights",
+      "label": "Agent Insights",
+      "description": "Oversight. GA. Internal and confidential. Enforcement is only half of an investigation: decisions and detections scatter across one record set per surface, so \"what happened\" takes days to answer and incidents stay open.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=agent-insights"
+      }
+    },
+    {
+      "id": "feature-owasp-agentic-ai-top-10",
+      "label": "OWASP Agentic AI Top 10",
+      "description": "Oversight. GA. Internal and confidential. Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/oversight?feature=owasp-agentic-ai-top-10"
+      }
+    },
+    {
+      "id": "feature-secrets-hub",
+      "label": "Secrets Hub",
+      "description": "Platform. Internal and confidential. Customers already keep secrets in an external store, here Google Cloud Secret Manager.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=secrets-hub"
+      }
+    },
+    {
+      "id": "feature-sensor-enforcement",
+      "label": "Sensor enforcement",
+      "description": "Platform. Detecting AI workloads on a host is not enough when an unapproved program must stop running.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=sensor-enforcement"
+      }
+    },
+    {
+      "id": "feature-governing-agentcore-gateway",
+      "label": "Governing the AgentCore gateway",
+      "description": "Platform. New in 2026-11-02 release. Internal and confidential. The release slide describes this as the gateway itself being an object of policy.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=governing-agentcore-gateway"
+      }
+    },
+    {
+      "id": "feature-private-network-discovery",
+      "label": "Private-network discovery",
+      "description": "Platform. New in 2026-11-02 release. Internal and confidential. The release slide describes this as a workload connector and scanner that reach agents inside your own network and cloud accounts.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=private-network-discovery"
+      }
+    },
+    {
+      "id": "feature-user-vault",
+      "label": "User Vault",
+      "description": "Platform. GA. Internal and confidential. Shared service accounts break attribution, because every action looks the same in the target system's logs.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=user-vault"
+      }
+    },
+    {
+      "id": "feature-personal-agent-discovery-and-enforcement",
+      "label": "Personal Agent Discovery & Enforcement",
+      "description": "Platform. GA. Internal and confidential. Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=personal-agent-discovery-and-enforcement"
+      }
+    },
+    {
+      "id": "feature-ai-platform-agents",
+      "label": "AI Platform Agents",
+      "description": "Platform. Enhanced in 2026-11-02 release (GA). Internal and confidential. Agents created in cloud consoles sit outside identity processes: nobody inventoried them and nobody knows what they reach.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=ai-platform-agents"
+      }
+    },
+    {
+      "id": "feature-saas-access-management",
+      "label": "SaaS Access Management",
+      "description": "Platform. New in 2026-11-02 release (GA). Internal and confidential. Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "group": "concept",
+      "action": {
+        "type": "route",
+        "href": "/#/platform?feature=saas-access-management"
       }
     },
     {
@@ -213,6 +632,211 @@
       "id": "nhi-checks",
       "label": "What the gateway checks on each call",
       "href": "/#/map?diagram=nhi-checks"
+    },
+    {
+      "id": "agent-registry",
+      "label": "Agent Registry: what it uses",
+      "href": "/#/diagram/agent-registry"
+    },
+    {
+      "id": "privilege-agent-desktop-device-bound-identity",
+      "label": "Privilege Agent (desktop device-bound identity): what it uses",
+      "href": "/#/diagram/privilege-agent-desktop-device-bound-identity"
+    },
+    {
+      "id": "cimd-client-documents",
+      "label": "CIMD client documents: what it uses",
+      "href": "/#/diagram/cimd-client-documents"
+    },
+    {
+      "id": "federated-identity",
+      "label": "Federated Identity: what it uses",
+      "href": "/#/diagram/federated-identity"
+    },
+    {
+      "id": "self-hosted-agents",
+      "label": "Self-Hosted Agents: what it uses",
+      "href": "/#/diagram/self-hosted-agents"
+    },
+    {
+      "id": "on-behalf-of",
+      "label": "On-behalf-of: what it uses",
+      "href": "/#/diagram/on-behalf-of"
+    },
+    {
+      "id": "id-jag",
+      "label": "ID-JAG: what it uses",
+      "href": "/#/diagram/id-jag"
+    },
+    {
+      "id": "agent-governance",
+      "label": "Agent Governance: what it uses",
+      "href": "/#/diagram/agent-governance"
+    },
+    {
+      "id": "virtual-keys",
+      "label": "Virtual keys: what it uses",
+      "href": "/#/diagram/virtual-keys"
+    },
+    {
+      "id": "model-allowlists",
+      "label": "Model allowlists: what it uses",
+      "href": "/#/diagram/model-allowlists"
+    },
+    {
+      "id": "llm-provider-routes-and-wire-shapes",
+      "label": "LLM provider routes and wire shapes: what it uses",
+      "href": "/#/diagram/llm-provider-routes-and-wire-shapes"
+    },
+    {
+      "id": "attributable-denial",
+      "label": "Attributable denial: what it uses",
+      "href": "/#/diagram/attributable-denial"
+    },
+    {
+      "id": "policy-union-model",
+      "label": "Policy union model: what it uses",
+      "href": "/#/diagram/policy-union-model"
+    },
+    {
+      "id": "mcp-tool-call-inspection",
+      "label": "MCP tool-call policy: what it uses",
+      "href": "/#/diagram/mcp-tool-call-inspection"
+    },
+    {
+      "id": "mcp-discovery-gating",
+      "label": "MCP discovery gating: what it uses",
+      "href": "/#/diagram/mcp-discovery-gating"
+    },
+    {
+      "id": "aggregate-apps",
+      "label": "Aggregate apps: what it uses",
+      "href": "/#/diagram/aggregate-apps"
+    },
+    {
+      "id": "agent-to-agent-a2a-through-the-gateway",
+      "label": "Agent-to-agent (A2A) through the gateway: what it uses",
+      "href": "/#/diagram/agent-to-agent-a2a-through-the-gateway"
+    },
+    {
+      "id": "a2a-guardrails",
+      "label": "A2A guardrails: what it uses",
+      "href": "/#/diagram/a2a-guardrails"
+    },
+    {
+      "id": "backend-auth-modes",
+      "label": "Backend auth modes: what it uses",
+      "href": "/#/diagram/backend-auth-modes"
+    },
+    {
+      "id": "mcp-gateway",
+      "label": "MCP Gateway: what it uses",
+      "href": "/#/diagram/mcp-gateway"
+    },
+    {
+      "id": "openapi-to-mcp",
+      "label": "OpenAPI to MCP: what it uses",
+      "href": "/#/diagram/openapi-to-mcp"
+    },
+    {
+      "id": "mcp-catalog",
+      "label": "MCP Catalog: what it uses",
+      "href": "/#/diagram/mcp-catalog"
+    },
+    {
+      "id": "per-credential-inspection-policy-aiguard",
+      "label": "Per-credential inspection policy (AI Guard): what it uses",
+      "href": "/#/diagram/per-credential-inspection-policy-aiguard"
+    },
+    {
+      "id": "cedar-per-call-policy",
+      "label": "Cedar per-call policy: what it uses",
+      "href": "/#/diagram/cedar-per-call-policy"
+    },
+    {
+      "id": "human-in-the-loop-approvals",
+      "label": "Human-in-the-loop approvals: what it uses",
+      "href": "/#/diagram/human-in-the-loop-approvals"
+    },
+    {
+      "id": "attack-lab",
+      "label": "Attack Lab: what it uses",
+      "href": "/#/diagram/attack-lab"
+    },
+    {
+      "id": "audit-evidence",
+      "label": "Audit evidence: what it uses",
+      "href": "/#/diagram/audit-evidence"
+    },
+    {
+      "id": "data-protection",
+      "label": "Data protection: what it uses",
+      "href": "/#/diagram/data-protection"
+    },
+    {
+      "id": "intent-purpose-and-behaviour",
+      "label": "Intent, Purpose and Behaviour: what it uses",
+      "href": "/#/diagram/intent-purpose-and-behaviour"
+    },
+    {
+      "id": "coding-agents",
+      "label": "Coding Agents: what it uses",
+      "href": "/#/diagram/coding-agents"
+    },
+    {
+      "id": "prompt-logging",
+      "label": "Prompt Logging: what it uses",
+      "href": "/#/diagram/prompt-logging"
+    },
+    {
+      "id": "agent-insights",
+      "label": "Agent Insights: what it uses",
+      "href": "/#/diagram/agent-insights"
+    },
+    {
+      "id": "owasp-agentic-ai-top-10",
+      "label": "OWASP Agentic AI Top 10: what it uses",
+      "href": "/#/diagram/owasp-agentic-ai-top-10"
+    },
+    {
+      "id": "secrets-hub",
+      "label": "Secrets Hub: what it uses",
+      "href": "/#/diagram/secrets-hub"
+    },
+    {
+      "id": "sensor-enforcement",
+      "label": "Sensor enforcement: what it uses",
+      "href": "/#/diagram/sensor-enforcement"
+    },
+    {
+      "id": "governing-agentcore-gateway",
+      "label": "Governing the AgentCore gateway: what it uses",
+      "href": "/#/diagram/governing-agentcore-gateway"
+    },
+    {
+      "id": "private-network-discovery",
+      "label": "Private-network discovery: what it uses",
+      "href": "/#/diagram/private-network-discovery"
+    },
+    {
+      "id": "user-vault",
+      "label": "User Vault: what it uses",
+      "href": "/#/diagram/user-vault"
+    },
+    {
+      "id": "personal-agent-discovery-and-enforcement",
+      "label": "Personal Agent Discovery & Enforcement: what it uses",
+      "href": "/#/diagram/personal-agent-discovery-and-enforcement"
+    },
+    {
+      "id": "ai-platform-agents",
+      "label": "AI Platform Agents: what it uses",
+      "href": "/#/diagram/ai-platform-agents"
+    },
+    {
+      "id": "saas-access-management",
+      "label": "SaaS Access Management: what it uses",
+      "href": "/#/diagram/saas-access-management"
     }
   ],
   "stories": [

@@ -1,0 +1,145 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "privilege-agent-desktop-device-bound-identity",
+  "title": "Privilege Agent (desktop device-bound identity): what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Privilege Agent (desktop device-bound identit…",
+      "sub": [
+        "Privilege Map · Identity"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "PingOne Privilege desktop app",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "console",
+      "label": "Onboarding link generated in the PingOne admi…",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "console",
+      "label": "Local console served by the agent",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Privilege cloud frontend and its device-ident…",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "PingOne Privilege administrator role",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses PingOne Privilege desktop app"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Onboarding link generated in th…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Local console served by the age…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Privilege cloud frontend and it…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses PingOne Privilege administrator…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "PingOne Privilege desktop app",
+      "what": "The PingOne Privilege desktop app (macOS) pairs one user to one workstation.",
+      "why": "Privilege is designed to refuse access from a machine that is not a paired device, so that access is tied to a specific workstation and a specific person.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Onboarding link generated in the PingOne admi…",
+      "what": "A user with the Privilege services permission generates a one-time onboarding link, documented as valid for about 2 hours; opening it on the Mac and choosing Launch Agent completes pairing.",
+      "why": "Privilege is designed to refuse access from a machine that is not a paired device, so that access is tied to a specific workstation and a specific person.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Local console served by the agent",
+      "what": "Opening Console from the menu-bar icon opens a local console served by the agent.",
+      "why": "Privilege is designed to refuse access from a machine that is not a paired device, so that access is tied to a specific workstation and a specific person.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Privilege cloud frontend and its device-ident…",
+      "what": "On the one tenant tested, the cloud frontend returned 403 to a request without the device identity, which is the device-bound gate measured directly.",
+      "why": "Privilege is designed to refuse access from a machine that is not a paired device, so that access is tied to a specific workstation and a specific person.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "PingOne Privilege administrator role",
+      "what": "The PingOne Privilege desktop app (macOS) pairs one user to one workstation.",
+      "why": "Privilege is designed to refuse access from a machine that is not a paired device, so that access is tied to a specific workstation and a specific person.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

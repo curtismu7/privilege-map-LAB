@@ -1,0 +1,162 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "private-network-discovery",
+  "title": "Private-network discovery: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Private-network discovery",
+      "sub": [
+        "Privilege Map · Platform"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Workload connector",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Scanner",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Bedrock",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "AgentCore",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Lex",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "gateway",
+      "label": "Outbound polling via proxy",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Workload connector"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Scanner"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Bedrock"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses AgentCore"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Lex"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Outbound polling via proxy"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Workload connector",
+      "what": "A workload connector and scanner reach agents inside your own network and cloud accounts, including Bedrock, AgentCore and Lex.",
+      "why": "The release slide describes this as a workload connector and scanner that reach agents inside your own network and cloud accounts.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Scanner",
+      "what": "A workload connector and scanner reach agents inside your own network and cloud accounts, including Bedrock, AgentCore and Lex.",
+      "why": "The release slide describes this as a workload connector and scanner that reach agents inside your own network and cloud accounts.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Bedrock",
+      "what": "A workload connector and scanner reach agents inside your own network and cloud accounts, including Bedrock, AgentCore and Lex.",
+      "why": "The release slide describes this as a workload connector and scanner that reach agents inside your own network and cloud accounts.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "AgentCore",
+      "what": "A workload connector and scanner reach agents inside your own network and cloud accounts, including Bedrock, AgentCore and Lex.",
+      "why": "The release slide describes this as a workload connector and scanner that reach agents inside your own network and cloud accounts.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Lex",
+      "what": "Lex is one of the components this feature uses.",
+      "why": "The release slide describes this as a workload connector and scanner that reach agents inside your own network and cloud accounts.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Outbound polling via proxy",
+      "what": "They poll outbound through your proxy.",
+      "why": "The release slide describes this as a workload connector and scanner that reach agents inside your own network and cloud accounts.",
+      "edges": [
+        5
+      ]
+    }
+  ]
+}

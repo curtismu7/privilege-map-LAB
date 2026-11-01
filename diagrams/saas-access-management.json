@@ -1,0 +1,271 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "saas-access-management",
+  "title": "SaaS Access Management: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "SaaS Access Management",
+      "sub": [
+        "Privilege Map · Platform"
+      ],
+      "x": 330,
+      "y": 375
+    },
+    {
+      "id": "c0",
+      "group": "console",
+      "label": "GitHub",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "GitLab",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Salesforce",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Snowflake",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Databricks",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Google Workspace",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "policy",
+      "label": "Approval chains",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "policy",
+      "label": "Slack and Mattermost approval",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "Expiry reaper",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "policy",
+      "label": "Grant receipts",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    },
+    {
+      "id": "c10",
+      "group": "other",
+      "label": "Nightly drift detection",
+      "sub": [],
+      "x": 660,
+      "y": 750
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses GitHub"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses GitLab"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Salesforce"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Snowflake"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Databricks"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Google Workspace"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Approval chains"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Slack and Mattermost approval"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Expiry reaper"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Grant receipts"
+    },
+    {
+      "source": "feature",
+      "target": "c10",
+      "label": "uses Nightly drift detection"
+    }
+  ],
+  "steps": [
+    {
+      "title": "GitHub",
+      "what": "GitHub: repository collaborator, team membership and team-to-repository, using a personal access token, with GitHub Enterprise Server supported.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "GitLab",
+      "what": "GitLab: group and project membership with access level, using an administrator token, with self-managed supported.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Salesforce",
+      "what": "Salesforce: permission sets, permission set groups and profiles, using OAuth JWT bearer with a connected app.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Snowflake",
+      "what": "Snowflake: role membership, using key-pair authentication.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Databricks",
+      "what": "Databricks: Unity Catalog privileges, using an OAuth service principal.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Google Workspace",
+      "what": "Google Workspace: admin role assignment, using a service account with domain-wide delegation.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Approval chains",
+      "what": "Requests go through multi-level approval chains with automatic routing to the right approver, self-approval blocked and optional auto-approval by policy.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Slack and Mattermost approval",
+      "what": "Approvers act directly from Slack or Mattermost, while Microsoft Teams, Jira and ServiceNow receive notifications and tickets.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Expiry reaper",
+      "what": "Every grant carries an expiry, and a reaper reconciles continuously and removes access from the platform when the window closes, even if the original grant workflow is long finished.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Grant receipts",
+      "what": "Access to the systems engineers actually use is requestable, approved, time-bound and automatically removed, with a receipt for every grant.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        9
+      ]
+    },
+    {
+      "title": "Nightly drift detection",
+      "what": "Every grant is recorded, reference-counted where several policies overlap, and reconciled against the platform nightly to surface access granted outside Privilege.",
+      "why": "Standing access accumulates, such as a repository grant for one incident or a warehouse role for one migration.",
+      "edges": [
+        10
+      ]
+    }
+  ]
+}

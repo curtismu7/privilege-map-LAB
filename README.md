@@ -1,6 +1,6 @@
 # Privilege Map LAB
 
-ReactFlow diagrams and feature cards for PingOne Privilege's Federated Identity (formerly non-human identity, NHI) model: what an agent access key is made of, and the five checks the gateway runs on every call.
+ReactFlow diagrams and 41 feature cards for PingOne Privilege's Federated Identity (formerly non-human identity, NHI) model: what an agent access key is made of, the five checks the gateway runs on every call, and the Privilege features around them, each with its own diagram.
 
 Tier: Demo
 Repo: https://github.com/ping-sandbox/privilege-map-LAB
@@ -8,7 +8,9 @@ Catalog: none yet. No catalog row matches this app, so `docs/shelf-entry.json` h
 
 ## What is simulated
 
-**Mock mode (default, and the only mode).** Everything runs offline inside this app. The diagrams, 21 feature cards, stories and talk track are content drawn from Ping documentation and our own tests; there is no Privilege gateway, no tenant, no token and no sign-in behind them. Cards list what was not verified. The banner on every page says this, including in presenter mode.
+**Mock mode (default, and the only mode).** Everything runs offline inside this app. The diagrams, 41 feature cards, stories and talk track are content drawn from Ping documentation, an internal Ping deck and our own tests; there is no Privilege gateway, no tenant, no token and no sign-in behind them. Cards list what was not verified; a claim we did not test on our tenant stays UNVERIFIED. The banner on every page says this, including in presenter mode.
+
+**Internal and confidential content.** 33 of the 41 features (20 new features and 13 updates) use text from an internal Ping deck ("Identity for Digital Workforce", H2 2026), which includes unreleased and roadmap items. Those cards carry an "Internal, confidential" badge and a status badge (GA, New in 2026-11-02 release, Roadmap, and so on), and their source line and diagram say so. They are stated by the deck and not tested on our tenant. This repo is Internal to the `ping-sandbox` org; do not copy those cards into a public repo or share them outside Ping. A test fails if a deck-sourced card loses its marking.
 
 **Live mode.** This app has none. It has no tenant or provider to connect to. The Live button is shown on every page so the mode is always visible, but it is disabled, and the server refuses `MODE=live` and a live request.
 
@@ -24,7 +26,7 @@ npm run build
 npm start
 ```
 
-Open http://127.0.0.1:5300 . With no setup at all, mock mode shows every page: the Map (two diagrams), the five feature pages, Stories, and Presenter mode.
+Open http://127.0.0.1:5300 . With no setup at all, mock mode shows every page: the Map (two diagrams), the five feature pages (41 features), a diagram for each feature, Stories, and Presenter mode.
 
 For development, `npm run dev` serves the same page on the same port with hot reload.
 
@@ -63,7 +65,7 @@ The Live button is disabled and its tooltip says why. `POST /api/mode` with `liv
 
 **Stories and customer config.** Stories in `content/stories/` use `{{cast.<role>}}` tokens, resolved from `content/cast.json`; an undefined token fails the tests and the server's health. Copy `customer.config.example.json` to `customer.config.json` to set the product name, tagline, footer and to rename cast roles (`vocabulary`) for a room. No real customer name is shipped.
 
-**Diagrams.** `diagrams/nhi-entity.json` and `diagrams/nhi-checks.json` are `diagram-studio/1` data, the format Diagram Studio edits and exports. The page builds the ReactFlow graph from the data: drag any box, Simulate walks the steps, Prev and Next step by hand, the speed control sets the pace, and Reset stops the walk and puts every box back.
+**Diagrams.** `diagrams/nhi-entity.json` and `diagrams/nhi-checks.json` (the Map) and one `diagrams/<feature id>.json` per feature (41) are `diagram-studio/1` data, the format Diagram Studio edits and exports. Each feature page has an "Open the diagram in a new tab" link (`#/diagram/<feature id>`): one box for the feature and one for each component it lists, with steps that reuse the feature's own "how it works" sentences. The feature files are generated from `src/data/features.json` by `npm run diagrams`; a test fails if one drifts. The page builds the ReactFlow graph from the data: drag any box, Simulate walks the steps, Prev and Next step by hand, the speed control sets the pace, and Reset stops the walk and puts every box back.
 
 ## Health, doctor and reset
 
@@ -88,7 +90,7 @@ This publishes 127.0.0.1:5301 only, runs as a non-root user on a read-only file 
 npm test
 ```
 
-A good run on Node 26 is **89 tests, 89 pass, 0 fail**. The suite builds the page first if `dist/` is missing and starts real test servers on ports 4770-4779 only.
+A good run on Node 26 is **468 tests, 468 pass, 0 fail**. The suite builds the page first if `dist/` is missing and starts real test servers on ports 4770-4779 only.
 
 ## Troubleshooting
 

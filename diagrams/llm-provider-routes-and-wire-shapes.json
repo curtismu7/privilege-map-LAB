@@ -1,0 +1,238 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "llm-provider-routes-and-wire-shapes",
+  "title": "LLM provider routes and wire shapes: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "LLM provider routes and wire shapes",
+      "sub": [
+        "Privilege Map · LLM"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway model routes",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Virtual keys",
+      "sub": [
+        "one per provider, each with its",
+        "own settings"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "gateway",
+      "label": "Anthropic route",
+      "sub": [
+        "native Messages API"
+      ],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "gateway",
+      "label": "OpenAI route",
+      "sub": [
+        "chat completions"
+      ],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "gateway",
+      "label": "Custom OpenAI-compatible route",
+      "sub": [
+        "llama.cpp"
+      ],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "console",
+      "label": "Demo chat console with a raw request tab",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "gateway",
+      "label": "Provider API keys held in Privilege and injec…",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "gateway",
+      "label": "Eleven providers, twelve routes",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "gateway",
+      "label": "OpenAI-compatible endpoint support",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway model routes"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Virtual keys"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Anthropic route"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses OpenAI route"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Custom OpenAI-compatible route"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Demo chat console with a raw re…"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Provider API keys held in Privi…"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Eleven providers, twelve routes"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses OpenAI-compatible endpoint supp…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway model routes",
+      "what": "On the OpenAI and Anthropic routes, the gateway's own refusals (401, 403, 400, 429) are described as short JSON bodies that name the cause; only the guardrail block body was reproduced across providers, and provider errors come back in the provider's own style.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Virtual keys",
+      "what": "The gateway exposes one route per provider.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Anthropic route",
+      "what": "Anthropic uses the native Messages API, which needs a version header and takes the system prompt as a top-level field.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "OpenAI route",
+      "what": "OpenAI uses chat completions.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Custom OpenAI-compatible route",
+      "what": "A custom OpenAI-compatible route fronts a local llama.cpp server.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Demo chat console with a raw request tab",
+      "what": "The demo chat console offers lanes for these providers and a raw request tab that shows the untouched request body.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Provider API keys held in Privilege and injec…",
+      "what": "The gateway exposes one route per provider.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Eleven providers, twelve routes",
+      "what": "The Ping deck (LLM Gateway) counts eleven providers across twelve routes that the deck describes as verified, with Bedrock runtime and Mantle as separate routes: OpenAI, Anthropic, Google Gemini, Azure OpenAI, Amazon Bedrock, xAI, Groq, Mistral, DeepSeek, Together and OpenRouter.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "OpenAI-compatible endpoint support",
+      "what": "Any OpenAI-compatible endpoint can front a self-hosted or private model.",
+      "why": "Applications built for different provider APIs should not each need their own governance.",
+      "edges": [
+        8
+      ]
+    }
+  ]
+}

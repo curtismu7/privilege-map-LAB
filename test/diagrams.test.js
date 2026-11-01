@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { DEMO_DIAGRAMS, DIAGRAM_DIR, loadDiagramByName, listDiagrams, validateDiagram } from '../lib/diagrams.js';
+import { DEMO_DIAGRAMS, MAP_DIAGRAMS, FEATURE_DIAGRAMS, DIAGRAM_DIR, loadDiagramByName, listDiagrams, validateDiagram } from '../lib/diagrams.js';
 
 for (const name of DEMO_DIAGRAMS) {
   const c = loadDiagramByName(name);
@@ -51,7 +51,9 @@ for (const name of DEMO_DIAGRAMS) {
 test('only the app\'s named diagrams are served, and a path is not a name', () => {
   assert.throws(() => loadDiagramByName('../package'), /not used by this app/);
   assert.throws(() => loadDiagramByName('auth-code-pkce'), /not used by this app/);
-  assert.equal(listDiagrams().length, 2);
+  assert.equal(listDiagrams().length, 2 + 41);
+  assert.deepEqual(listDiagrams().filter((d) => d.kind === 'map').map((d) => d.id), MAP_DIAGRAMS);
+  assert.equal(FEATURE_DIAGRAMS.length, 41);
   assert.ok(listDiagrams().every((d) => d.available));
 });
 
@@ -65,7 +67,7 @@ test('validation rejects an arrow to a missing box, a step to a missing arrow an
 
 // When a Diagram Studio checkout is available (DIAGRAM_STUDIO_DIR, or ~/Development/diagram-studio), the real validator must agree.
 const studioValidate = path.join(process.env.DIAGRAM_STUDIO_DIR || path.join(os.homedir(), 'Development', 'diagram-studio'), 'core', 'src', 'validate.js');
-test('the diagram-studio validator accepts both diagrams', { skip: !fs.existsSync(studioValidate) && 'no Diagram Studio checkout found' }, async () => {
+test('the diagram-studio validator accepts every diagram', { skip: !fs.existsSync(studioValidate) && 'no Diagram Studio checkout found' }, async () => {
   const { validateDiagram: studio } = await import(pathToFileURL(studioValidate).href);
   for (const name of DEMO_DIAGRAMS) {
     assert.deepEqual(studio(JSON.parse(fs.readFileSync(path.join(DIAGRAM_DIR, `${name}.json`), 'utf8'))), [], name);

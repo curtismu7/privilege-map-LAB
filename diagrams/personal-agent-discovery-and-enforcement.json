@@ -1,0 +1,248 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "personal-agent-discovery-and-enforcement",
+  "title": "Personal Agent Discovery & Enforcement: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Personal Agent Discovery & Enforcement",
+      "sub": [
+        "Privilege Map · Platform"
+      ],
+      "x": 330,
+      "y": 300
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Network behaviour analysis",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Local LLM fingerprinting",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "gateway",
+      "label": "Endpoint inventory",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "gateway",
+      "label": "MCP server discovery",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Managed browser extension",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "gateway",
+      "label": "Kubernetes eBPF sensor",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "gateway",
+      "label": "Agent artifact scanning",
+      "sub": [
+        "by the sensor"
+      ],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Detection catalogs",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "other",
+      "label": "Windows kernel driver",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "macOS network extension",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Network behaviour analysis"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Local LLM fingerprinting"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Endpoint inventory"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses MCP server discovery"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Managed browser extension"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Kubernetes eBPF sensor"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Agent artifact scanning"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Detection catalogs"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Windows kernel driver"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses macOS network extension"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Network behaviour analysis",
+      "what": "Network behaviour analysis is process-aware: it identifies AI service use by packet sizing, streaming patterns and TLS characteristics, not just destination, and attributes traffic to the owning process, so it can recognise a tool it has never seen.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Local LLM fingerprinting",
+      "what": "Local LLM fingerprinting actively discovers listening model servers and identifies them against 50 runtime signatures (Ollama, LM Studio, vLLM, llama.cpp and more), then correlates which local process is calling them, without touching the network.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Endpoint inventory",
+      "what": "Endpoint inventory covers installed AI applications, IDE assistant extensions, running AI processes and AI provider API keys present in process environments.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "MCP server discovery",
+      "what": "MCP server discovery works three ways at once: configuration files (Claude, Cursor, VS Code, Windsurf), running server processes, and a localhost port sweep confirming each with a real MCP handshake, and undeclared servers surface explicitly.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Managed browser extension",
+      "what": "A managed browser extension covers AI site usage, in-page AI API calls, AI browser extensions, workspace-embedded AI (Copilot, Gemini, Slack AI), OAuth consent grants to AI applications, and on-device models.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Kubernetes eBPF sensor",
+      "what": "In Kubernetes, an eBPF sensor, one per node, discovers AI agents, MCP servers and self-hosted model servers inside pods, attributes every finding to the owning pod, and in audit mode also reports unauthorized process execution.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Agent artifact scanning",
+      "what": "Agent artifact scanning: the sensor reads the files that configure how an agent behaves (skills, plugins, instruction files and hooks), records each with its path and a content hash, and scans contents for unicode smuggling, obfuscation, exfiltration and injection.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Detection catalogs",
+      "what": "Detection is driven by maintained catalogs: 78 AI services across 184 domains, 107 AI process signatures, 50 local-model runtime probes and 76 browser AI destinations, and each endpoint finding carries a confidence score and the evidence behind it.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Windows kernel driver",
+      "what": "Enforcement differs by surface: on Windows a kernel driver denies a blocked image at process creation, on macOS a system network extension is used, in browsers denied AI destinations are blocked, and in Kubernetes unauthorized process execution is terminated in kernel context.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "macOS network extension",
+      "what": "Enforcement differs by surface: on Windows a kernel driver denies a blocked image at process creation, on macOS a system network extension is used, in browsers denied AI destinations are blocked, and in Kubernetes unauthorized process execution is terminated in kernel context.",
+      "why": "Employees adopt AI faster than security approves it, and unsanctioned use, including fully offline models, is invisible.",
+      "edges": [
+        9
+      ]
+    }
+  ]
+}

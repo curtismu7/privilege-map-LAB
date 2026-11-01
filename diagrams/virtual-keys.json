@@ -1,0 +1,343 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "virtual-keys",
+  "title": "Virtual keys: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Virtual keys",
+      "sub": [
+        "Privilege Map · LLM"
+      ],
+      "x": 330,
+      "y": 450
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway model routes",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "console",
+      "label": "Virtual key",
+      "sub": [
+        "LLM-scoped agent key in the Agent",
+        "Registry"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "gateway",
+      "label": "Real provider key held in Privilege and injec…",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Allowed-models list",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "policy",
+      "label": "Request rate, token rate and budget limits",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "policy",
+      "label": "Per-key AI Guard guardrail",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "gateway",
+      "label": "OpenAI route",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "gateway",
+      "label": "Anthropic route",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "gateway",
+      "label": "OpenAI-compatible custom route",
+      "sub": [
+        "llama.cpp"
+      ],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    },
+    {
+      "id": "c10",
+      "group": "policy",
+      "label": "Cluster-wide spend limits",
+      "sub": [],
+      "x": 660,
+      "y": 750
+    },
+    {
+      "id": "c11",
+      "group": "other",
+      "label": "Tenant model pricing",
+      "sub": [],
+      "x": 0,
+      "y": 750
+    },
+    {
+      "id": "c12",
+      "group": "other",
+      "label": "Usage accounting",
+      "sub": [],
+      "x": 660,
+      "y": 900
+    },
+    {
+      "id": "c13",
+      "group": "other",
+      "label": "Metadata-only usage records",
+      "sub": [],
+      "x": 0,
+      "y": 900
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway model routes"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Virtual key"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Real provider key held in Privi…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Allowed-models list"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Request rate, token rate and bu…"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Per-key AI Guard guardrail"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses OpenAI route"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Anthropic route"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses OpenAI-compatible custom route"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c10",
+      "label": "uses Cluster-wide spend limits"
+    },
+    {
+      "source": "feature",
+      "target": "c11",
+      "label": "uses Tenant model pricing"
+    },
+    {
+      "source": "feature",
+      "target": "c12",
+      "label": "uses Usage accounting"
+    },
+    {
+      "source": "feature",
+      "target": "c13",
+      "label": "uses Metadata-only usage records"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway model routes",
+      "what": "The gateway writes one log line per model call with provider, model, token counts, a cost estimate, latency, user and key ID.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Virtual key",
+      "what": "A virtual key is an LLM-scoped agent key created in the Agent Registry wizard.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Real provider key held in Privilege and injec…",
+      "what": "It needs the real provider key in hand: Privilege stores that key, does not return it on read, and injects it server-side.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Allowed-models list",
+      "what": "Each key is bound to one provider (OpenAI, Anthropic, or an OpenAI-compatible custom endpoint) and carries an owner, an allowed-models list, request and token rate limits, a budget, an expiry, scopes and AI Guard settings.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Request rate, token rate and budget limits",
+      "what": "Each key is bound to one provider (OpenAI, Anthropic, or an OpenAI-compatible custom endpoint) and carries an owner, an allowed-models list, request and token rate limits, a budget, an expiry, scopes and AI Guard settings.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Per-key AI Guard guardrail",
+      "what": "Each key is bound to one provider (OpenAI, Anthropic, or an OpenAI-compatible custom endpoint) and carries an owner, an allowed-models list, request and token rate limits, a budget, an expiry, scopes and AI Guard settings.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "OpenAI route",
+      "what": "Each key is bound to one provider (OpenAI, Anthropic, or an OpenAI-compatible custom endpoint) and carries an owner, an allowed-models list, request and token rate limits, a budget, an expiry, scopes and AI Guard settings.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Anthropic route",
+      "what": "Each key is bound to one provider (OpenAI, Anthropic, or an OpenAI-compatible custom endpoint) and carries an owner, an allowed-models list, request and token rate limits, a budget, an expiry, scopes and AI Guard settings.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "OpenAI-compatible custom route",
+      "what": "Each key is bound to one provider (OpenAI, Anthropic, or an OpenAI-compatible custom endpoint) and carries an owner, an allowed-models list, request and token rate limits, a budget, an expiry, scopes and AI Guard settings.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "The application calls the gateway's route for its provider and presents the virtual key as a bearer token or API-key header.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        9
+      ]
+    },
+    {
+      "title": "Cluster-wide spend limits",
+      "what": "Spend limits are budgets in US dollars or tokens on a daily, weekly, monthly or lifetime window, aggregated across every gateway instance so a limit holds cluster-wide, with requests and tokens per minute capped per key.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        10
+      ]
+    },
+    {
+      "title": "Tenant model pricing",
+      "what": "Tenant model pricing lets a tenant override the built-in per-model rates, or add models the platform does not price, so cost reflects the contract.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        11
+      ]
+    },
+    {
+      "title": "Usage accounting",
+      "what": "The usage record captures metadata only by default, and prompt and response content is not written to the audit log by default; full retention is an explicit tenant policy, encrypted to a key only the tenant holds.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        12
+      ]
+    },
+    {
+      "title": "Metadata-only usage records",
+      "what": "Every request records the model, prompt and completion tokens, calculated cost, latency and status, streaming or not.",
+      "why": "Applications and agents should never hold a model provider's API key.",
+      "edges": [
+        13
+      ]
+    }
+  ]
+}

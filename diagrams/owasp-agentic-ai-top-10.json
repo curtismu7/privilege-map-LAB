@@ -1,0 +1,292 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "owasp-agentic-ai-top-10",
+  "title": "OWASP Agentic AI Top 10: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "OWASP Agentic AI Top 10",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 375
+    },
+    {
+      "id": "c0",
+      "group": "policy",
+      "label": "AIGuard content inspection",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "gateway",
+      "label": "Gateway chokepoint",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Per-user virtual keys",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Least-privilege scopes",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Per-application RBAC",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Live revocation",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "A2A scope",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Rate and budget ceilings",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "policy",
+      "label": "Guardrail circuit breaker",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "SIEM event stream",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    },
+    {
+      "id": "c10",
+      "group": "gateway",
+      "label": "In-gateway behaviour scoring",
+      "sub": [],
+      "x": 660,
+      "y": 750
+    },
+    {
+      "id": "c11",
+      "group": "gateway",
+      "label": "In-gateway rogue-agent access scoring",
+      "sub": [],
+      "x": 0,
+      "y": 750
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses AIGuard content inspection"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Gateway chokepoint"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Per-user virtual keys"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Least-privilege scopes"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Per-application RBAC"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Live revocation"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses A2A scope"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Rate and budget ceilings"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Guardrail circuit breaker"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses SIEM event stream"
+    },
+    {
+      "source": "feature",
+      "target": "c10",
+      "label": "uses In-gateway behaviour scoring"
+    },
+    {
+      "source": "feature",
+      "target": "c11",
+      "label": "uses In-gateway rogue-agent access s…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "AIGuard content inspection",
+      "what": "The slide maps the ten ASI categories to controls across the platform, some by AIGuard content inspection and others by the gateway's architectural controls: a chokepoint every agent must pass, scoped and instantly revocable credentials, and enforced spend ceilings.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Gateway chokepoint",
+      "what": "The slide maps the ten ASI categories to controls across the platform, some by AIGuard content inspection and others by the gateway's architectural controls: a chokepoint every agent must pass, scoped and instantly revocable credentials, and enforced spend ceilings.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Per-user virtual keys",
+      "what": "ASI03 Identity and Privilege Abuse: gateway plus AIGuard, through per-user virtual keys, least-privilege scopes, per-application RBAC and live revocation.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Least-privilege scopes",
+      "what": "ASI03 Identity and Privilege Abuse: gateway plus AIGuard, through per-user virtual keys, least-privilege scopes, per-application RBAC and live revocation.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Per-application RBAC",
+      "what": "ASI03 Identity and Privilege Abuse: gateway plus AIGuard, through per-user virtual keys, least-privilege scopes, per-application RBAC and live revocation.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Live revocation",
+      "what": "ASI03 Identity and Privilege Abuse: gateway plus AIGuard, through per-user virtual keys, least-privilege scopes, per-application RBAC and live revocation.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "A2A scope",
+      "what": "ASI02 Tool Misuse and Exploitation: AIGuard path traversal, destructive command, SSRF and over-broad scope detection.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Rate and budget ceilings",
+      "what": "ASI08 Cascading Agent Failures: gateway rate and budget ceilings that cap blast radius, a guardrail circuit breaker and a full event stream to your SIEM; in-gateway behaviour scoring now supplements it.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Guardrail circuit breaker",
+      "what": "ASI08 Cascading Agent Failures: gateway rate and budget ceilings that cap blast radius, a guardrail circuit breaker and a full event stream to your SIEM; in-gateway behaviour scoring now supplements it.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "SIEM event stream",
+      "what": "ASI08 Cascading Agent Failures: gateway rate and budget ceilings that cap blast radius, a guardrail circuit breaker and a full event stream to your SIEM; in-gateway behaviour scoring now supplements it.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        9
+      ]
+    },
+    {
+      "title": "In-gateway behaviour scoring",
+      "what": "ASI08 Cascading Agent Failures: gateway rate and budget ceilings that cap blast radius, a guardrail circuit breaker and a full event stream to your SIEM; in-gateway behaviour scoring now supplements it.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        10
+      ]
+    },
+    {
+      "title": "In-gateway rogue-agent access scoring",
+      "what": "ASI10 Rogue Agents: gateway, where no agent reaches a model, tool or peer without a valid scoped key, with instant revocation and bounded spend; in-gateway rogue-agent access scoring supplements it.",
+      "why": "Security review now demands precise answers against the OWASP Agentic Security Initiative (ASI) taxonomy.",
+      "edges": [
+        11
+      ]
+    }
+  ]
+}

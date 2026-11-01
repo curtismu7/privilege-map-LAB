@@ -1,0 +1,124 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "on-behalf-of",
+  "title": "On-behalf-of: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "On-behalf-of",
+      "sub": [
+        "Privilege Map · Identity"
+      ],
+      "x": 330,
+      "y": 75
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Gateway token exchange",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "RFC 8693 token swap",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "gateway",
+      "label": "Token minted for the downstream MCP server",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "policy",
+      "label": "Act claim",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Gateway token exchange"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses RFC 8693 token swap"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Token minted for the downstream…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Act claim"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Gateway token exchange",
+      "what": "The gateway swaps the caller's verified token (RFC 8693) for one minted specifically for the downstream MCP server, so the backend validates a token issued to it rather than trusting a shared service account.",
+      "why": "The deck gives no separate problem statement for this row.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "RFC 8693 token swap",
+      "what": "The gateway swaps the caller's verified token (RFC 8693) for one minted specifically for the downstream MCP server, so the backend validates a token issued to it rather than trusting a shared service account.",
+      "why": "The deck gives no separate problem statement for this row.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Token minted for the downstream MCP server",
+      "what": "The gateway swaps the caller's verified token (RFC 8693) for one minted specifically for the downstream MCP server, so the backend validates a token issued to it rather than trusting a shared service account.",
+      "why": "The deck gives no separate problem statement for this row.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Act claim",
+      "what": "The act claim preserves who the original caller was.",
+      "why": "The deck gives no separate problem statement for this row.",
+      "edges": [
+        3
+      ]
+    }
+  ]
+}

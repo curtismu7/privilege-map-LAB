@@ -1,0 +1,141 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "data-protection",
+  "title": "Data protection: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Data protection",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "23 personal data kinds",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Checksum validation",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Per-kind selection",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "policy",
+      "label": "Custom gitleaks-format rules",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "policy",
+      "label": "364 secret and credential detectors",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses 23 personal data kinds"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Checksum validation"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Per-kind selection"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Custom gitleaks-format rules"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses 364 secret and credential detec…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "23 personal data kinds",
+      "what": "Personal data detection grows from 5 kinds to 23, checksum-validated and selectable per kind.",
+      "why": "The release slide describes this as expanded detection of personal data and of secrets and credentials in LLM, MCP, A2A and coding-agent traffic.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Checksum validation",
+      "what": "Checksum validation is one of the components this feature uses.",
+      "why": "The release slide describes this as expanded detection of personal data and of secrets and credentials in LLM, MCP, A2A and coding-agent traffic.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Per-kind selection",
+      "what": "Per-kind selection is one of the components this feature uses.",
+      "why": "The release slide describes this as expanded detection of personal data and of secrets and credentials in LLM, MCP, A2A and coding-agent traffic.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Custom gitleaks-format rules",
+      "what": "Custom gitleaks-format rules is one of the components this feature uses.",
+      "why": "The release slide describes this as expanded detection of personal data and of secrets and credentials in LLM, MCP, A2A and coding-agent traffic.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "364 secret and credential detectors",
+      "what": "364 secret and credential detectors apply across LLM, MCP, A2A and coding-agent traffic.",
+      "why": "The release slide describes this as expanded detection of personal data and of secrets and credentials in LLM, MCP, A2A and coding-agent traffic.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

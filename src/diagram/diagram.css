@@ -29,6 +29,11 @@
   align-items: end;
 }
 
+/* One fixed diagram (a feature's own page): no picker, so speed and the buttons take the two columns. */
+.dtools--fixed {
+  grid-template-columns: minmax(0, 140px) auto;
+}
+
 .dtools label {
   display: flex;
   flex-direction: column;

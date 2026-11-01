@@ -10,7 +10,8 @@
     "test": "node --test test/*.test.js",
     "doctor": "node scripts/doctor.mjs",
     "reset": "node scripts/reset.mjs",
-    "spec": "node scripts/gen-spec.mjs"
+    "spec": "node scripts/gen-spec.mjs",
+    "diagrams": "node scripts/gen-feature-diagrams.mjs"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "5.3.0",

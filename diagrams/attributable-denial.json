@@ -1,0 +1,218 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "attributable-denial",
+  "title": "Attributable denial: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Attributable denial",
+      "sub": [
+        "Privilege Map · LLM"
+      ],
+      "x": 330,
+      "y": 225
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway model routes",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "AI Guard built-in detectors",
+      "sub": [
+        "prompt injection, personal data",
+        "and others"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "policy",
+      "label": "Cedar AI policies",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "policy",
+      "label": "Virtual key",
+      "sub": [
+        "an LLM-scoped agent key that",
+        "carries the guardrail settings"
+      ],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Agent key",
+      "sub": [
+        "named in policy events"
+      ],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Audit compliance mappings",
+      "sub": [
+        "OWASP, MITRE ATLAS, NIST AI RMF"
+      ],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "policy",
+      "label": "Demo Prove-the-policy button",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway model routes"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses AI Guard built-in detectors"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Cedar AI policies"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Virtual key"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Agent key"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Audit compliance mappings"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Demo Prove-the-policy button"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway model routes",
+      "what": "Wrong-provider and model-allowlist refusals are 403 responses on the model routes whose body names the reason.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "AI Guard built-in detectors",
+      "what": "In the few requests tested with a virtual key, a block returned a 400 whose message names the category, such as prompt injection.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Cedar AI policies",
+      "what": "Second, a Cedar policy can withhold content from a response, for example personal data in a completion.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Virtual key",
+      "what": "First, an AI Guard guardrail runs before the provider is called.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Agent key",
+      "what": "The one live-verified policy denial of this kind logged the decision, policy IDs, principal and agent key, with no compliance mapping.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "This differs from MCP and A2A calls, where the refusal that names its cause is the missing-scope one (for mcp or a2a) and any other bare 403 needs the gateway log.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Audit compliance mappings",
+      "what": "Request-side guardrail block events carry OWASP, MITRE ATLAS and NIST mappings.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Demo Prove-the-policy button",
+      "what": "The demo includes a Prove-the-policy button intended to send a personal-data prompt and show the provider, route and reason as an explanation rather than a failure.",
+      "why": "When a model call is refused, the operator and the auditor need to know which control refused it and why.",
+      "edges": [
+        7
+      ]
+    }
+  ]
+}

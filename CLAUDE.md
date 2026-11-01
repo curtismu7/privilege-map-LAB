@@ -1,6 +1,6 @@
 # Privilege Map LAB
 
-Tier: Demo. ReactFlow diagrams and 21 feature cards for the PingOne Privilege Federated Identity model.
+Tier: Demo. ReactFlow diagrams and 41 feature cards (5 pages, each with its own diagram) for the PingOne Privilege Federated Identity model.
 Plain `node:http` server (`server.js`) serving a Vite + React page built into `dist/`. Mock only: this app has no live mode.
 
 ## Run and test
@@ -22,6 +22,8 @@ npm run reset      # run state only; settings kept
 - Diagrams are `diagram-studio/1` data in `diagrams/`, loaded by name (`lib/diagrams.js`). Do not hand-build nodes or edges in the UI. Arrow labels must not overlap or repeat; check with `~/Development/AI-DEMO-Standalone/scripts/diagram-overlap.js` in a browser after any diagram or label change.
 - Story and talk-track text uses `{{cast.<role>}}`; an undefined token fails the tests and marks health `broken`.
 - `src/standalone-ui.css` is the canonical shared stylesheet, byte-identical. Never edit it here; change `AI-DEMO-Standalone/shared/standalone-ui.css` and re-vendor. App CSS: tokens only, no colour literals, no `!important`, no italics, no id selectors, kebab-case BEM. Check with `AI-DEMO-Standalone/scripts/check-css.sh`.
-- `src/data/features.json` is the content; `npm run spec` regenerates `docs/standard-ui.md` from it.
+- `src/data/features.json` is the content (41 features); `npm run spec` regenerates `docs/standard-ui.md` and `npm run diagrams` regenerates `diagrams/<feature id>.json` from it. Tests fail on drift. Diagram ids are at most 48 characters (Diagram Studio's limit).
+- 33 features come from an internal, confidential Ping deck (Internal ping-sandbox repo only). Keep the "Internal, confidential" badge, the "(internal, confidential)" source line and the "not tested on our tenant" unverified line on each; `npm test` checks them. Status badges (GA, New in 2026-11-02 release, Roadmap) come from the data. Roadmap text must say it is roadmap. "Federated Identity" is a display rename; API names (NonHumanIdentity and the like) stay.
+- The content pack keeps the placeholder catalog id D0; a card and a diagram per feature must stay in `content-pack.json` (a test checks).
 - No tenant ids, client ids, hostnames, personal or customer names. Use `.example` or `.invalid`. Never commit `.env` files, keys, licences or `customer.config.json`.
 - Docker publishes `127.0.0.1` only; a test pins it.

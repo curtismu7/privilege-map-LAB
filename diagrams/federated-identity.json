@@ -1,0 +1,210 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "federated-identity",
+  "title": "Federated Identity: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Federated Identity",
+      "sub": [
+        "Privilege Map · Identity"
+      ],
+      "x": 330,
+      "y": 225
+    },
+    {
+      "id": "c0",
+      "group": "console",
+      "label": "Platform-issued tokens",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "One credential for MCP, A2A and LLM",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Exact identity binding",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Enforced lifetimes",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "gateway",
+      "label": "Five deployment models",
+      "sub": [
+        "sidecar injection in development"
+      ],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "other",
+      "label": "Issuer key-set handling",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Key owned by an identity, which supplies the…",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "gateway",
+      "label": "Backend isolation with static, per-user vault…",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Platform-issued tokens"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses One credential for MCP, A2A and…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Exact identity binding"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Enforced lifetimes"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Five deployment models"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Issuer key-set handling"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Key owned by an identity, which…"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Backend isolation with static,…"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Platform-issued tokens",
+      "what": "Supported platforms are Kubernetes service-account tokens, GitHub Actions and GitLab CI job tokens, SPIFFE JWT-SVIDs, and any platform that issues OIDC tokens with published keys (Federated Identity is the updated term; the release slide retires Non-Human Identity).",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "One credential for MCP, A2A and LLM",
+      "what": "The token stops at the gateway and is never forwarded; backends receive the application's own configured credential (static, per-user from the vault, or OAuth), and revoking the identity cuts the workload off immediately, with every request attributed to a specific deployment in audit.",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Exact identity binding",
+      "what": "Supported platforms are Kubernetes service-account tokens, GitHub Actions and GitLab CI job tokens, SPIFFE JWT-SVIDs, and any platform that issues OIDC tokens with published keys (Federated Identity is the updated term; the release slide retires Non-Human Identity).",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Enforced lifetimes",
+      "what": "Enforced lifetimes is one of the components this feature uses.",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Five deployment models",
+      "what": "Five deployment models are described: direct token read from a Kubernetes projected volume, per-job CI/CD tokens, SPIFFE/SPIRE for mixed estates, a stored agent key as the fallback where no verifiable token exists, and sidecar injection for agents you cannot modify, which is in development.",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Issuer key-set handling",
+      "what": "Issuer and subject are matched exactly, such as one ServiceAccount in one namespace or one repository on one branch, and the audience is mandatory, so a key bound to main cannot be used by a pull request from a fork; additional claims such as repository, workflow and environment can be pinned.",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Key owned by an identity, which supplies the…",
+      "what": "An agent access key can name a Federated Identity as the principal it acts as instead of borrowing a human owner, so a fully autonomous agent gets a real principal in audit and policy, and that identity supplies the verification material for the key.",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Backend isolation with static, per-user vault…",
+      "what": "The token stops at the gateway and is never forwarded; backends receive the application's own configured credential (static, per-user from the vault, or OAuth), and revoking the identity cuts the workload off immediately, with every request attributed to a specific deployment in audit.",
+      "why": "Agents hold stored API keys that outlive their workloads and stay valid from anywhere if they leak.",
+      "edges": [
+        7
+      ]
+    }
+  ]
+}

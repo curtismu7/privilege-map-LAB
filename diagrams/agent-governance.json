@@ -1,0 +1,204 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "agent-governance",
+  "title": "Agent Governance: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Agent Governance",
+      "sub": [
+        "Privilege Map · Identity"
+      ],
+      "x": 330,
+      "y": 225
+    },
+    {
+      "id": "c0",
+      "group": "other",
+      "label": "Onboarding",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "other",
+      "label": "Deep agent anatomy",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Custodians",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "policy",
+      "label": "Approval workflows",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Certification campaigns",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "policy",
+      "label": "Agent policies",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "other",
+      "label": "Activity monitoring",
+      "sub": [],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Inventory dashboard",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Onboarding"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Deep agent anatomy"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Custodians"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Approval workflows"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Certification campaigns"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Agent policies"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Activity monitoring"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Inventory dashboard"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Onboarding",
+      "what": "Onboarding brings agents across your infrastructure in as first-class identities, and the how-it-works strip adds that their tools are synced as entitlements.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Deep agent anatomy",
+      "what": "Deep agent anatomy catalogs each agent in full: tools, knowledge bases, guardrails, credentials, bindings and sub-agents.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Custodians",
+      "what": "Custodians and approval workflows let named humans approve access requests, review activity and manage permissions, and assignment can be automated by rule.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Approval workflows",
+      "what": "Custodians and approval workflows let named humans approve access requests, review activity and manage permissions, and assignment can be automated by rule.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Certification campaigns",
+      "what": "Certification and agent policies run campaigns that certify agent entitlements, and policies flag conflicting access with preventative and detective scans.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Agent policies",
+      "what": "Certification and agent policies run campaigns that certify agent entitlements, and policies flag conflicting access with preventative and detective scans.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Activity monitoring",
+      "what": "Activity monitoring uses normalized logs to show when agents act, what resources they touch and whether the action was approved or not, with risk scoring.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Inventory dashboard",
+      "what": "The inventory dashboard shows recently discovered, review-pending and action-required counts, with platform filters and per-agent detail.",
+      "why": "There is no understanding of where AI agents can reach.",
+      "edges": [
+        7
+      ]
+    }
+  ]
+}

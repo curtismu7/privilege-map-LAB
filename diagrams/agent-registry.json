@@ -1,0 +1,285 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "agent-registry",
+  "title": "Agent Registry: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Agent Registry",
+      "sub": [
+        "Privilege Map · Identity"
+      ],
+      "x": 330,
+      "y": 375
+    },
+    {
+      "id": "c0",
+      "group": "console",
+      "label": "Agent Registry console page",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "console",
+      "label": "Add Agent and Edit Agent wizard",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Custodian",
+      "sub": [
+        "a user who owns the key"
+      ],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "other",
+      "label": "Scopes",
+      "sub": [
+        "llm, mcp, a2a"
+      ],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Agent access key",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "policy",
+      "label": "Grant policy created when apps are selected",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "policy",
+      "label": "Per-key Runtime Protection",
+      "sub": [
+        "AI Guard"
+      ],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Federated Identity object",
+      "sub": [
+        "optional custodian"
+      ],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "gateway",
+      "label": "Privilege gateway",
+      "sub": [
+        "LLM, MCP and A2A routes"
+      ],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    },
+    {
+      "id": "c10",
+      "group": "other",
+      "label": "Console audit feed",
+      "sub": [],
+      "x": 660,
+      "y": 750
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Agent Registry console page"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Add Agent and Edit Agent wizard"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Custodian"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Scopes"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Agent access key"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Grant policy created when apps…"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Per-key Runtime Protection"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Federated Identity object"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c10",
+      "label": "uses Console audit feed"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Agent Registry console page",
+      "what": "The documented flow is a four-step Add Agent wizard in the Agent Registry.",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Add Agent and Edit Agent wizard",
+      "what": "The documented flow is a four-step Add Agent wizard in the Agent Registry.",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Custodian",
+      "what": "(1) Identity and Access sets the agent name (permanent; renaming means delete and recreate), custodian, expiry and scopes (llm, mcp, a2a).",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Scopes",
+      "what": "(1) Identity and Access sets the agent name (permanent; renaming means delete and recreate), custodian, expiry and scopes (llm, mcp, a2a).",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Agent access key",
+      "what": "(1) Identity and Access sets the agent name (permanent; renaming means delete and recreate), custodian, expiry and scopes (llm, mcp, a2a).",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Grant policy created when apps are selected",
+      "what": "For mcp or a2a, it sets the specific apps (and optionally specific MCP tools) the agent may reach; selecting them is the grant, and saving creates a grant policy for the custodian tied to the key.",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Per-key Runtime Protection",
+      "what": "(3) Runtime Protection sets the AI Guard configuration for that key; AI Guard is configured per agent key, not per app.",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Federated Identity object",
+      "what": "The documentation also describes a second custodian option, a secretless Federated Identity (the former Non-Human Identity; the API object is still NonHumanIdentity) with federation settings (issuer, audience, subject, key set location, maximum token lifetime, required claims).",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Privilege gateway",
+      "what": "(2) Gateway and Apps sets, for llm, one provider per key, allowed models, requests per minute, tokens per minute and a budget; the real provider key is stored in Privilege and injected server-side, so LLM-scoped keys are created here and need the real provider key in hand.",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "(2) Gateway and Apps sets, for llm, one provider per key, allowed models, requests per minute, tokens per minute and a budget; the real provider key is stored in Privilege and injected server-side, so LLM-scoped keys are created here and need the real provider key in hand.",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        9
+      ]
+    },
+    {
+      "title": "Console audit feed",
+      "what": "Console audit feed is one of the components this feature uses.",
+      "why": "Agents that call models, tool servers and other agents need to be first-class identities with an owner, an expiry, a lifecycle and per-agent policy, not anonymous API keys.",
+      "edges": [
+        10
+      ]
+    }
+  ]
+}

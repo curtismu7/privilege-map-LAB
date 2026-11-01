@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import DiagramView from './diagram/DiagramView.jsx';
 import FeaturePage from './pages/FeaturePage.jsx';
 import StoriesPage from './pages/StoriesPage.jsx';
+import FeatureDiagramPage from './pages/FeatureDiagramPage.jsx';
 import ModeToggle from './components/ModeToggle.jsx';
 import Banner from './components/Banner.jsx';
 import Presenter from './components/Presenter.jsx';
@@ -10,11 +11,16 @@ import { getJson, postJson } from './api.js';
 
 const NAV = [{ id: 'map', title: 'Map' }, ...PAGES, { id: 'stories', title: 'Stories' }];
 
-// Routes are hash routes: #/identity, or #/map?diagram=nhi-checks.
+const DIAGRAM_PREFIX = 'diagram/';
+
+// Routes are hash routes: #/identity, #/identity?feature=agent-registry, #/map?diagram=nhi-checks, and
+// #/diagram/<feature id> (a feature's own diagram, opened in a new tab from its page).
 function currentRoute() {
   const [path, query = ''] = window.location.hash.replace(/^#\/?/, '').split('?');
+  const params = new URLSearchParams(query);
+  if (path.startsWith(DIAGRAM_PREFIX)) return { id: 'feature-diagram', featureId: path.slice(DIAGRAM_PREFIX.length), diagram: '', feature: '' };
   const known = NAV.some((n) => n.id === path);
-  return { id: known ? path : 'map', diagram: new URLSearchParams(query).get('diagram') || '' };
+  return { id: known ? path : 'map', diagram: params.get('diagram') || '', feature: params.get('feature') || '' };
 }
 
 function MapPage({ diagram, speed, onSpeed }) {
@@ -56,7 +62,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (info) postJson('/api/run', { page: route.id });
+    if (info && route.id !== 'feature-diagram') postJson('/api/run', { page: route.id });
   }, [route.id, info]);
 
   const chooseMode = useCallback(async (mode) => {
@@ -128,7 +134,8 @@ export default function App() {
       <main className="page">
         {route.id === 'map' ? <MapPage diagram={route.diagram} speed={info.settings?.speed} onSpeed={saveSpeed} /> : null}
         {route.id === 'stories' ? <StoriesPage /> : null}
-        {route.id !== 'map' && route.id !== 'stories' ? <FeaturePage key={route.id} pageId={route.id} /> : null}
+        {route.id === 'feature-diagram' ? <FeatureDiagramPage key={route.featureId} featureId={route.featureId} speed={info.settings?.speed} onSpeed={saveSpeed} /> : null}
+        {!['map', 'stories', 'feature-diagram'].includes(route.id) ? <FeaturePage key={`${route.id}:${route.feature}`} pageId={route.id} featureId={route.feature} /> : null}
       </main>
       <footer className="footer">
         <span>

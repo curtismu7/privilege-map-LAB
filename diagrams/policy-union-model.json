@@ -1,0 +1,172 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "policy-union-model",
+  "title": "Policy union model: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Policy union model",
+      "sub": [
+        "Privilege Map · MCP and A2A"
+      ],
+      "x": 330,
+      "y": 150
+    },
+    {
+      "id": "c0",
+      "group": "policy",
+      "label": "Tool policy per app",
+      "sub": [],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "Policy time window",
+      "sub": [
+        "valid from and until"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "other",
+      "label": "Identity binding and identity sync",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "gateway",
+      "label": "MCP Server application with discovery gating…",
+      "sub": [],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Gateway log",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "console",
+      "label": "Client view of the tool list",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Tool policy per app"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses Policy time window"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Identity binding and identity s…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses MCP Server application with dis…"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Gateway log"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses Client view of the tool list"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Tool policy per app",
+      "what": "In one test, editing a policy's tool list down did not change the grant while a broader policy still applied; that was measured in a single configuration.",
+      "why": "Admins need to know why a change to one policy may not remove access.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Policy time window",
+      "what": "Creating a policy adds its tools to the identity's combined grant.",
+      "why": "Admins need to know why a change to one policy may not remove access.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Identity binding and identity sync",
+      "what": "Creating a policy adds its tools to the identity's combined grant.",
+      "why": "Admins need to know why a change to one policy may not remove access.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "MCP Server application with discovery gating…",
+      "what": "In one test, editing a policy's tool list down did not change the grant while a broader policy still applied; that was measured in a single configuration.",
+      "why": "Admins need to know why a change to one policy may not remove access.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Gateway log",
+      "what": "Denied calls look identical to a client, a bare 403, and are told apart only in the gateway log, which distinguishes an identity that is not synced, an app with no policy, and a tool hidden by policy.",
+      "why": "Admins need to know why a change to one policy may not remove access.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Client view of the tool list",
+      "what": "Tools outside the grant are removed from the tool list before it is returned, so the client cannot tell they exist.",
+      "why": "Admins need to know why a change to one policy may not remove access.",
+      "edges": [
+        5
+      ]
+    }
+  ]
+}

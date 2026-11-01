@@ -1,0 +1,283 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "cedar-per-call-policy",
+  "title": "Cedar per-call policy: what it uses",
+  "lede": "One arrow for each component this feature lists. The steps reuse the feature's own \"how it works\" text; nothing here is a new claim. Internal and confidential: this text comes from an internal Ping deck and has not been tested on our tenant.",
+  "groups": {
+    "feature": {
+      "label": "The feature",
+      "color": "red"
+    },
+    "console": {
+      "label": "Console",
+      "color": "blue"
+    },
+    "gateway": {
+      "label": "Gateway and runtime",
+      "color": "amber"
+    },
+    "policy": {
+      "label": "Policy and guardrails",
+      "color": "green"
+    },
+    "other": {
+      "label": "Identity, data and logs",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "feature",
+      "group": "feature",
+      "label": "Cedar per-call policy",
+      "sub": [
+        "Privilege Map · Oversight"
+      ],
+      "x": 330,
+      "y": 375
+    },
+    {
+      "id": "c0",
+      "group": "gateway",
+      "label": "Privilege gateway",
+      "sub": [
+        "MCP and LLM paths"
+      ],
+      "x": 660,
+      "y": 0
+    },
+    {
+      "id": "c1",
+      "group": "policy",
+      "label": "AI Policies in the Privilege console",
+      "sub": [
+        "policy text, templates, state"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "c2",
+      "group": "console",
+      "label": "Entity registry for users, agents, groups and…",
+      "sub": [],
+      "x": 660,
+      "y": 150
+    },
+    {
+      "id": "c3",
+      "group": "policy",
+      "label": "Grant rules with required claims",
+      "sub": [
+        "a claim gate, not Cedar"
+      ],
+      "x": 0,
+      "y": 150
+    },
+    {
+      "id": "c4",
+      "group": "other",
+      "label": "Agent key and agent scopes",
+      "sub": [],
+      "x": 660,
+      "y": 300
+    },
+    {
+      "id": "c5",
+      "group": "policy",
+      "label": "AI Guard findings",
+      "sub": [],
+      "x": 0,
+      "y": 300
+    },
+    {
+      "id": "c6",
+      "group": "policy",
+      "label": "Approval requests",
+      "sub": [
+        "hold path"
+      ],
+      "x": 660,
+      "y": 450
+    },
+    {
+      "id": "c7",
+      "group": "other",
+      "label": "Surface scope",
+      "sub": [],
+      "x": 0,
+      "y": 450
+    },
+    {
+      "id": "c8",
+      "group": "policy",
+      "label": "Application policy",
+      "sub": [],
+      "x": 660,
+      "y": 600
+    },
+    {
+      "id": "c9",
+      "group": "other",
+      "label": "Action scope",
+      "sub": [],
+      "x": 0,
+      "y": 600
+    },
+    {
+      "id": "c10",
+      "group": "other",
+      "label": "End-user scope",
+      "sub": [],
+      "x": 660,
+      "y": 750
+    }
+  ],
+  "edges": [
+    {
+      "source": "feature",
+      "target": "c0",
+      "label": "uses Privilege gateway"
+    },
+    {
+      "source": "feature",
+      "target": "c1",
+      "label": "uses AI Policies in the Privilege co…"
+    },
+    {
+      "source": "feature",
+      "target": "c2",
+      "label": "uses Entity registry for users, agen…"
+    },
+    {
+      "source": "feature",
+      "target": "c3",
+      "label": "uses Grant rules with required claims"
+    },
+    {
+      "source": "feature",
+      "target": "c4",
+      "label": "uses Agent key and agent scopes"
+    },
+    {
+      "source": "feature",
+      "target": "c5",
+      "label": "uses AI Guard findings"
+    },
+    {
+      "source": "feature",
+      "target": "c6",
+      "label": "uses Approval requests"
+    },
+    {
+      "source": "feature",
+      "target": "c7",
+      "label": "uses Surface scope"
+    },
+    {
+      "source": "feature",
+      "target": "c8",
+      "label": "uses Application policy"
+    },
+    {
+      "source": "feature",
+      "target": "c9",
+      "label": "uses Action scope"
+    },
+    {
+      "source": "feature",
+      "target": "c10",
+      "label": "uses End-user scope"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Privilege gateway",
+      "what": "Denials and holds are written to the gateway log.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "AI Policies in the Privilege console",
+      "what": "A policy created through the API keeps an empty state until it is set to Active.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Entity registry for users, agents, groups and…",
+      "what": "Entity registry for users, agents, groups and… is one of the components this feature uses.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Grant rules with required claims",
+      "what": "Separately, grant rules can carry required claims, which narrow a rule to callers presenting particular token claims; that is a claim gate, not Cedar.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "Agent key and agent scopes",
+      "what": "The editor exposes the caller (a user, an agent or a group), the tool being called, the application, the scopes on the presented token, the scopes on the agent key, the named arguments of the call, the number of approvals so far, and AI Guard findings such as the kinds of personal data detected.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "AI Guard findings",
+      "what": "The editor exposes the caller (a user, an agent or a group), the tool being called, the application, the scopes on the presented token, the scopes on the agent key, the named arguments of the call, the number of approvals so far, and AI Guard findings such as the kinds of personal data detected.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        5
+      ]
+    },
+    {
+      "title": "Approval requests",
+      "what": "A policy can refuse a tool call, hold a tool call for a human instead of refusing it, or withhold content from a model reply.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        6
+      ]
+    },
+    {
+      "title": "Surface scope",
+      "what": "Surface scope sets which gateway surface a credential may touch at all (model, tool server or peer agent), derived from the route so it is refused before any policy is consulted, and a credential can never exceed the scopes its owning identity holds.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        7
+      ]
+    },
+    {
+      "title": "Application policy",
+      "what": "Application policy sets which applications that identity reaches and which claims the presented token must carry before an application is reachable.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        8
+      ]
+    },
+    {
+      "title": "Action scope",
+      "what": "Action scope sets which actions are permitted inside an application the caller can already reach, read from the verified token rather than from anything the caller supplies, and a rule can require a specific scope before a given tool may be invoked.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        9
+      ]
+    },
+    {
+      "title": "End-user scope",
+      "what": "End-user scope is the only layer that reaches past the service account, covering which actions the person behind the agent may take.",
+      "why": "The customer needs a rule that decides allow, refuse or hold for each individual agent call at the gateway.",
+      "edges": [
+        10
+      ]
+    }
+  ]
+}

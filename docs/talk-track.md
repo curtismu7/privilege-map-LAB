@@ -16,15 +16,23 @@ Switch to the second diagram. {{cast.gateway}} runs five checks in a fixed order
 
 ## Show who is accountable
 
-Open the Identity page. Pick Agent Registry. The point is the custodian: the human {{cast.agent}} acts as, who policy is issued to, and who the gateway log names. Say that a key with no accountable human is the problem this solves.
+Open the Identity page. Pick Agent Registry. The point is the custodian: the human {{cast.agent}} acts as, who policy is issued to, and who the gateway log names. Say that a key with no accountable human is the problem this solves. The page also holds Federated Identity (the new name for non-human identity; the API objects keep their old names), self-hosted agents, on-behalf-of and ID-JAG.
 
 ## Show the model and tool paths
 
 Open the LLM page, then MCP and A2A. One route per provider, and one set of key checks. For tools, the grant decides which tools are visible at all. Keep it short; the detail is on each feature card.
 
+## Open a feature's diagram
+
+Every feature has an "Open the diagram in a new tab" link. It opens one box for the feature and one for each component it lists. Press Simulate and read the step text aloud: it is the feature's own "how it works" sentence, so there is nothing new to defend. Drag a box, then Reset.
+
+## Say what is internal
+
+Some cards carry an "Internal, confidential" badge. They use text from an internal Ping deck, including unreleased and roadmap items, and were not tested on our tenant. A status badge (GA, New in the 2026-11-02 release, Roadmap) says how far along each one is. Only present these to an audience that may hear internal material, and never promise a roadmap item as a date.
+
 ## Be honest about what is unverified
 
-Open "Sources and what is not verified" on any feature before you present it. The content is a draft compiled from documentation and owner tests, and each card lists what was not measured. If it is not on the card as verified, do not claim it.
+Open "Sources and what is not verified" on any feature before you present it. The content is a draft compiled from documentation, an internal deck and owner tests, and each card lists what was not measured. If it is not on the card as verified, do not claim it.
 
 ## Tell a story
 

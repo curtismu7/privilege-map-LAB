@@ -92,7 +92,12 @@ test('talk track, stories and diagrams are served, with every cast token resolve
   assert.equal(stories.stories.length, 3);
   assert.doesNotMatch(JSON.stringify([talk, stories]), /\{\{|\}\}/);
   const list = await (await fetch(`${app.base}/api/diagrams`)).json();
-  assert.deepEqual(list.diagrams.map((d) => d.id), ['nhi-entity', 'nhi-checks']);
+  assert.deepEqual(list.diagrams.filter((d) => d.kind === 'map').map((d) => d.id), ['nhi-entity', 'nhi-checks']);
+  assert.equal(list.diagrams.filter((d) => d.kind === 'feature').length, 41);
+  assert.ok(list.diagrams.every((d) => d.available));
+  const feature = await (await fetch(`${app.base}/api/diagrams/agent-registry`)).json();
+  assert.equal(feature.schema, 'diagram-studio/1');
+  assert.equal(feature.id, 'agent-registry');
   const one = await (await fetch(`${app.base}/api/diagrams/nhi-entity`)).json();
   assert.equal(one.schema, 'diagram-studio/1');
   assert.equal((await fetch(`${app.base}/api/diagrams/not-ours`)).status, 404);
