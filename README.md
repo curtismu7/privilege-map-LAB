@@ -3,7 +3,7 @@
 ReactFlow diagrams and feature cards for PingOne Privilege's Federated Identity (formerly non-human identity, NHI) model: what an agent access key is made of, and the five checks the gateway runs on every call.
 
 Tier: Demo
-Repo: https://github.com/ping-sandbox/privilege-map-LAB
+Repo: https://github.com/curtismu7/privilege-map-LAB
 Catalog: none yet. No catalog row matches this app, so `docs/shelf-entry.json` has no `catalogId`. `content-pack.json` carries the provisional id D101 because the pack schema requires one; the owner assigns the real one.
 
 ## What is simulated
@@ -17,7 +17,7 @@ Catalog: none yet. No catalog row matches this app, so `docs/shelf-entry.json` h
 Prerequisites: Node 26 or newer. Docker only if you use the Docker form.
 
 ```sh
-git clone https://github.com/ping-sandbox/privilege-map-LAB.git
+git clone https://github.com/curtismu7/privilege-map-LAB.git
 cd privilege-map-LAB
 npm ci
 npm run build
