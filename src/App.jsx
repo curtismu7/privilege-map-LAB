@@ -3,6 +3,7 @@ import DiagramView from './diagram/DiagramView.jsx';
 import FeaturePage from './pages/FeaturePage.jsx';
 import StoriesPage from './pages/StoriesPage.jsx';
 import ModeToggle from './components/ModeToggle.jsx';
+import ShelfLink from "./components/ShelfLink.jsx";
 import Banner from './components/Banner.jsx';
 import Presenter from './components/Presenter.jsx';
 import { PAGES } from './data/pages.js';
@@ -108,6 +109,7 @@ export default function App() {
           <p>{branding.tagline}</p>
         </div>
         <div className="topbar__controls">
+          <ShelfLink />
           <ModeToggle mode={info.mode} liveAvailable={info.liveAvailable} liveReason={info.liveReason} onChoose={chooseMode} />
           <button type="button" onClick={() => setPresenting(true)} disabled={!talk.length}>
             Presenter

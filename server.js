@@ -12,6 +12,7 @@ import { loadCustomerConfig } from './lib/customer.js';
 import { loadCast, loadStories, resolveDeep } from './lib/stories.js';
 import { parseTalkTrack } from './lib/talk.js';
 import { listDiagrams, loadDiagramByName, DEMO_DIAGRAMS } from './lib/diagrams.js';
+import { shelfInfo } from './lib/shelfLink.js';
 import { resolveWorkspace, workspaceDir, appendTrace, readTrace, clearRunState, readRun, writeRun, readSettings, writeSettings } from './lib/workspace.js';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
@@ -172,6 +173,8 @@ function serveStatic(res, pathname) {
 async function handleApi(req, res, url) {
   const route = `${req.method} ${url.pathname}`;
   switch (route) {
+    case 'GET /api/shelf':
+      return json(res, 200, shelfInfo()); // the header "Shelf" button
     case 'GET /api/health':
       return json(res, 200, health());
     case 'GET /api/state':
