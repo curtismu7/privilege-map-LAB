@@ -5,6 +5,7 @@ services:
     build: .
     image: privilege-map-lab:local
     environment:
+      SHELF_URL: ${SHELF_URL:-}
       MODE: mock
       HOST_PORT: "${HOST_PORT:-5301}"
     ports:
