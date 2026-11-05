@@ -100,6 +100,6 @@ A good run on Node 26 is **89 tests, 89 pass, 0 fail**. The suite builds the pag
 
 ## Ownership
 
-- Owner: the ping-sandbox maintainers.
+- Owner: the curtismu7 maintainers.
 - License: MIT (see `LICENSE`). The bundled Montserrat and IBM Plex Mono fonts are under the SIL Open Font License 1.1.
 - Found a problem? Open an issue on the repo.

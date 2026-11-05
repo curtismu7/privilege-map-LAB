@@ -80,7 +80,7 @@ test('the README follows the standard: title ends in LAB, tier, repo, and the re
   const r = read('README.md');
   assert.match(r.split('\n')[0], /^# .* LAB$/);
   assert.match(r, /^Tier: Demo$/m);
-  assert.match(r, /^Repo: https:\/\/github\.com\/ping-sandbox\/privilege-map-LAB$/m);
+  assert.match(r, /^Repo: https:\/\/github\.com\/curtismu7\/privilege-map-LAB$/m);
   for (const h of ['What is simulated', 'Run from a clone', 'Settings file', 'Ports, and what to do if the port is taken', 'Mock and live modes', 'Health, doctor and reset', 'Docker (optional)', 'Tests', 'Troubleshooting', 'Ownership']) {
     assert.match(r, new RegExp(`^## ${h.replace(/[()]/g, '\\$&')}$`, 'm'), h);
   }
