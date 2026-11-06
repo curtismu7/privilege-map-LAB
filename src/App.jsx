@@ -10,6 +10,13 @@ import { PAGES } from './data/pages.js';
 import { getJson, postJson } from './api.js';
 
 const NAV = [{ id: 'map', title: 'Map' }, ...PAGES, { id: 'stories', title: 'Stories' }];
+const THEME_KEY = 'privmap.theme';
+const THEMES = [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']];
+
+function initialTheme() {
+  try { const t = localStorage.getItem(THEME_KEY); if (t === 'light' || t === 'dark') return t; } catch { /* storage blocked */ }
+  return 'auto';
+}
 
 // Routes are hash routes: #/identity, or #/map?diagram=nhi-checks.
 function currentRoute() {
@@ -32,6 +39,13 @@ export default function App() {
   const [info, setInfo] = useState(null);
   const [error, setError] = useState('');
   const [route, setRoute] = useState(currentRoute());
+  const [theme, setTheme] = useState(initialTheme);
+  const pickTheme = (next) => {
+    try { if (next === 'auto') localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, next); } catch { /* not remembered */ }
+    setTheme(next);
+  };
+  // The picker only sets data-theme; the shared stylesheet does the rest ("auto" follows the system setting).
+  useEffect(() => { if (theme === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = theme; }, [theme]);
   const [talk, setTalk] = useState([]);
   const [presenting, setPresenting] = useState(false);
   const [step, setStep] = useState(0);
@@ -111,6 +125,11 @@ export default function App() {
         <div className="topbar__controls">
           <ShelfLink />
           <ModeToggle mode={info.mode} liveAvailable={info.liveAvailable} liveReason={info.liveReason} onChoose={chooseMode} />
+          <label className="shell-theme">Theme
+            <select value={theme} onChange={(e) => pickTheme(e.target.value)}>
+              {THEMES.map(([id, label]) => <option key={id} value={id}>{label}</option>)}
+            </select>
+          </label>
           <button type="button" onClick={() => setPresenting(true)} disabled={!talk.length}>
             Presenter
           </button>

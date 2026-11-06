@@ -44,6 +44,20 @@
   gap: 8px;
 }
 
+.shell-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.shell-theme select {
+  min-height: 32px;
+  padding: 4px 8px;
+}
+
 .note {
   margin: 8px 0 0;
   min-height: 1.5em;
