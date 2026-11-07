@@ -23,6 +23,8 @@ jobs:
         run: npm run build
       - name: Test
         run: npm test
+      # The vendored shared stylesheet must match the hash pinned when it was last re-vendored.
+      - run: bash scripts/check-ui-standard.sh
       - name: Doctor against a running app
         run: |
           PORT=4770 DATA_ROOT="$RUNNER_TEMP/data" npm start > "$RUNNER_TEMP/app.log" 2>&1 &
