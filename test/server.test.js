@@ -2,12 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import http from 'node:http';
+import { spawnSync } from 'node:child_process';
 import { startServer } from './support/helpers.mjs';
 
 // One server for the whole file: a real child process in MODE=mock, with an outbound recorder loaded into it.
 let app;
 test.before(async () => {
-  app = await startServer();
+  app = await startServer({ LAB_PROXY_ORIGINS: 'https://local.ping-devops.com:8443' });
 });
 test.after(async () => {
   if (app) await app.stop();
@@ -149,4 +150,18 @@ test('the trace for this workspace records the reset', async () => {
   const t = await (await fetch(`${app.base}/api/trace`)).json();
   assert.equal(t.workspace, app.workspace);
   assert.ok(t.lines.some((l) => JSON.parse(l).type === 'reset'));
+});
+
+test('LAB_PROXY_ORIGINS: the proxy origin may write, no other origin may, and a bad value stops the server', () => {
+  const write = (origin) => post('/api/reset', {}, { Origin: origin });
+  return (async () => {
+    assert.equal((await write('https://local.ping-devops.com:8443')).status, 200);
+    assert.equal((await write('https://evil.example.invalid')).status, 403);
+    assert.equal((await write('https://local.ping-devops.com:9999')).status, 403);
+    assert.equal((await write('http://local.ping-devops.com:8443')).status, 403);
+    // A bad value must stop the server before it listens (no port is used, so this adds no server to the shared test pool).
+    const bad = spawnSync(process.execPath, ['server.js'], { cwd: new URL('..', import.meta.url).pathname, encoding: 'utf8', timeout: 20000, env: { ...process.env, MODE: 'mock', PORT: '4778', LAB_PROXY_ORIGINS: 'https://local.ping-devops.com:8443/path', STANDALONE_ENV: '/nonexistent' } });
+    assert.notEqual(bad.status, 0);
+    assert.match(bad.stderr, /LAB_PROXY_ORIGINS: must be a bare http\(s\) origin/);
+  })();
 });
