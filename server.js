@@ -58,7 +58,20 @@ for (const d of listDiagrams()) if (!d.available) problems.push(d.error);
 
 const PUBLIC_PORTS = new Set([String(PORT), process.env.HOST_PORT].filter(Boolean));
 const ALLOWED_HOSTS = new Set([...PUBLIC_PORTS].flatMap((p) => [`127.0.0.1:${p}`, `localhost:${p}`]));
-const ALLOWED_ORIGINS = new Set([...PUBLIC_PORTS].flatMap((p) => [`http://127.0.0.1:${p}`, `http://localhost:${p}`]));
+// Behind the shared lab-proxy the page's Origin is the proxy's (https://local.ping-devops.com:8443), not this app's own
+// loopback address. LAB_PROXY_ORIGINS is an explicit, comma separated list of such origins; each must be a bare http(s)
+// origin. It is a fixed allow-list, not a trusted header, so nothing else can ask to be same-origin. Unset = loopback only.
+function proxyOrigins(env = process.env) {
+  const out = [];
+  for (const raw of String(env.LAB_PROXY_ORIGINS || '').split(',').map((v) => v.trim()).filter(Boolean)) {
+    let u;
+    try { u = new URL(raw); } catch { throw new Error(`LAB_PROXY_ORIGINS: not a URL: ${raw}`); }
+    if (!/^https?:$/.test(u.protocol) || u.origin !== raw) throw new Error(`LAB_PROXY_ORIGINS: must be a bare http(s) origin: ${raw}`);
+    out.push(u.origin);
+  }
+  return out;
+}
+const ALLOWED_ORIGINS = new Set([...[...PUBLIC_PORTS].flatMap((p) => [`http://127.0.0.1:${p}`, `http://localhost:${p}`]), ...proxyOrigins()]);
 const SPEEDS = ['slow', 'normal', 'fast'];
 const PAGES = ['map', 'identity', 'llm', 'mcp', 'oversight', 'platform', 'stories'];
 
