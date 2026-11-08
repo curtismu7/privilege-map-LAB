@@ -5,7 +5,7 @@ services:
     build: .
     image: privilege-map-lab:local
     environment:
-      SHELF_URL: ${SHELF_URL:-}
+      SHELF_URL: ${SHELF_URL:-http://127.0.0.1:4400}
       MODE: mock
       LAB_PROXY_ORIGINS: "${LAB_PROXY_ORIGINS:-https://local.ping-devops.com:8443}"
       HOST_PORT: "${HOST_PORT:-5301}"
