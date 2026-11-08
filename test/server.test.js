@@ -165,3 +165,16 @@ test('LAB_PROXY_ORIGINS: the proxy origin may write, no other origin may, and a 
     assert.match(bad.stderr, /LAB_PROXY_ORIGINS: must be a bare http\(s\) origin/);
   })();
 });
+
+test('shelf button: GET /api/shelf is reachable and returns SHELF_URL (trailing slash trimmed); POST is refused', async () => {
+  const shelf = await startServer({ SHELF_URL: 'https://shelf.example:8443/' });
+  try {
+    const res = await fetch(`${shelf.base}/api/shelf`);
+    assert.equal(res.status, 200);
+    assert.deepEqual(await res.json(), { shelfUrl: 'https://shelf.example:8443' });
+    const posted = await fetch(`${shelf.base}/api/shelf`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+    assert.notEqual(posted.status, 200);
+  } finally {
+    await shelf.stop();
+  }
+});

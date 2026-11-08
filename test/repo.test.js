@@ -113,3 +113,7 @@ test('grids that auto-fit have a real minimum column width, so cards wrap at 375
   assert.doesNotMatch(css, /auto-(fit|fill),\s*minmax\(0[a-z%]*,/, 'a zero minimum never wraps');
   assert.match(css, /\.story-list\s*\{[^}]*minmax\(min\(100%,\s*\d+px\),\s*1fr\)/);
 });
+
+test('docker-compose.yml passes a usable SHELF_URL into the container (the shelf button needs it)', () => {
+  assert.match(read('docker-compose.yml'), /^\s*SHELF_URL: \$\{SHELF_URL:-http:\/\/127\.0\.0\.1:4400\}\s*$/m);
+});
