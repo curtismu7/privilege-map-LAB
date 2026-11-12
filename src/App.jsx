@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import DiagramView from './diagram/DiagramView.jsx';
 import FeaturePage from './pages/FeaturePage.jsx';
 import StoriesPage from './pages/StoriesPage.jsx';
-import ModeToggle from './components/ModeToggle.jsx';
+import TopMenu, { applyFontSize } from './top-menu/TopMenu.jsx';
 import ShelfLink from "./components/ShelfLink.jsx";
 import Banner from './components/Banner.jsx';
 import Presenter from './components/Presenter.jsx';
@@ -40,6 +40,8 @@ export default function App() {
   const [error, setError] = useState('');
   const [route, setRoute] = useState(currentRoute());
   const [theme, setTheme] = useState(initialTheme);
+  const [fontStep, setFontStep] = useState(() => { try { return localStorage.getItem('privmap.font') || 'M'; } catch { return 'M'; } });
+  useEffect(() => { applyFontSize(fontStep); try { localStorage.setItem('privmap.font', fontStep); } catch { /* blocked */ } }, [fontStep]);
   const pickTheme = (next) => {
     try { if (next === 'auto') localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, next); } catch { /* not remembered */ }
     setTheme(next);
@@ -123,16 +125,16 @@ export default function App() {
           <p>{branding.tagline}</p>
         </div>
         <div className="topbar__controls">
-          <ShelfLink />
-          <ModeToggle mode={info.mode} liveAvailable={info.liveAvailable} liveReason={info.liveReason} onChoose={chooseMode} />
-          <label className="shell-theme">Theme
-            <select value={theme} onChange={(e) => pickTheme(e.target.value)}>
-              {THEMES.map(([id, label]) => <option key={id} value={id}>{label}</option>)}
-            </select>
-          </label>
-          <button type="button" onClick={() => setPresenting(true)} disabled={!talk.length}>
-            Presenter
-          </button>
+          <TopMenu
+            mode={info?.mode ? { value: info.mode, onChange: chooseMode, realAvailable: !!info.liveAvailable, realHint: info.liveReason } : undefined}
+            theme={{ value: theme, onChange: pickTheme }}
+            fontSize={{ value: fontStep, onChange: setFontStep }}
+            present={{ active: presenting, onToggle: () => setPresenting(!presenting), label: 'Present' }}
+            version={info.version || null}
+            extra={null}
+          >
+            <ShelfLink />
+          </TopMenu>
         </div>
       </header>
       <Banner mode={info.mode} />
