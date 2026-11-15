@@ -6,7 +6,7 @@ import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadSharedSettings } from './lib/settings.js';
-import { installProcessGuard, processGuardInstalled, netguardCounters, netguardSelfTest } from './lib/netguard.js';
+import { installProcessGuard, processGuardInstalled, netguardCounters, netguardSelfTest, setAllowedOrigins } from './lib/netguard.js';
 import { readFileSettings, doorConfig, createRealDoor } from './gatewayReal.js';
 
 // Real mode = the shared gateway hop: an agent key from the shared settings file calling a live Privilege door.
@@ -230,6 +230,7 @@ async function handleApi(req, res, url) {
     case 'POST /api/gateway-check': {
       const door = realDoorFrom(process.env);
       if (!door) return json(res, 409, { error: 'real_not_available', message: PMG_REFUSAL });
+      setAllowedOrigins([door.origin]); // the process guard's one real outbound: this door's origin
       const body = await parseBody(req);
       const app = String(body?.app || door.apps[0]);
       if (!door.apps.includes(app)) return json(res, 400, { error: `app must be one of ${door.apps.join(', ')}` });
