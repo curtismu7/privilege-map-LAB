@@ -7,6 +7,18 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadSharedSettings } from './lib/settings.js';
 import { installProcessGuard, processGuardInstalled, netguardCounters, netguardSelfTest } from './lib/netguard.js';
+import { readFileSettings, doorConfig, createRealDoor } from './gatewayReal.js';
+
+// Real mode = the shared gateway hop: an agent key from the shared settings file calling a live Privilege door.
+const PMG_REFUSAL = 'Real gateway check is not configured: set PMG_GW_URL, PMG_GW_APPS and at least one PMG_GW_KEY_<NAME> in ~/Development/.env (or STANDALONE_ENV). The diagrams keep working.';
+const realDoorFrom = (env = process.env) => {
+  const p = env.STANDALONE_ENV || `${env.HOME || ''}/Development/.env`;
+  let text = '';
+  try { text = fs.readFileSync(p, 'utf8'); } catch { /* the environment may still carry the keys */ }
+  for (const [k, v] of Object.entries(env)) if (k.startsWith('PMG_GW_') && v) text += `\n${k}=${v}`;
+  const cfg = doorConfig(text, 'PMG');
+  return cfg.ok ? createRealDoor({ config: cfg, clientInfo: { name: 'privilege-map', version: '0.1.0' } }) : null;
+};
 import { resolveMode, LIVE_AVAILABLE, NO_LIVE_REASON } from './lib/mode.js';
 import { loadCustomerConfig } from './lib/customer.js';
 import { loadCast, loadStories, resolveDeep } from './lib/stories.js';
@@ -214,6 +226,18 @@ async function handleApi(req, res, url) {
         return json(res, 409, { error: NO_LIVE_REASON, mode: MODE, liveAvailable: LIVE_AVAILABLE });
       }
       return json(res, 200, { ok: true, mode: MODE, liveAvailable: LIVE_AVAILABLE });
+    }
+    case 'POST /api/gateway-check': {
+      const door = realDoorFrom(process.env);
+      if (!door) return json(res, 409, { error: 'real_not_available', message: PMG_REFUSAL });
+      const body = await parseBody(req);
+      const app = String(body?.app || door.apps[0]);
+      if (!door.apps.includes(app)) return json(res, 400, { error: `app must be one of ${door.apps.join(', ')}` });
+      const caller = body?.caller && door.callers.some((c) => c.id === body.caller) ? body.caller : door.callers[0].id;
+      const listing = await door.list(app, caller);
+      const out = { app, caller, gateway: door.origin, listing };
+      if (listing.ok) out.refusal = await door.call(app, caller, 'privilege_map_refusal_probe_tool', {});
+      return json(res, 200, out);
     }
     case 'POST /api/run': {
       const body = await parseBody(req);
