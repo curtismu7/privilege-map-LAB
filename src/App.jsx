@@ -4,6 +4,7 @@ import FeaturePage from './pages/FeaturePage.jsx';
 import StoriesPage from './pages/StoriesPage.jsx';
 import TopMenu, { applyFontSize } from './top-menu/TopMenu.jsx';
 import ShelfLink from "./components/ShelfLink.jsx";
+import VerifyMark from "./components/VerifyMark.jsx";
 import Banner from './components/Banner.jsx';
 import Presenter from './components/Presenter.jsx';
 import { PAGES } from './data/pages.js';
@@ -142,6 +143,7 @@ export default function App() {
           extra={null}
         >
           <ShelfLink />
+          <VerifyMark id="privilege-map" />
         </TopMenu>
       </header>
       <main className="page">
