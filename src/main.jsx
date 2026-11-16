@@ -4,6 +4,7 @@ import '@xyflow/react/dist/style.css';
 import './fonts.css';
 import './standalone-ui.css';
 import './top-menu/top-menu.css';
+import './components/VerifyMark.css';
 import './styles.css';
 import './diagram/diagram.css';
 import App from './App.jsx';
