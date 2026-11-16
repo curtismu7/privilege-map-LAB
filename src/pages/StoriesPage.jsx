@@ -34,7 +34,9 @@ export default function StoriesPage() {
               {s.steps.map((step) => (
                 <li key={step.n}>
                   <strong>{step.title}.</strong> {step.tell}
-                  <span className="story__say"> Say: {step.say}</span>
+                  <p className="story__say">
+                    <strong>Say:</strong> {step.say}
+                  </p>
                 </li>
               ))}
             </ol>
