@@ -1,6 +1,11 @@
 /* App layout and components. Tokens come from standalone-ui.css (loaded first); this file adds no colours.
    Class names are kebab-case BEM. State is carried by attributes (aria-pressed, aria-current, data-state, hidden). */
 
+/* Root font size follows the TopMenu Text size control (S/M/L set --fs to 14/16/18px), so rem sizes scale. */
+html {
+  font-size: var(--fs, 16px);
+}
+
 /* Shell bar (STANDALONE-UI-PATTERNS.md section 1): Core Dark in both themes, Ping Red gradient rule, full-bleed
    (the -16px cancels the body gutter); wraps at 600px. position: relative anchors the TopMenu sign-in slot. */
 .shell-bar {
@@ -261,10 +266,6 @@
 
 .story__steps {
   padding-left: 20px;
-}
-
-.story__say {
-  color: var(--muted);
 }
 
 .story__link {
