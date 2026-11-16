@@ -108,47 +108,48 @@ export default function App() {
   if (error) {
     return (
       <main className="page">
+        <Banner mode="mock" />
         <p className="note" role="alert">
           The server did not answer: {error}. Is the app running? Try npm start.
         </p>
       </main>
     );
   }
-  if (!info) return <main className="page"><p className="note">Loading.</p></main>;
+  if (!info) return <main className="page"><Banner mode="mock" /><p className="note">Loading.</p></main>;
 
   const { branding } = info.customer;
   return (
-    <div className="shell">
-      <header className="topbar">
-        <div className="topbar__brand">
+    <>
+      <header className="shell-bar">
+        <span className="shell-brand">
+          <span className="shell-logo" aria-hidden="true">PM</span>
           <h1>{branding.productName}</h1>
-          <p>{branding.tagline}</p>
-        </div>
-        <div className="topbar__controls">
-          <TopMenu
-            mode={info?.mode ? { value: info.mode, onChange: chooseMode, realAvailable: !!info.liveAvailable, realHint: info.liveReason } : undefined}
-            theme={{ value: theme, onChange: pickTheme }}
-            fontSize={{ value: fontStep, onChange: setFontStep }}
-            present={{ active: presenting, onToggle: () => setPresenting(!presenting), label: 'Present' }}
-            version={info.version || null}
-            extra={null}
-          >
-            <ShelfLink />
-          </TopMenu>
-        </div>
+          <span className={`shell-badge${info.mode === 'live' ? ' shell-badge--live' : ''}`} data-testid="mode-badge">{info.mode === 'live' ? 'Live' : 'Mock'}</span>
+        </span>
+        <nav className="shell-nav" aria-label="Pages">
+          {NAV.map((n) => (
+            <a key={n.id} href={`#/${n.id}`} aria-current={route.id === n.id ? 'page' : undefined}>
+              {n.title}
+            </a>
+          ))}
+        </nav>
+        <TopMenu
+          mode={info?.mode ? { value: info.mode, onChange: chooseMode, realAvailable: !!info.liveAvailable, realHint: info.liveReason } : undefined}
+          theme={{ value: theme, onChange: pickTheme }}
+          fontSize={{ value: fontStep, onChange: setFontStep }}
+          present={{ active: presenting, onToggle: () => setPresenting(!presenting), label: 'Present' }}
+          version={info.version || null}
+          extra={null}
+        >
+          <ShelfLink />
+        </TopMenu>
       </header>
-      <Banner mode={info.mode} />
-      <p className="note" aria-live="polite">
-        {note || (info.liveAvailable ? '' : info.liveReason)}
-      </p>
-      <nav className="page-nav" aria-label="Pages">
-        {NAV.map((n) => (
-          <a key={n.id} href={`#/${n.id}`} aria-current={route.id === n.id ? 'page' : undefined}>
-            {n.title}
-          </a>
-        ))}
-      </nav>
       <main className="page">
+        <Banner mode={info.mode} />
+        <p className="note" aria-live="polite">
+          {note || (info.liveAvailable ? '' : info.liveReason)}
+        </p>
+        <p className="page-lede">{branding.tagline}</p>
         {route.id === 'map' ? <MapPage diagram={route.diagram} speed={info.settings?.speed} onSpeed={saveSpeed} /> : null}
         {route.id === 'stories' ? <StoriesPage /> : null}
         {route.id !== 'map' && route.id !== 'stories' ? <FeaturePage key={route.id} pageId={route.id} /> : null}
@@ -163,6 +164,6 @@ export default function App() {
         </button>
       </footer>
       {presenting ? <Presenter steps={talk} index={step} mode={info.mode} onIndex={goStep} onExit={() => setPresenting(false)} /> : null}
-    </div>
+    </>
   );
 }
