@@ -143,8 +143,8 @@ const MUTATIONS = [
   ['live mode accepts any origin', "if (!allowedOrigin || url.origin !== allowedOrigin) {", 'if (false) {'],
   ['redirects are followed', 'if (response.status >= 300 && response.status < 400) {', 'if (false) {'],
   ['the body size cap is gone', 'if (total > maxBytes) {', 'if (false) {'],
-  ['the process fetch guard lets public names through', 'if (!isLoopbackHost(host)) {\n      netguardCounters.refused += 1;\n      throw new NetguardError(`outbound fetch', 'if (false) {\n      netguardCounters.refused += 1;\n      throw new NetguardError(`outbound fetch'],
-  ['the process socket guard lets public hosts through', 'if (host !== null && !isLoopbackHost(host)) {', 'if (false) {'],
+  ['the process fetch guard lets public names through', 'if (!isLoopbackHost(host) && !originAllowed(host)) {\n      netguardCounters.refused += 1;\n      throw new NetguardError(`outbound fetch', 'if (false) {\n      netguardCounters.refused += 1;\n      throw new NetguardError(`outbound fetch'],
+  ['the process socket guard lets public hosts through', 'if (host !== null && !isLoopbackHost(host) && !originAllowed(host)) {', 'if (false) {'],
   ['the process socket guard stops unwrapping the normalized args from net.connect', 'const list = Array.isArray(args[0]) ? args[0] : args;', 'const list = args;'],
   ['credentials in the URL are accepted', 'if (url.username || url.password) throw', 'if (false) throw']
 ];

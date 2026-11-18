@@ -169,12 +169,12 @@ server-side guard after repeated network drops). Note the times from
 ## Real mode: through the PingOne Privilege gateway
 
 Real mode here is one live call through the SE PingOne Privilege gateway
-(`https://mcpgw.ai-demo.ping-devops.com`) with an agent access key from the shared settings
-file (`~/Development/.env`, or the file `STANDALONE_ENV` names).
+(the gateway host is in the shared settings file) with an agent access key from the shared
+settings file (`~/Development/.env`, or the file `STANDALONE_ENV` names).
 
-**Privilege objects this lab uses:** the door (Agentic App) `aggregate-limited` — the gateway's
+**Privilege objects this lab uses:** the Agentic App `aggregate-limited` — the gateway's
 MCP aggregate with a tool filter — at client path `/aggregate-limited/mcp`, called with the
 agent access key `PMG_GW_KEY_LAB_AGENT` (write-only, never shown). **What runs in Real:** the
-**Privilege gateway check** (`POST /api/gateway-check`): one live `tools/list` through the door,
+**Privilege gateway check** (`POST /api/gateway-check`): one live `tools/list` through the gateway,
 then one `tools/call` probe of a tool no policy grants, so you see the gateway's own refusal
 shape. Settings keys: `PMG_GW_URL`, `PMG_GW_APPS`, `PMG_GW_KEY_<NAME>`.

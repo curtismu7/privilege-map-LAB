@@ -77,7 +77,7 @@ test('shows this lab\'s own mark (and no other lab\'s), with the note as its too
   assert.equal((html.match(/class="verify"/g) || []).length, 1);
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, '/api/shelf');
-  assert.equal(calls[0].init.credentials, 'omit');
+  assert.equal(calls[0].init.credentials, 'same-origin');
 });
 
 test('an In progress mark shows its own label and status', async () => {
