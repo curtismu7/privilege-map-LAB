@@ -4,6 +4,7 @@ import FeaturePage from './pages/FeaturePage.jsx';
 import StoriesPage from './pages/StoriesPage.jsx';
 import TopMenu, { applyFontSize } from './top-menu/TopMenu.jsx';
 import ShelfLink from "./components/ShelfLink.jsx";
+import VerifyMark from "./components/VerifyMark.jsx";
 import Banner from './components/Banner.jsx';
 import Presenter from './components/Presenter.jsx';
 import { PAGES } from './data/pages.js';
@@ -120,12 +121,12 @@ export default function App() {
   const { branding } = info.customer;
   return (
     <div className="shell">
-      <header className="topbar">
-        <div className="topbar__brand">
+      <header className="shell-bar">
+        <div className="shell-brand">
           <h1>{branding.productName}</h1>
           <p>{branding.tagline}</p>
         </div>
-        <div className="topbar__controls">
+        <div className="shell-right">
           <TopMenu
             mode={info?.mode ? { value: info.mode, onChange: chooseMode, realAvailable: !!info.liveAvailable, realHint: info.liveReason } : undefined}
             theme={{ value: theme, onChange: pickTheme }}
@@ -135,20 +136,21 @@ export default function App() {
             extra={null}
           >
             <ShelfLink />
+            <VerifyMark id="privilege-map" />
           </TopMenu>
         </div>
+        <nav className="shell-nav" aria-label="Pages">
+          {NAV.map((n) => (
+            <a key={n.id} href={`#/${n.id}`} aria-current={route.id === n.id ? 'page' : undefined}>
+              {n.title}
+            </a>
+          ))}
+        </nav>
       </header>
       <Banner mode={info.mode} />
       <p className="note" aria-live="polite">
         {note || (info.liveAvailable ? '' : info.liveReason)}
       </p>
-      <nav className="page-nav" aria-label="Pages">
-        {NAV.map((n) => (
-          <a key={n.id} href={`#/${n.id}`} aria-current={route.id === n.id ? 'page' : undefined}>
-            {n.title}
-          </a>
-        ))}
-      </nav>
       <main className="page">
         <PrivilegeCheck />
 
