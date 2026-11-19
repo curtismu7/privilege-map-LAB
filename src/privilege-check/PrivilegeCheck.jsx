@@ -58,11 +58,11 @@ export default function PrivilegeCheck({ apiBase = '', title = 'Privilege gatewa
       <header className="pcard__head">
         <h3 className="pcard__title">{title}</h3>
         {primaryRetry ? (
-          <button type="button" className="pcard__retry primary" onClick={refresh} aria-disabled={state.phase === 'checking' ? 'true' : undefined}>
+          <button type="button" className="pcard__retry primary" onClick={refresh} disabled={state.phase === 'checking'}>
             {state.phase === 'checking' ? 'Checking…' : 'Run the gateway check'}
           </button>
         ) : (
-          <button type="button" className="pcard__retry" onClick={refresh} aria-disabled={state.phase === 'checking' ? 'true' : undefined}>
+          <button type="button" className="pcard__retry" onClick={refresh} disabled={state.phase === 'checking'}>
             {state.phase === 'checking' ? 'Checking…' : 'Run the gateway check'}
           </button>
         )}
