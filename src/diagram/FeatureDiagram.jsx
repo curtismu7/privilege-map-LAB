@@ -1,11 +1,13 @@
 // Embedded diagram on a feature card. Same diagram-studio/1 data and the same rendering
-// path as the Map page's DiagramView (layout.js routes the arrows); only the chrome differs:
-// no diagram picker, and Prev/Next step instead of the full tool strip.
+// path as the Map page's DiagramView, through the shared diagram kit (§8c): arrow labels
+// in a layer above the boxes, clicking a box expands it in place with its details.
+// Chrome differs from the Map page: no diagram picker, Prev/Next stepping.
 import React, { useEffect, useMemo, useState } from 'react';
-import { ReactFlow, Background, Controls, MarkerType, useNodesState, useReactFlow, useStore } from '@xyflow/react';
-import { routeEdges, placeLabels } from './layout.js';
+import { ReactFlow, Background, Controls, useNodesState, useReactFlow, useStore } from '@xyflow/react';
 import { getJson } from '../api.js';
-import { BoxNode, toNodes, toEdges, toLabelItems, LabelLayer, RouteEdge, NODE_W, NODE_H, FIT } from './shared.jsx';
+import { ArrowNoLabel, EdgeLabels, FitOpen, PassportActions } from '../diagram-kit/DiagramKit.jsx';
+import { BoxNode, toNodes, toEdges, toLabelItems, asGraph, labelPointFor, boxPassport, NODE_W, NODE_H, FIT } from './shared.jsx';
+import '../diagram-kit/diagram-kit.css';
 
 function FitView({ diagramId, tick }) {
   const { fitView } = useReactFlow();
@@ -24,16 +26,17 @@ export default function FeatureDiagram({ diagramId }) {
   const [diagram, setDiagram] = useState(null);
   const [error, setError] = useState('');
   const [stepIndex, setStepIndex] = useState(-1);
+  const [open, setOpen] = useState(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [badges, setBadges] = useState(0);
-  const [fitTick, setFitTick] = useState(0);
 
   useEffect(() => {
     setStepIndex(-1);
+    setOpen(null);
     getJson(`/api/diagrams/${encodeURIComponent(diagramId)}`)
       .then((d) => {
         setError('');
-        setDiagram(d);
+        const graph = asGraph(d);
+        setDiagram({ ...d, graph, passportFor: (id) => boxPassport(graph, id) });
         setNodes(toNodes(d, NONE));
       })
       .catch((e) => setError(e.message));
@@ -42,28 +45,46 @@ export default function FeatureDiagram({ diagramId }) {
   const steps = diagram?.steps || [];
   const active = useMemo(() => (stepIndex >= 0 && steps[stepIndex] ? new Set(steps[stepIndex].edges) : NONE), [stepIndex, steps]);
 
+  // Walking the steps only flags the boxes at the ends of the lit arrows; a box the user has moved stays where it is.
+  // An expanded box carries its details (the kit's Passport) and sits above its neighbours.
   useEffect(() => {
     if (!diagram) return;
-    setNodes((prev) => prev.map((n) => ({ ...n, data: { ...n.data, active: diagram.edges.some((e, i) => active.has(i) && (e.source === n.id || e.target === n.id)) } })));
-  }, [active, diagram]); // eslint-disable-line react-hooks/exhaustive-deps
+    setNodes((prev) =>
+      prev.map((n) => ({
+        ...n,
+        zIndex: n.id === open ? 10 : undefined,
+        data: {
+          ...n.data,
+          active: diagram.edges.some((e, i) => active.has(i) && (e.source === n.id || e.target === n.id)),
+          passport: n.id === open ? diagram.passportFor(n.id) : null
+        }
+      }))
+    );
+  }, [active, diagram, open]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const rects = useMemo(
-    () =>
-      nodes.map((n) => ({
-        id: n.id,
-        x: n.position.x,
-        y: n.position.y,
-        w: (n.measured && n.measured.width) || NODE_W,
-        h: (n.measured && n.measured.height) || NODE_H
-      })),
-    [nodes]
-  );
-  const routes = useMemo(() => (diagram ? routeEdges(rects, diagram.edges.map((e, i) => ({ id: `e${i}`, source: e.source, target: e.target }))) : {}), [diagram, rects]);
-  const edges = useMemo(() => (diagram ? toEdges(diagram, active, routes) : []), [diagram, active, routes]);
-  const items = useMemo(() => (diagram ? toLabelItems(diagram) : []), [diagram]);
-  const shape = diagram ? { w: Math.max(...diagram.nodes.map((n) => n.x || 0)) - Math.min(...diagram.nodes.map((n) => n.x || 0)) + NODE_W, h: Math.max(...diagram.nodes.map((n) => n.y || 0)) - Math.min(...diagram.nodes.map((n) => n.y || 0)) + NODE_H } : { w: 3, h: 1 };
+  const positions = useMemo(() => Object.fromEntries(nodes.map((n) => [n.id, n.position])), [nodes]);
+  const items = useMemo(() => (diagram ? toLabelItems(diagram, positions, active) : []), [diagram, positions, active]);
+  const shape = diagram
+    ? {
+        w: Math.max(...diagram.nodes.map((n) => n.x || 0)) - Math.min(...diagram.nodes.map((n) => n.x || 0)) + NODE_W,
+        h: Math.max(...diagram.nodes.map((n) => n.y || 0)) - Math.min(...diagram.nodes.map((n) => n.y || 0)) + NODE_H
+      }
+    : { w: 3, h: 1 };
   const step = stepIndex >= 0 ? steps[stepIndex] : null;
   if (error) return null;
+
+  const actions = useMemo(
+    () => ({
+      open: (id) => setOpen(id),
+      close: () => setOpen(null),
+      link: (id) => {
+        const u = new URL(window.location.href);
+        u.searchParams.set('box', id);
+        return u.toString();
+      }
+    }),
+    []
+  );
 
   return (
     <div className="fdiag">
@@ -80,27 +101,31 @@ export default function FeatureDiagram({ diagramId }) {
       </div>
       {diagram ? <p className="dnote">{diagram.lede}</p> : null}
       <div className="dcanvas" aria-label="Flow diagram" style={{ aspectRatio: `${shape.w} / ${shape.h}` }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          nodeTypes={{ box: BoxNode }}
-          edgeTypes={{ route: RouteEdge }}
-          onNodesChange={onNodesChange}
-          fitView
-          fitViewOptions={FIT}
-          nodesConnectable={false}
-          edgesFocusable={false}
-          proOptions={{ hideAttribution: true }}
-          minZoom={0.1}
-        >
-          <Background gap={24} />
-          <Controls showInteractive={false} fitViewOptions={FIT} />
-          <FitView diagramId={diagramId} tick={fitTick} />
-          {diagram ? <LabelLayer diagram={diagram} items={items} routes={routes} rects={rects} active={active} onBadges={setBadges} /> : null}
-        </ReactFlow>
+        <PassportActions.Provider value={actions}>
+          <ReactFlow
+            nodes={nodes}
+            edges={diagram ? toEdges(diagram, active) : []}
+            nodeTypes={{ box: BoxNode }}
+            edgeTypes={{ arrow: ArrowNoLabel }}
+            onNodesChange={onNodesChange}
+            onNodeClick={(_, n) => setOpen((o) => (o === n.id ? null : n.id))}
+            onPaneClick={() => setOpen(null)}
+            fitView
+            fitViewOptions={FIT}
+            nodesConnectable={false}
+            edgesFocusable={false}
+            proOptions={{ hideAttribution: true }}
+            minZoom={0.1}
+          >
+            <Background gap={24} />
+            <Controls showInteractive={false} fitViewOptions={FIT} />
+            <FitView diagramId={diagramId} closePadding={0.08} />
+            {diagram ? <EdgeLabels items={items} pointFor={labelPointFor} fallback={{ w: NODE_W, h: NODE_H }} /> : null}
+          </ReactFlow>
+        </PassportActions.Provider>
       </div>
       {diagram ? (
-        <details className="diagram-legend" open={badges > 0 ? true : undefined}>
+        <details className="diagram-legend" open>
           <summary>Arrow labels ({diagram.edges.length})</summary>
           <ol className="diagram-legend__list">
             {diagram.edges.map((e, i) => (
@@ -121,7 +146,7 @@ export default function FeatureDiagram({ diagramId }) {
             {step.why ? <p>{step.why}</p> : null}
           </>
         ) : (
-          <p>Press Simulate to walk the steps in order. Boxes can be moved.</p>
+          <p>Press Simulate to walk the steps in order. Boxes can be moved; click a box to see its details.</p>
         )}
       </div>
     </div>

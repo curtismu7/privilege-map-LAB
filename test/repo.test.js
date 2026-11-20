@@ -92,6 +92,7 @@ test('no machine paths, outside links or EC key generation in the source', () =>
   for (const f of textFiles) {
     const rel = path.relative(ROOT, f);
     if (rel.startsWith('test/')) continue; // tests name the patterns they forbid
+    if (rel.startsWith('src/diagram-kit/')) continue; // vendored byte for byte; its integrity is the diagram-kit.sha256 pin, and its own tests use example URLs
     const text = fs.readFileSync(f, 'utf8');
     assert.doesNotMatch(text, /\/Users\/|\/home\/[a-z]/, `${rel} has a machine path`);
     if (/^(src|index\.html)/.test(rel)) assert.doesNotMatch(text, /https?:\/\/(?!127\.0\.0\.1|localhost)/, `${rel} links outside this machine`);
