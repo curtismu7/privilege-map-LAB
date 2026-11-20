@@ -3,20 +3,10 @@
 // Simulate walks the data's steps (each step lights its arrows), with Prev, Next, Pause, a speed control and Reset
 // (Reset also puts every box back where the data placed it). Boxes can be dragged.
 import React, { useEffect, useMemo, useState } from 'react';
-import { ReactFlow, Background, Controls, Handle, Position, useNodesState, useReactFlow, useStore } from '@xyflow/react';
+import { ReactFlow, Background, Controls, useNodesState, useReactFlow, useStore } from '@xyflow/react';
 import { routeEdges } from './layout.js';
 import { getJson } from '../api.js';
 import { BoxNode, toNodes, toEdges, toLabelItems, LabelLayer, RouteEdge, NODE_W, NODE_H, FIT } from './shared.jsx';
-
-function BoxNodeWithHandles({ data }) {
-  return (
-    <>
-      <Handle type="target" position={Position.Left} />
-      <BoxNode data={data} />
-      <Handle type="source" position={Position.Right} />
-    </>
-  );
-}
 
 // Size of the drawing in flow units, so the canvas can take the diagram's own shape.
 function contentShape(diagram) {
@@ -193,7 +183,7 @@ export default function DiagramView({ initialId = '', initialSpeed = 'normal', o
         <ReactFlow
           nodes={nodes}
           edges={edges}
-          nodeTypes={{ box: BoxNodeWithHandles }}
+          nodeTypes={{ box: BoxNode }}
           edgeTypes={{ route: RouteEdge }}
           onNodesChange={onNodesChange}
           fitView

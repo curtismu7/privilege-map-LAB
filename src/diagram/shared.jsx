@@ -1,7 +1,7 @@
 // Rendering pieces shared by DiagramView (Map page) and FeatureDiagram (feature cards).
 // Both map diagram-studio/1 data to ReactFlow through these; nothing is drawn by hand.
 import React, { useLayoutEffect, useMemo, useEffect, useRef, useState } from 'react';
-import { BaseEdge, MarkerType, useViewport, useStore } from '@xyflow/react';
+import { BaseEdge, Handle, MarkerType, Position, useViewport, useStore } from '@xyflow/react';
 import { placeLabels } from './layout.js';
 
 export const NODE_W = 210;
@@ -10,17 +10,22 @@ export const FIT = { padding: 0.04, minZoom: 0.1 };
 
 const GROUP_CLASS = { red: 'dg-red', dark: 'dg-dark', grey: 'dg-grey', blue: 'dg-blue', green: 'dg-green', amber: 'dg-amber' };
 
+// The handles are what ReactFlow anchors arrows to; a node type without them draws no edges.
 export function BoxNode({ data }) {
   return (
-    <div className={`dbox ${GROUP_CLASS[data.color] || 'dg-grey'}`} data-state={data.active ? 'active' : 'idle'}>
-      <div className="dbox__group">{data.groupLabel}</div>
-      <div className="dbox__label">{data.label}</div>
-      {(data.sub || []).map((line) => (
-        <div className="dbox__sub" key={line}>
-          {line}
-        </div>
-      ))}
-    </div>
+    <>
+      <Handle type="target" position={Position.Left} />
+      <div className={`dbox ${GROUP_CLASS[data.color] || 'dg-grey'}`} data-state={data.active ? 'active' : 'idle'}>
+        <div className="dbox__group">{data.groupLabel}</div>
+        <div className="dbox__label">{data.label}</div>
+        {(data.sub || []).map((line) => (
+          <div className="dbox__sub" key={line}>
+            {line}
+          </div>
+        ))}
+      </div>
+      <Handle type="source" position={Position.Right} />
+    </>
   );
 }
 
