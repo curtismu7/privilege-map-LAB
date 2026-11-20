@@ -286,3 +286,28 @@
     min-height: 360px;
   }
 }
+
+/* Embedded diagram on a feature card. */
+.fdiag {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.fdiag__bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.fdiag__open {
+  margin-left: auto;
+  font-size: 12px;
+}
+
+.fdiag .dcanvas {
+  min-height: 300px;
+}

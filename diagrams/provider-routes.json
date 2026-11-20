@@ -1,0 +1,151 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "provider-routes",
+  "title": "One route per provider",
+  "lede": "The gateway presents one route per provider and passes each provider's own request format through without translating it.",
+  "groups": {
+    "client": {
+      "label": "Client",
+      "color": "blue"
+    },
+    "gw": {
+      "label": "Gateway routes",
+      "color": "dark"
+    },
+    "provider": {
+      "label": "Providers",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "client",
+      "group": "client",
+      "label": "Client picks a lane",
+      "sub": [
+        "sends that provider's",
+        "wire shape"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "anthro",
+      "group": "gw",
+      "label": "Anthropic route",
+      "sub": [
+        "native Messages API, version",
+        "header, top-level system"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "openai",
+      "group": "gw",
+      "label": "OpenAI route",
+      "sub": [
+        "chat completions"
+      ],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "custom",
+      "group": "gw",
+      "label": "OpenAI-compatible route",
+      "sub": [
+        "fronts a local llama.cpp",
+        "server"
+      ],
+      "x": 320,
+      "y": 260
+    },
+    {
+      "id": "pa",
+      "group": "provider",
+      "label": "Anthropic",
+      "sub": [
+        "provider errors in provider",
+        "style"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "po",
+      "group": "provider",
+      "label": "OpenAI",
+      "sub": [
+        "gateway refusals are short",
+        "JSON bodies"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "pc",
+      "group": "provider",
+      "label": "Custom endpoint",
+      "sub": [
+        "same virtual key accepted"
+      ],
+      "x": 640,
+      "y": 260
+    }
+  ],
+  "edges": [
+    {
+      "source": "client",
+      "target": "anthro",
+      "label": "Messages API shape"
+    },
+    {
+      "source": "client",
+      "target": "openai",
+      "label": "chat completions shape"
+    },
+    {
+      "source": "client",
+      "target": "custom",
+      "label": "OpenAI-compatible shape"
+    },
+    {
+      "source": "anthro",
+      "target": "pa",
+      "label": "passed through untranslated"
+    },
+    {
+      "source": "openai",
+      "target": "po",
+      "label": "passed through untranslated"
+    },
+    {
+      "source": "custom",
+      "target": "pc",
+      "label": "passed through untranslated"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Pick the lane and its wire shape",
+      "what": "The client sends the wire shape its route expects: native Messages for Anthropic, chat completions for OpenAI.",
+      "why": "The gateway does not translate between formats.",
+      "edges": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "title": "Untranslated pass-through",
+      "what": "Each route forwards the provider's own format; the virtual key is accepted as a bearer token or API-key header.",
+      "why": "Gateway refusals (401, 403, 400, 429) are short JSON bodies that name the cause; provider errors come back in the provider's own style.",
+      "edges": [
+        3,
+        4,
+        5
+      ]
+    }
+  ]
+}

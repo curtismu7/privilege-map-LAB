@@ -1,0 +1,131 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "ai-guard-policy",
+  "title": "AI Guard on one key",
+  "lede": "AI Guard is an inspection policy attached to the agent key, with per-detector alert, sanitize and block thresholds and an optional external service.",
+  "groups": {
+    "key": {
+      "label": "Agent key",
+      "color": "blue"
+    },
+    "config": {
+      "label": "Runtime Protection",
+      "color": "dark"
+    },
+    "action": {
+      "label": "Per call",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "wizard",
+      "group": "config",
+      "label": "Runtime Protection step",
+      "sub": [
+        "Enable AI Guard switch,",
+        "Fail Closed switch (off means",
+        "fail open)"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "det",
+      "group": "config",
+      "label": "11 built-in detectors",
+      "sub": [
+        "alert, sanitize and block",
+        "thresholds, 0 to 1 score"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "ext",
+      "group": "config",
+      "label": "External Guardrail",
+      "sub": [
+        "operator-run HTTP service:",
+        "URL, timeout, auth header,",
+        "Block Agreement"
+      ],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "call",
+      "group": "key",
+      "label": "Call made with this key",
+      "sub": [
+        "policy follows the key,",
+        "not the network"
+      ],
+      "x": 0,
+      "y": 195
+    },
+    {
+      "id": "strong",
+      "group": "action",
+      "label": "Strongest threshold wins",
+      "sub": [
+        "alert records without",
+        "blocking; block stops; one",
+        "key can observe while",
+        "another enforces"
+      ],
+      "x": 640,
+      "y": 195
+    }
+  ],
+  "edges": [
+    {
+      "source": "wizard",
+      "target": "det",
+      "label": "detectors configured per key"
+    },
+    {
+      "source": "wizard",
+      "target": "ext",
+      "label": "optional external service"
+    },
+    {
+      "source": "det",
+      "target": "call",
+      "label": "settings apply to this key's calls"
+    },
+    {
+      "source": "call",
+      "target": "strong",
+      "label": "score sets the action"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Configure on the key",
+      "what": "AI Guard is set in the Runtime Protection step of the Agent Registry wizard: an Enable switch and a Fail Closed switch (off means fail open).",
+      "why": "The policy attaches to the credential, not the network; a team can watch a new policy before enforcing it.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Detectors and thresholds",
+      "what": "Eleven built-in detectors each carry alert, sanitize and block thresholds on a 0 to 1 score, plus an optional External Guardrail service.",
+      "why": "Threshold values seen in testing came from one key and are not product defaults.",
+      "edges": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "title": "The strongest threshold reached acts",
+      "what": "Alert records a finding without blocking, sanitize rewrites, block stops: the strongest threshold reached sets the action.",
+      "why": "Tool-call arguments are not inspected by this control.",
+      "edges": [
+        3
+      ]
+    }
+  ]
+}

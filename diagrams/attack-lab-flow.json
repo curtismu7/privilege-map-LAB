@@ -1,0 +1,186 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "attack-lab-flow",
+  "title": "Each scenario has its own path",
+  "lede": "The Attack Lab runs each scenario through an existing safe path and attributes the result to the component that observed it.",
+  "groups": {
+    "scenario": {
+      "label": "Scenario",
+      "color": "red"
+    },
+    "path": {
+      "label": "Path it travels",
+      "color": "dark"
+    },
+    "label": {
+      "label": "Attribution",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "ta",
+      "group": "scenario",
+      "label": "Tool Abuse",
+      "sub": [
+        "a non-mutating simulation"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "tp",
+      "group": "scenario",
+      "label": "Tool Poisoning",
+      "sub": [
+        "hostile metadata to model",
+        "proposal to tool-call boundary"
+      ],
+      "x": 0,
+      "y": 130
+    },
+    {
+      "id": "sv",
+      "group": "scenario",
+      "label": "Schema Violation",
+      "sub": [
+        "invalid arguments"
+      ],
+      "x": 0,
+      "y": 260
+    },
+    {
+      "id": "ia",
+      "group": "scenario",
+      "label": "Inter-Agent Abuse",
+      "sub": [
+        "A2A discovery and message",
+        "probes"
+      ],
+      "x": 0,
+      "y": 390
+    },
+    {
+      "id": "mc",
+      "group": "scenario",
+      "label": "Malicious Content",
+      "sub": [
+        "safe awareness sample, only",
+        "on explicit action"
+      ],
+      "x": 0,
+      "y": 520
+    },
+    {
+      "id": "mid",
+      "group": "path",
+      "label": "Through the demo backend, token",
+      "sub": [
+        "exchange, Authorize check"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "edge",
+      "group": "path",
+      "label": "To the MCP and A2A gates",
+      "sub": [],
+      "x": 320,
+      "y": 260
+    },
+    {
+      "id": "gw",
+      "group": "path",
+      "label": "Through the LLM gateway",
+      "sub": [
+        "to the model provider"
+      ],
+      "x": 320,
+      "y": 520
+    },
+    {
+      "id": "attr",
+      "group": "label",
+      "label": "Enforcement component and",
+      "sub": [
+        "reachability shown"
+      ],
+      "x": 640,
+      "y": 260
+    }
+  ],
+  "edges": [
+    {
+      "source": "ta",
+      "target": "mid",
+      "label": "safe existing path"
+    },
+    {
+      "source": "tp",
+      "target": "edge",
+      "label": "stops at the tool-call boundary"
+    },
+    {
+      "source": "sv",
+      "target": "edge",
+      "label": "labelled a local schema rejection",
+      "dashed": true
+    },
+    {
+      "source": "ia",
+      "target": "edge",
+      "label": "gateway probes"
+    },
+    {
+      "source": "mc",
+      "target": "gw",
+      "label": "explicit action only"
+    },
+    {
+      "source": "mid",
+      "target": "attr",
+      "label": "component that observed it"
+    },
+    {
+      "source": "edge",
+      "target": "attr",
+      "label": "component that observed it"
+    },
+    {
+      "source": "gw",
+      "target": "attr",
+      "label": "component that observed it"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Scenario, path, attribution",
+      "what": "Each scenario is designed to travel an existing safe path, and the result is attributed to the component that observed it.",
+      "why": "A model refusal or a local validator rejection must not be presented as a Privilege block.",
+      "edges": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "title": "Three different destinations",
+      "what": "Tool Abuse runs the demo backend path; Tool Poisoning and Schema Violation stop at the MCP boundaries; Malicious Content goes through the LLM gateway.",
+      "why": "Schema Violation is labelled a local schema rejection unless the response reports a Privilege decision.",
+      "edges": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "title": "Read the fields aloud",
+      "what": "The presenter is advised to read the enforcement component and reachability fields aloud and to treat no-gateway-decision as a valid outcome.",
+      "why": "A fixture mode, labelled as not sent to Privilege, is also described.",
+      "edges": []
+    }
+  ]
+}

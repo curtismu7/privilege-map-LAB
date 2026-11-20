@@ -1,0 +1,143 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "model-allowlist",
+  "title": "The model allowlist check",
+  "lede": "The gateway reads the model field of each request and compares it with the key's Allowed models list before anything leaves for the provider.",
+  "groups": {
+    "app": {
+      "label": "Application",
+      "color": "blue"
+    },
+    "gw": {
+      "label": "Gateway",
+      "color": "dark"
+    },
+    "provider": {
+      "label": "Model provider",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "app",
+      "group": "app",
+      "label": "Request with a model field",
+      "sub": [
+        "the id the client chose"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "list",
+      "group": "gw",
+      "label": "Key's Allowed models list",
+      "sub": [
+        "a subset of the provider",
+        "catalog"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "onlist",
+      "group": "gw",
+      "label": "Model is on the list",
+      "sub": [
+        "call continues to the",
+        "other key checks"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "off",
+      "group": "gw",
+      "label": "403: model not allowed",
+      "sub": [
+        "same refusal for a model",
+        "that does not exist"
+      ],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "prov",
+      "group": "provider",
+      "label": "Provider sees the call",
+      "sub": [
+        "only listed models"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "edit",
+      "group": "gw",
+      "label": "Edit the allowlist",
+      "sub": [
+        "next call honoured, no",
+        "gateway restart"
+      ],
+      "x": 0,
+      "y": 130
+    }
+  ],
+  "edges": [
+    {
+      "source": "app",
+      "target": "list",
+      "label": "gateway reads the model field"
+    },
+    {
+      "source": "list",
+      "target": "onlist",
+      "label": "model is listed"
+    },
+    {
+      "source": "onlist",
+      "target": "prov",
+      "label": "call leaves for the provider"
+    },
+    {
+      "source": "list",
+      "target": "off",
+      "label": "not on the list",
+      "dashed": true
+    },
+    {
+      "source": "edit",
+      "target": "list",
+      "label": "allowlist change applies"
+    }
+  ],
+  "steps": [
+    {
+      "title": "The request names a model",
+      "what": "The gateway reads the model field of each request and compares it with the key's Allowed models list.",
+      "why": "The provider's own model-list endpoint returns the whole catalog, not the key's list, so a dropdown built from it does not show which ids are allowed.",
+      "edges": [
+        0,
+        1
+      ]
+    },
+    {
+      "title": "Listed or refused",
+      "what": "A listed model continues; an unlisted or nonexistent model is refused with a 403 whose message says the model is not allowed for this key.",
+      "why": "Unlike MCP and A2A calls, this refusal names its cause in the response body.",
+      "edges": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "title": "Changes apply on the next call",
+      "what": "Editing the key's allowlist changed a refused call to accepted on the next call, with no gateway restart.",
+      "why": "App and policy edits are documented to take about 4 minutes to reach the gateway.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

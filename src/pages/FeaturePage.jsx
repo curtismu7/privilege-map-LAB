@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import features from '../data/features.json';
 import { PAGES } from '../data/pages.js';
+import FeatureDiagram from '../diagram/FeatureDiagram.jsx';
 
 function Section({ title, children }) {
   return (
@@ -31,6 +32,7 @@ function FeatureDetail({ feature }) {
           ))}
         </ul>
       </Section>
+      {feature.diagram ? <FeatureDiagram diagramId={feature.diagram} /> : null}
       <details className="feature__more">
         <summary>Sources and what is not verified</summary>
         <p className="small">

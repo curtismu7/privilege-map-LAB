@@ -1,0 +1,144 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "discovery-gating",
+  "title": "Ungranted tools are hidden",
+  "lede": "The gateway filters tools/list to the set the caller's policy grants, so the agent never learns what it may not call.",
+  "groups": {
+    "agent": {
+      "label": "Agent",
+      "color": "blue"
+    },
+    "gw": {
+      "label": "Gateway",
+      "color": "dark"
+    },
+    "server": {
+      "label": "MCP server",
+      "color": "grey"
+    },
+    "log": {
+      "label": "Evidence",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "list",
+      "group": "agent",
+      "label": "tools/list request",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "filter",
+      "group": "gw",
+      "label": "Filter to the grant",
+      "sub": [
+        "ungranted tools removed"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "seen",
+      "group": "agent",
+      "label": "Agent sees granted tools only",
+      "sub": [
+        "ungranted ones cannot be",
+        "tried later"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "full",
+      "group": "server",
+      "label": "Full tool list",
+      "sub": [
+        "never shown unfiltered"
+      ],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "call403",
+      "group": "gw",
+      "label": "Call for a hidden tool",
+      "sub": [
+        "bare HTTP 403, no JSON-RPC",
+        "body, same as a nonexistent",
+        "tool"
+      ],
+      "x": 0,
+      "y": 195
+    },
+    {
+      "id": "logline",
+      "group": "log",
+      "label": "Gateway log records it",
+      "sub": [
+        "the removal and the reason",
+        "live only here"
+      ],
+      "x": 640,
+      "y": 195
+    }
+  ],
+  "edges": [
+    {
+      "source": "list",
+      "target": "filter",
+      "label": "request passes the gateway"
+    },
+    {
+      "source": "filter",
+      "target": "seen",
+      "label": "granted tools returned"
+    },
+    {
+      "source": "filter",
+      "target": "full",
+      "label": "not forwarded whole"
+    },
+    {
+      "source": "seen",
+      "target": "call403",
+      "label": "agent tries a hidden tool",
+      "dashed": true
+    },
+    {
+      "source": "filter",
+      "target": "logline",
+      "label": "removal and denials logged"
+    }
+  ],
+  "steps": [
+    {
+      "title": "The list is filtered",
+      "what": "Ungranted tools were removed from the response and the removal written to the gateway log.",
+      "why": "Hiding the tool removes the knowledge, instead of only blocking calls.",
+      "edges": [
+        0,
+        1,
+        4
+      ]
+    },
+    {
+      "title": "Hidden means refused",
+      "what": "A call for a hidden tool returns a plain HTTP 403 with no JSON-RPC body, the same as for a nonexistent tool.",
+      "why": "The reason lives only in the gateway log; the only self-describing 403 names a missing mcp scope.",
+      "edges": [
+        3
+      ]
+    },
+    {
+      "title": "No policy denies from the first request",
+      "what": "An app with no policy denies by default from the first request and returns a bare 403 before the backend is contacted.",
+      "why": "Policy edits take about 4 minutes to reach the gateway, so a changed grant is not visible immediately.",
+      "edges": [
+        2
+      ]
+    }
+  ]
+}

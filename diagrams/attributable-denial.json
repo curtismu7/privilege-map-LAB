@@ -1,0 +1,142 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "attributable-denial",
+  "title": "Which control refused the call",
+  "lede": "Two mechanisms can refuse a model call at different points, and each writes a different kind of evidence.",
+  "groups": {
+    "app": {
+      "label": "Caller",
+      "color": "blue"
+    },
+    "pre": {
+      "label": "Before the provider",
+      "color": "dark"
+    },
+    "post": {
+      "label": "After the provider",
+      "color": "amber"
+    },
+    "evidence": {
+      "label": "Evidence",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "call",
+      "group": "app",
+      "label": "Model call with a virtual key",
+      "sub": [],
+      "x": 0,
+      "y": 130
+    },
+    {
+      "id": "guard",
+      "group": "pre",
+      "label": "AI Guard guardrail",
+      "sub": [
+        "per agent key, before the",
+        "provider is called"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "route",
+      "group": "pre",
+      "label": "Wrong provider or model 403",
+      "sub": [
+        "body names the reason"
+      ],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "withhold",
+      "group": "post",
+      "label": "Cedar policy withholds content",
+      "sub": [
+        "personal data in a reply; the",
+        "provider already answered"
+      ],
+      "x": 320,
+      "y": 260
+    },
+    {
+      "id": "guard-ev",
+      "group": "evidence",
+      "label": "400 naming the category",
+      "sub": [
+        "OWASP, MITRE ATLAS,",
+        "NIST mappings"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "cedar-ev",
+      "group": "evidence",
+      "label": "Log: decision, policy ids,",
+      "sub": [
+        "principal and agent key"
+      ],
+      "x": 640,
+      "y": 260
+    }
+  ],
+  "edges": [
+    {
+      "source": "call",
+      "target": "guard",
+      "label": "request text screened"
+    },
+    {
+      "source": "call",
+      "target": "route",
+      "label": "key vs provider and allowlist"
+    },
+    {
+      "source": "call",
+      "target": "withhold",
+      "label": "reply content policy"
+    },
+    {
+      "source": "guard",
+      "target": "guard-ev",
+      "label": "block: 400 names the category"
+    },
+    {
+      "source": "withhold",
+      "target": "cedar-ev",
+      "label": "denial logged with policy ids"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Before the provider: AI Guard",
+      "what": "The guardrail runs before the provider is called; a block returns a 400 whose message names the category, such as prompt injection.",
+      "why": "AI Guard is configured per agent key, not per app. Block events carry OWASP, MITRE ATLAS and NIST mappings.",
+      "edges": [
+        0,
+        3
+      ]
+    },
+    {
+      "title": "Route checks name their reason",
+      "what": "Wrong-provider and model-allowlist refusals are 403 responses on the model routes whose body names the reason.",
+      "why": "Bare 403s on MCP and A2A routes instead need the gateway log.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "After the provider: Cedar",
+      "what": "A Cedar policy can withhold content from a completion, for example personal data; the provider has already answered.",
+      "why": "The live-verified denial logged decision, policy IDs, principal and agent key, with no compliance mapping.",
+      "edges": [
+        2,
+        4
+      ]
+    }
+  ]
+}

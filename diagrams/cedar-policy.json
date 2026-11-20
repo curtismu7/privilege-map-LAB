@@ -1,0 +1,137 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "cedar-policy",
+  "title": "A Cedar policy decides one call",
+  "lede": "A Cedar AI policy can refuse a tool call, hold it for a human, or withhold content from a reply, using caller, tool, argument and scope facts.",
+  "groups": {
+    "facts": {
+      "label": "What the rule reads",
+      "color": "blue"
+    },
+    "policy": {
+      "label": "Cedar policy",
+      "color": "dark"
+    },
+    "action": {
+      "label": "Decision",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "who",
+      "group": "facts",
+      "label": "Caller: user, agent, group",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "what",
+      "group": "facts",
+      "label": "Tool and named arguments",
+      "sub": [
+        "app, token scopes, key",
+        "scopes, approvals so far,",
+        "AI Guard findings"
+      ],
+      "x": 0,
+      "y": 130
+    },
+    {
+      "id": "cedar",
+      "group": "policy",
+      "label": "AI Policies in Cedar",
+      "sub": [
+        "written from a template",
+        "card"
+      ],
+      "x": 320,
+      "y": 65
+    },
+    {
+      "id": "allow",
+      "group": "action",
+      "label": "Permit the call",
+      "sub": [],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "hold",
+      "group": "action",
+      "label": "Hold for a human",
+      "sub": [
+        "annotations set grant",
+        "lifetime, request lifetime,",
+        "approvers, reason"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "deny",
+      "group": "action",
+      "label": "Refuse or withhold",
+      "sub": [
+        "denials and holds written",
+        "to the gateway log"
+      ],
+      "x": 640,
+      "y": 260
+    }
+  ],
+  "edges": [
+    {
+      "source": "who",
+      "target": "cedar",
+      "label": "principal"
+    },
+    {
+      "source": "what",
+      "target": "cedar",
+      "label": "resource and context"
+    },
+    {
+      "source": "cedar",
+      "target": "allow",
+      "label": "rule permits"
+    },
+    {
+      "source": "cedar",
+      "target": "hold",
+      "label": "rule holds"
+    },
+    {
+      "source": "cedar",
+      "target": "deny",
+      "label": "rule refuses or withholds"
+    }
+  ],
+  "steps": [
+    {
+      "title": "The facts a rule can read",
+      "what": "The editor exposes the caller, the tool and its named arguments, the app, token and key scopes, approvals so far and AI Guard findings.",
+      "why": "Cedar reading PingFederate token scopes was measured on one PingFederate-token door only and should not be generalised.",
+      "edges": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "title": "Permit, hold or refuse",
+      "what": "A policy can refuse a call, hold it for a human, or withhold content from a model reply; hold annotations set grant and request lifetime, approvers and reason.",
+      "why": "Denials and holds are written to the gateway log.",
+      "edges": []
+    },
+    {
+      "title": "Candidate until Active",
+      "what": "A policy is Candidate (validated, stored, never enforced) or Active (enforced); an API-created policy stays empty until set Active.",
+      "why": "App and policy edits take about 4 minutes to reach the gateway.",
+      "edges": []
+    }
+  ]
+}

@@ -51,7 +51,7 @@ for (const name of DEMO_DIAGRAMS) {
 test('only the app\'s named diagrams are served, and a path is not a name', () => {
   assert.throws(() => loadDiagramByName('../package'), /not used by this app/);
   assert.throws(() => loadDiagramByName('auth-code-pkce'), /not used by this app/);
-  assert.equal(listDiagrams().length, 2);
+  assert.equal(listDiagrams().length, DEMO_DIAGRAMS.length);
   assert.ok(listDiagrams().every((d) => d.available));
 });
 

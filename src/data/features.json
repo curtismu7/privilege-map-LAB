@@ -38,7 +38,8 @@
       "With Block Agreement off, a sidecar verdict did not block an A2A message in one test (the call succeeded with an alert only); it was shown to block on the LLM path only.",
       "Which console release introduced the non-human-identity custodian option and per-app guardrail settings comes from release notes and was not re-verified on the tenant.",
       "The size and composition of the agent fleet seen earlier is a past snapshot and may have changed."
-    ]
+    ],
+    "diagram": "agent-registry-wizard"
   },
   {
     "id": "privilege-agent-desktop-device-bound-identity",
@@ -70,7 +71,8 @@
       "The fix for a blank local console (quit and relaunch) was confirmed on one Mac and not re-verified.",
       "The erasure of the previous tenant identity on re-pairing comes from a documented warning and was not tested.",
       "The device-bound 403 was measured on one tenant only, so refusal of an unpaired machine in general is not established."
-    ]
+    ],
+    "diagram": "device-bound-identity"
   },
   {
     "id": "cimd-client-documents",
@@ -98,7 +100,8 @@
       "The claim that no open registration records accumulate was not observed.",
       "The sign-in flow steps other than the document fetch are design implications and were not observed.",
       "Whether the check that public paths are reachable anonymously is part of automated testing is not verified."
-    ]
+    ],
+    "diagram": "cimd-flow"
   },
   {
     "id": "virtual-keys",
@@ -137,7 +140,8 @@
       "Using two keys for the same provider, and provider rate-limit header behavior on providers other than OpenAI and Anthropic, were not tested.",
       "How quickly a change to a key's own settings, such as limits, reaches the gateway is not settled.",
       "That only the base URL changes between providers is a design intent and was not tested with the provider SDKs."
-    ]
+    ],
+    "diagram": "virtual-key-path"
   },
   {
     "id": "model-allowlists",
@@ -171,7 +175,8 @@
       "An allowlist with an empty model list was not tested.",
       "The allowlist edit was proven by response behavior only, because the audit endpoint was not exposed to the tenant key.",
       "The sources do not settle whether an allowlist edit follows the roughly 4-minute delay for app and policy edits or the immediate pickup seen in one test."
-    ]
+    ],
+    "diagram": "model-allowlist"
   },
   {
     "id": "llm-provider-routes-and-wire-shapes",
@@ -204,7 +209,8 @@
       "The custom llama.cpp route and its behavior are taken from release notes and were not independently confirmed.",
       "Whether the Agent Registry accepts additional OpenAI-compatible providers was not confirmed.",
       "Gateway refusal bodies other than the guardrail block were described in documentation but not reproduced across providers."
-    ]
+    ],
+    "diagram": "provider-routes"
   },
   {
     "id": "attributable-denial",
@@ -243,7 +249,8 @@
       "Response-side Cedar denials were seen carrying decision, policy IDs, principal and agent key without a compliance mapping. A request-rate denial event does carry a mapping (a control mapping to NIST AI RMF MANAGE-2.4), so a policy denial can carry one; which denials do is not settled.",
       "The decision and policy ID values in the Cedar event come from one live event on one tenant and may change between releases.",
       "Personal-data withholding by AI Guard and by Cedar are different mechanisms with different events, and they were not compared on the same request."
-    ]
+    ],
+    "diagram": "attributable-denial"
   },
   {
     "id": "policy-union-model",
@@ -274,7 +281,8 @@
       "The source documents disagree on expiry: one says an expired policy silently removes its tools, another says it denies identically to a missing policy. This is unresolved.",
       "The gateway log wording comes from one gateway release and may change.",
       "Deleting a policy was not measured, and its effect on the combined grant is unknown."
-    ]
+    ],
+    "diagram": "policy-union"
   },
   {
     "id": "mcp-tool-call-inspection",
@@ -305,7 +313,8 @@
       "The rug-pull case did not flip on either app; that the gateway caches the tool list per app is an inference, not a detection result.",
       "The side-by-side matrix was measured on one gateway release and later releases were not re-measured.",
       "The dangerous tools are stubs, so no real transfer, deletion or grant was exercised."
-    ]
+    ],
+    "diagram": "tool-call-inspection"
   },
   {
     "id": "mcp-discovery-gating",
@@ -334,7 +343,8 @@
       "Whether a changed grant applies without a gateway restart was not measured beyond the roughly 4 minute propagation delay for edits.",
       "The refusal wording differs between an aggregate app with a tool filter and one without, and which wording applies to a given app was not fully mapped.",
       "Time-window behavior in the console was not measured."
-    ]
+    ],
+    "diagram": "discovery-gating"
   },
   {
     "id": "aggregate-apps",
@@ -365,7 +375,8 @@
       "The aggregate was measured as plain JSON with no session ID, and behavior with session-bearing clients was not tested.",
       "The refusal wording differs between an aggregate with a tool filter and one without, and was not fully mapped.",
       "Gateway acceptance of workload-identity tokens through an aggregate is not proven, and a Federated Identity with no key behind it authenticates nobody."
-    ]
+    ],
+    "diagram": "aggregate-app"
   },
   {
     "id": "agent-to-agent-a2a-through-the-gateway",
@@ -396,7 +407,8 @@
       "Whether every hop in a chain is logged was observed in the one chain tested and not across other chains.",
       "The agent card address and certificate behavior was observed on a single agent and may differ for others.",
       "A blocked hop is logged with the caller, category and rules but not the target app, and the log names a guardrail category rather than a policy; this was seen on a prompt-injection message sent to a worker agent through the gateway."
-    ]
+    ],
+    "diagram": "a2a-chain"
   },
   {
     "id": "a2a-guardrails",
@@ -427,7 +439,8 @@
       "Calls made with a person's sign-in were found to be unscreened in one setup only; other setups were not tested.",
       "The release-note claims about per-application AI Guard and skill-targeted policies were not read or measured; the verified behavior here is per agent key.",
       "The gateway log prints live agent keys in some guardrail lines, and the log should be treated as a secret; whether this is fixed on current builds was not checked."
-    ]
+    ],
+    "diagram": "a2a-guardrail-path"
   },
   {
     "id": "backend-auth-modes",
@@ -463,7 +476,8 @@
       "Static Token on an MCP backend was measured through an aggregate member only.",
       "The forwarded bearer value was not confirmed in the gateway log on the first run.",
       "Which mode applies when none is picked is documented as Static Token if a token is configured and otherwise None; this was not measured."
-    ]
+    ],
+    "diagram": "backend-auth-modes"
   },
   {
     "id": "per-credential-inspection-policy-aiguard",
@@ -499,7 +513,8 @@
       "Tool-argument content was not caught and tool poisoning passed; the mcp scope filters tools only.",
       "The console's detector grouping may differ from the grouping in the documents, and the console headings were not checked against the guide.",
       "The release-note claim of application-level AI Guard conflicts with per-key configuration and was not measured."
-    ]
+    ],
+    "diagram": "ai-guard-policy"
   },
   {
     "id": "cedar-per-call-policy",
@@ -535,7 +550,8 @@
       "Using PingFederate as an identity provider for Privilege was not tested.",
       "Coverage of Cedar attributes beyond those listed was not confirmed.",
       "Enforcement of a rule that depends on scopes of a PingFederate token on routes other than the one measured was not tested."
-    ]
+    ],
+    "diagram": "cedar-policy"
   },
   {
     "id": "human-in-the-loop-approvals",
@@ -567,7 +583,8 @@
       "Treating a Recognize call as a human-in-the-loop step was not tested.",
       "The Approver Policy wizard offers only infrastructure resource types, so it was not shown to cover MCP tool approvals.",
       "Whether PingFederate token claims reach an approval was not tested."
-    ]
+    ],
+    "diagram": "hitl-approval"
   },
   {
     "id": "attack-lab",
@@ -597,7 +614,8 @@
       "A live Tool Poisoning denial needs a specific hostile-server policy and a synced demo identity; this was not confirmed.",
       "The sequence view that separates gateway deny, local schema rejection, provider refusal and no verdict, and the planned colour-contrast audit, are plan steps that were not confirmed as built.",
       "The fixture mode and the presenter flow were not shown running."
-    ]
+    ],
+    "diagram": "attack-lab-flow"
   },
   {
     "id": "audit-evidence",
@@ -627,7 +645,8 @@
       "Verification covers one tenant and one gateway build; other tenants and builds were not covered.",
       "The verified Cedar denial event carried no framework mapping, while a request-rate denial event carried a NIST AI RMF control mapping; which denials carry mappings is not settled.",
       "No Attack Lab run was recorded as producing audit events."
-    ]
+    ],
+    "diagram": "audit-evidence"
   },
   {
     "id": "secrets-hub",
@@ -663,7 +682,8 @@
       "The clear-text key in the audit feed was seen once on the saved hub record and was not checked in a SIEM; the guide says later edits did not record it again.",
       "No test showed a hub supplying a credential to an app or agent.",
       "In the demo environment an existing long-lived grant already covers the secret, so a demo of expiry needs a user without that grant."
-    ]
+    ],
+    "diagram": "secrets-hub-flow"
   },
   {
     "id": "sensor-enforcement",
@@ -700,6 +720,7 @@
       "Docker container-scoped enforcement failed in test with no container attribution, and the cause was not established, so scoping by container name is not shown to work.",
       "Time before termination is described only as 'a moment' and was not measured.",
       "Lower capability tiers than terminate were not seen on the test host."
-    ]
+    ],
+    "diagram": "sensor-enforcement"
   }
 ]

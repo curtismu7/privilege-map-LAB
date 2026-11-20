@@ -1,0 +1,141 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "a2a-guardrail-path",
+  "title": "Screening agent-to-agent messages",
+  "lede": "The gateway inspects the whole request body with the calling key's AI Guard settings before the remote agent sees it, and screens replies too.",
+  "groups": {
+    "caller": {
+      "label": "Calling agent",
+      "color": "blue"
+    },
+    "gw": {
+      "label": "Gateway AI Guard",
+      "color": "dark"
+    },
+    "remote": {
+      "label": "Remote agent",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "msg",
+      "group": "caller",
+      "label": "Message: text, data, metadata",
+      "sub": [
+        "single or streaming"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "score",
+      "group": "gw",
+      "label": "Detectors score the parts",
+      "sub": [
+        "calling key's settings,",
+        "alert and block thresholds"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "pass",
+      "group": "gw",
+      "label": "Below alert: delivered",
+      "sub": [],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "alert",
+      "group": "gw",
+      "label": "Alert: logged, delivered",
+      "sub": [
+        "most detectors alerted at",
+        "the settings tested"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "block",
+      "group": "gw",
+      "label": "Block: HTTP 400",
+      "sub": [
+        "JSON-RPC error does not name",
+        "the category"
+      ],
+      "x": 640,
+      "y": 260
+    },
+    {
+      "id": "reply",
+      "group": "gw",
+      "label": "Reply screened too",
+      "sub": [
+        "a hostile agent-card text",
+        "was seen blocked"
+      ],
+      "x": 320,
+      "y": 260
+    }
+  ],
+  "edges": [
+    {
+      "source": "msg",
+      "target": "score",
+      "label": "whole body inspected"
+    },
+    {
+      "source": "score",
+      "target": "pass",
+      "label": "score below alert"
+    },
+    {
+      "source": "score",
+      "target": "alert",
+      "label": "score at or above alert"
+    },
+    {
+      "source": "score",
+      "target": "block",
+      "label": "score at or above block",
+      "dashed": true
+    },
+    {
+      "source": "pass",
+      "target": "reply",
+      "label": "response passes back through"
+    }
+  ],
+  "steps": [
+    {
+      "title": "The whole body is inspected",
+      "what": "Every text part, data part and the metadata are screened, for single and streaming messages.",
+      "why": "AI Guard is per agent key, so two callers can be treated differently for the same message.",
+      "edges": [
+        0,
+        1
+      ]
+    },
+    {
+      "title": "Alert passes, block stops",
+      "what": "A score at or above the block threshold stops the message with an HTTP 400; between the thresholds it alerts and passes.",
+      "why": "Thresholds are an operator choice per key; at the settings tested most detectors alerted rather than blocked.",
+      "edges": [
+        2,
+        3
+      ]
+    },
+    {
+      "title": "Replies are screened as well",
+      "what": "When the call used an agent key, replies from the remote agent are also screened.",
+      "why": "One reply carrying hostile text in its agent card was seen blocked.",
+      "edges": [
+        3,
+        4
+      ]
+    }
+  ]
+}

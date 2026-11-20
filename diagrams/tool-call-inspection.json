@@ -1,0 +1,146 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "tool-call-inspection",
+  "title": "The tool-call boundary",
+  "lede": "The gateway allows or denies each MCP tool call by tool name according to the app's policy, at the call itself rather than the metadata.",
+  "groups": {
+    "attack": {
+      "label": "Hostile server",
+      "color": "red"
+    },
+    "gw": {
+      "label": "Gateway",
+      "color": "dark"
+    },
+    "governed": {
+      "label": "Governed app",
+      "color": "green"
+    },
+    "ungoverned": {
+      "label": "Ungoverned app",
+      "color": "amber"
+    }
+  },
+  "nodes": [
+    {
+      "id": "meta",
+      "group": "attack",
+      "label": "Poisoned tool metadata",
+      "sub": [
+        "looks legitimate to the",
+        "agent"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "call",
+      "group": "gw",
+      "label": "Dangerous tool call",
+      "sub": [
+        "allowed or denied by tool",
+        "name"
+      ],
+      "x": 320,
+      "y": 65
+    },
+    {
+      "id": "yes",
+      "group": "governed",
+      "label": "Policy permits every tool",
+      "sub": [
+        "except three dangerous ones"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "no",
+      "group": "ungoverned",
+      "label": "Allow-all policy",
+      "sub": [
+        "same three calls allowed"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "meta2",
+      "group": "gw",
+      "label": "Metadata, results, resources",
+      "sub": [
+        "policed calls only; not",
+        "sanitized"
+      ],
+      "x": 320,
+      "y": 195
+    },
+    {
+      "id": "args",
+      "group": "gw",
+      "label": "Tool arguments not inspected",
+      "sub": [
+        "a hostile instruction in a",
+        "valid argument passed"
+      ],
+      "x": 320,
+      "y": 325
+    }
+  ],
+  "edges": [
+    {
+      "source": "meta",
+      "target": "call",
+      "label": "model proposes the call"
+    },
+    {
+      "source": "call",
+      "target": "yes",
+      "label": "denied on the governed app"
+    },
+    {
+      "source": "call",
+      "target": "no",
+      "label": "allowed on the ungoverned app"
+    },
+    {
+      "source": "meta",
+      "target": "meta2",
+      "label": "passes uninspected"
+    },
+    {
+      "source": "meta",
+      "target": "args",
+      "label": "inside a valid argument",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Metadata lures, the call lands",
+      "what": "Hostile tool metadata can look legitimate to the agent; the control sits at the tool call itself.",
+      "why": "Metadata, result, resource and prompt checks were allowed on both apps: the gateway polices calls and does not sanitize metadata.",
+      "edges": [
+        0,
+        3
+      ]
+    },
+    {
+      "title": "The policy decides at the call",
+      "what": "In a side-by-side test the same three dangerous calls were denied on the governed app and allowed on the ungoverned one.",
+      "why": "A rug-pull change to the tool list did not flip either app.",
+      "edges": [
+        1,
+        2
+      ]
+    },
+    {
+      "title": "What is not inspected",
+      "what": "Tool arguments are not inspected: a hostile instruction inside a valid argument was not caught.",
+      "why": "An app with no policy denies everything; policy edits take about 4 minutes to reach the gateway.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

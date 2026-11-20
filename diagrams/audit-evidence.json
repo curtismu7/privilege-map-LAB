@@ -1,0 +1,167 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "audit-evidence",
+  "title": "What each decision writes",
+  "lede": "Three verified event types come out of the gateway, and only some carry compliance framework mappings.",
+  "groups": {
+    "gw": {
+      "label": "Gateway decision",
+      "color": "dark"
+    },
+    "event": {
+      "label": "Structured event",
+      "color": "green"
+    },
+    "fields": {
+      "label": "Carries",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "block",
+      "group": "gw",
+      "label": "AI Guard request-side block",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "withhold",
+      "group": "gw",
+      "label": "AI Guard response-side withhold",
+      "sub": [
+        "personal data removed from",
+        "a reply"
+      ],
+      "x": 0,
+      "y": 130
+    },
+    {
+      "id": "cedar",
+      "group": "gw",
+      "label": "Cedar policy denial of a reply",
+      "sub": [
+        "a different mechanism from",
+        "the AI Guard withhold"
+      ],
+      "x": 0,
+      "y": 260
+    },
+    {
+      "id": "ev1",
+      "group": "event",
+      "label": "Request-side block event",
+      "sub": [],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "ev2",
+      "group": "event",
+      "label": "Withhold event",
+      "sub": [],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "ev3",
+      "group": "event",
+      "label": "Policy denial event",
+      "sub": [],
+      "x": 320,
+      "y": 260
+    },
+    {
+      "id": "map",
+      "group": "fields",
+      "label": "MITRE ATLAS, NIST AI RMF,",
+      "sub": [
+        "OWASP LLM"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "ids",
+      "group": "fields",
+      "label": "Request, span, trace ids",
+      "sub": [
+        "for joining to the trace view"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "who",
+      "group": "fields",
+      "label": "Decision, policy ids, principal,",
+      "sub": [
+        "agent key, grant shape"
+      ],
+      "x": 640,
+      "y": 260
+    }
+  ],
+  "edges": [
+    {
+      "source": "block",
+      "target": "ev1",
+      "label": "screening verdict"
+    },
+    {
+      "source": "withhold",
+      "target": "ev2",
+      "label": "response-side verdict"
+    },
+    {
+      "source": "cedar",
+      "target": "ev3",
+      "label": "policy decision"
+    },
+    {
+      "source": "ev1",
+      "target": "map",
+      "label": "compliance mappings present"
+    },
+    {
+      "source": "ev2",
+      "target": "ids",
+      "label": "joins to the trace view"
+    },
+    {
+      "source": "ev3",
+      "target": "who",
+      "label": "no compliance mapping shown",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "AI Guard writes two events",
+      "what": "A request-side block carries compliance mappings (MITRE ATLAS, NIST AI RMF, OWASP LLM), findings and request, span and trace ids; a response-side withhold of personal data is a separate event.",
+      "why": "The trace ids let an event be joined to the trace view.",
+      "edges": [
+        0,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "title": "Cedar denials are their own event",
+      "what": "A Cedar policy denial of an LLM reply carries the decision, policy ids, principal, agent key and grant shape.",
+      "why": "No compliance mapping was shown on it; policy denials are documented to carry the policy and principal but not a mapping.",
+      "edges": [
+        2,
+        5
+      ]
+    },
+    {
+      "title": "Two feeds, kept apart",
+      "what": "Events also carry tenant, user, virtual key id and framework ids where a mapping exists.",
+      "why": "The gateway traffic log is kept apart from the SIEM console-audit feed, which records who changed a policy or key but not traffic.",
+      "edges": []
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "backend-auth-modes",
+  "title": "What the backend receives",
+  "lede": "Each app's Auth Mode decides what credential the backend sees after sign-in and policy pass; the caller's gateway key is never forwarded.",
+  "groups": {
+    "caller": {
+      "label": "Caller",
+      "color": "blue"
+    },
+    "gw": {
+      "label": "Gateway",
+      "color": "dark"
+    },
+    "modes": {
+      "label": "Auth Mode",
+      "color": "amber"
+    },
+    "backend": {
+      "label": "Backend",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "caller",
+      "group": "caller",
+      "label": "Person or agent key",
+      "sub": [
+        "gateway key stays at the",
+        "gateway"
+      ],
+      "x": 0,
+      "y": 195
+    },
+    {
+      "id": "pass",
+      "group": "gw",
+      "label": "Sign-in and policy pass",
+      "sub": [],
+      "x": 320,
+      "y": 195
+    },
+    {
+      "id": "none",
+      "group": "modes",
+      "label": "None",
+      "sub": [
+        "no Authorization header"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "static",
+      "group": "modes",
+      "label": "Static Token",
+      "sub": [
+        "configured bearer token"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "user",
+      "group": "modes",
+      "label": "User Token",
+      "sub": [
+        "credential from the user's",
+        "vault; nothing if empty"
+      ],
+      "x": 640,
+      "y": 260
+    },
+    {
+      "id": "pat",
+      "group": "modes",
+      "label": "Pass Agent Token",
+      "sub": [
+        "forwards a workload",
+        "assertion; refuses a caller",
+        "with none"
+      ],
+      "x": 640,
+      "y": 390
+    },
+    {
+      "id": "be",
+      "group": "backend",
+      "label": "Backend decides",
+      "sub": [
+        "must refuse calls it",
+        "dislikes itself"
+      ],
+      "x": 960,
+      "y": 195
+    }
+  ],
+  "edges": [
+    {
+      "source": "caller",
+      "target": "pass",
+      "label": "call passes policy"
+    },
+    {
+      "source": "pass",
+      "target": "none",
+      "label": "mode chosen per app"
+    },
+    {
+      "source": "pass",
+      "target": "static",
+      "label": "mode chosen per app"
+    },
+    {
+      "source": "pass",
+      "target": "user",
+      "label": "mode chosen per app"
+    },
+    {
+      "source": "pass",
+      "target": "pat",
+      "label": "mode chosen per app"
+    },
+    {
+      "source": "none",
+      "target": "be",
+      "label": "header or nothing"
+    },
+    {
+      "source": "static",
+      "target": "be",
+      "label": "gateway's configured token"
+    },
+    {
+      "source": "user",
+      "target": "be",
+      "label": "vault credential or nothing"
+    },
+    {
+      "source": "pat",
+      "target": "be",
+      "label": "403 at the gateway if no assertion",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Policy first, credential second",
+      "what": "After sign-in and policy pass, the app's Auth Mode decides what the backend receives.",
+      "why": "The caller's own gateway key is never forwarded.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Four modes",
+      "what": "None sends no header; Static Token sends a configured bearer; User Token sends the user's vault credential; Pass Agent Token forwards a workload assertion.",
+      "why": "Only Pass Agent Token is refused at the gateway: a remote agent set to it refuses key callers, so key callers need Static Token.",
+      "edges": [
+        1,
+        2,
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "title": "The backend still decides",
+      "what": "On the other modes the call reaches the backend, which must refuse calls it dislikes.",
+      "why": "In testing None reached the agent (its own 401), Static Token returned 200, and an empty vault forwarded no header with a log line.",
+      "edges": [
+        5,
+        6,
+        7
+      ]
+    }
+  ]
+}

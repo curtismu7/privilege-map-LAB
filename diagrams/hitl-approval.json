@@ -1,0 +1,153 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "hitl-approval",
+  "title": "Two paths to a human decision",
+  "lede": "A Cedar hold keeps a call waiting at the gateway; the demo approval path runs a request through the Privilege API to a named approver.",
+  "groups": {
+    "policy": {
+      "label": "Policy hold",
+      "color": "dark"
+    },
+    "demo": {
+      "label": "Demo approval path",
+      "color": "blue"
+    },
+    "human": {
+      "label": "Approver",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "call",
+      "group": "policy",
+      "label": "Tool call matches a hold rule",
+      "sub": [],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "wait",
+      "group": "policy",
+      "label": "Call held, logged",
+      "sub": [
+        "the client retries after",
+        "approval"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "req",
+      "group": "demo",
+      "label": "Approval request via the API",
+      "sub": [
+        "type App, MCP action,",
+        "approvers set, one hour",
+        "expiry"
+      ],
+      "x": 0,
+      "y": 195
+    },
+    {
+      "id": "status",
+      "group": "demo",
+      "label": "New to Pending",
+      "sub": [
+        "self-approval refused"
+      ],
+      "x": 320,
+      "y": 195
+    },
+    {
+      "id": "console",
+      "group": "human",
+      "label": "Access Request Approvals,",
+      "sub": [
+        "then HITL Requests"
+      ],
+      "x": 640,
+      "y": 195
+    },
+    {
+      "id": "decide",
+      "group": "human",
+      "label": "Approve or deny",
+      "sub": [
+        "who decided is recorded"
+      ],
+      "x": 640,
+      "y": 325
+    },
+    {
+      "id": "resume",
+      "group": "policy",
+      "label": "Call proceeds or stays refused",
+      "sub": [],
+      "x": 320,
+      "y": 325
+    }
+  ],
+  "edges": [
+    {
+      "source": "call",
+      "target": "wait",
+      "label": "hold, not refuse"
+    },
+    {
+      "source": "req",
+      "target": "status",
+      "label": "created with approvers and expiry"
+    },
+    {
+      "source": "status",
+      "target": "console",
+      "label": "request appears under Awaiting"
+    },
+    {
+      "source": "console",
+      "target": "decide",
+      "label": "a person decides"
+    },
+    {
+      "source": "decide",
+      "target": "resume",
+      "label": "client retries after approval"
+    },
+    {
+      "source": "wait",
+      "target": "resume",
+      "label": "decision reaches the call"
+    }
+  ],
+  "steps": [
+    {
+      "title": "A policy can hold, not refuse",
+      "what": "A Cedar policy can hold a tool call for a human instead of refusing it; the hold is written to the gateway log.",
+      "why": "The client retries after approval.",
+      "edges": [
+        0,
+        1,
+        5
+      ]
+    },
+    {
+      "title": "Create the request",
+      "what": "The demo path creates an approval request through the Privilege API: type App, an MCP action, approvers set, one hour expiry; status moves New to Pending.",
+      "why": "Self-approval through the API is refused, so the decision belongs to a person.",
+      "edges": [
+        2,
+        3
+      ]
+    },
+    {
+      "title": "A person decides",
+      "what": "The named approver opens Access Request Approvals, then HITL Requests, finds the request under Awaiting, and approves or denies it.",
+      "why": "The console is the only notification path in the demo: Slack and Mattermost do not dispatch on the agentless demo tenant.",
+      "edges": [
+        4,
+        5
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "aggregate-app",
+  "title": "An aggregate app in front of members",
+  "lede": "Many MCP servers sit behind one address; the prefixed grant on the aggregate decides which tools a caller sees, and each member's own policy still applies.",
+  "groups": {
+    "client": {
+      "label": "Client",
+      "color": "blue"
+    },
+    "agg": {
+      "label": "Aggregate app",
+      "color": "dark"
+    },
+    "member": {
+      "label": "Member apps",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "call",
+      "group": "client",
+      "label": "One connection, one address",
+      "sub": [
+        "the aggregate's name"
+      ],
+      "x": 0,
+      "y": 65
+    },
+    {
+      "id": "agg",
+      "group": "agg",
+      "label": "tools/list with prefixes",
+      "sub": [
+        "member alias __ tool name;",
+        "alias defaults to the",
+        "member name"
+      ],
+      "x": 320,
+      "y": 65
+    },
+    {
+      "id": "grant",
+      "group": "agg",
+      "label": "Grant in prefixed form",
+      "sub": [
+        "decides what the caller",
+        "sees and can call"
+      ],
+      "x": 640,
+      "y": 65
+    },
+    {
+      "id": "m1",
+      "group": "member",
+      "label": "Member A",
+      "sub": [
+        "its own policy and",
+        "Auth Mode still apply"
+      ],
+      "x": 960,
+      "y": 0
+    },
+    {
+      "id": "m2",
+      "group": "member",
+      "label": "Member B",
+      "sub": [
+        "session opened as the",
+        "calling user"
+      ],
+      "x": 960,
+      "y": 130
+    },
+    {
+      "id": "refuse",
+      "group": "agg",
+      "label": "Refusal is a JSON-RPC error",
+      "sub": [
+        "with HTTP 200"
+      ],
+      "x": 320,
+      "y": 195
+    }
+  ],
+  "edges": [
+    {
+      "source": "call",
+      "target": "agg",
+      "label": "tools/list on the aggregate"
+    },
+    {
+      "source": "agg",
+      "target": "grant",
+      "label": "filter to the prefixed grant"
+    },
+    {
+      "source": "grant",
+      "target": "m1",
+      "label": "prefix stripped, session opened"
+    },
+    {
+      "source": "grant",
+      "target": "m2",
+      "label": "prefix stripped, session opened"
+    },
+    {
+      "source": "agg",
+      "target": "refuse",
+      "label": "ungranted or unknown tool",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "One address for many servers",
+      "what": "An MCP Aggregate application has a name that becomes its address and a list of member MCP Server apps; it has no backend or Auth Mode of its own.",
+      "why": "Each tool is listed as member alias, two underscores, tool name.",
+      "edges": [
+        0,
+        1
+      ]
+    },
+    {
+      "title": "The prefixed grant decides",
+      "what": "The grant on the aggregate, written in prefixed form, decides which tools the caller sees and can call.",
+      "why": "When a call arrives the aggregate strips the prefix and opens a session to that member as the calling user.",
+      "edges": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "title": "Refusals look like success",
+      "what": "In testing, refusals came back as JSON-RPC errors with HTTP 200 rather than the bare 403 of a plain MCP Server app.",
+      "why": "A client that checks only the HTTP status could read them as success; the wording varied.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

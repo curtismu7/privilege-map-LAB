@@ -213,6 +213,111 @@
       "id": "nhi-checks",
       "label": "What the gateway checks on each call",
       "href": "/#/map?diagram=nhi-checks"
+    },
+    {
+      "id": "agent-registry-wizard",
+      "label": "The Add Agent wizard",
+      "href": "/#/map?diagram=agent-registry-wizard"
+    },
+    {
+      "id": "device-bound-identity",
+      "label": "Device-bound desktop identity",
+      "href": "/#/map?diagram=device-bound-identity"
+    },
+    {
+      "id": "cimd-flow",
+      "label": "How a CIMD client is trusted",
+      "href": "/#/map?diagram=cimd-flow"
+    },
+    {
+      "id": "virtual-key-path",
+      "label": "A virtual key call to a model",
+      "href": "/#/map?diagram=virtual-key-path"
+    },
+    {
+      "id": "model-allowlist",
+      "label": "The model allowlist check",
+      "href": "/#/map?diagram=model-allowlist"
+    },
+    {
+      "id": "provider-routes",
+      "label": "One route per provider",
+      "href": "/#/map?diagram=provider-routes"
+    },
+    {
+      "id": "attributable-denial",
+      "label": "Which control refused the call",
+      "href": "/#/map?diagram=attributable-denial"
+    },
+    {
+      "id": "policy-union",
+      "label": "Why one policy may not narrow access",
+      "href": "/#/map?diagram=policy-union"
+    },
+    {
+      "id": "tool-call-inspection",
+      "label": "The tool-call boundary",
+      "href": "/#/map?diagram=tool-call-inspection"
+    },
+    {
+      "id": "discovery-gating",
+      "label": "Ungranted tools are hidden",
+      "href": "/#/map?diagram=discovery-gating"
+    },
+    {
+      "id": "aggregate-app",
+      "label": "An aggregate app in front of members",
+      "href": "/#/map?diagram=aggregate-app"
+    },
+    {
+      "id": "a2a-chain",
+      "label": "An agent calling an agent through the gateway",
+      "href": "/#/map?diagram=a2a-chain"
+    },
+    {
+      "id": "a2a-guardrail-path",
+      "label": "Screening agent-to-agent messages",
+      "href": "/#/map?diagram=a2a-guardrail-path"
+    },
+    {
+      "id": "backend-auth-modes",
+      "label": "What the backend receives",
+      "href": "/#/map?diagram=backend-auth-modes"
+    },
+    {
+      "id": "ai-guard-policy",
+      "label": "AI Guard on one key",
+      "href": "/#/map?diagram=ai-guard-policy"
+    },
+    {
+      "id": "cedar-policy",
+      "label": "A Cedar policy decides one call",
+      "href": "/#/map?diagram=cedar-policy"
+    },
+    {
+      "id": "hitl-approval",
+      "label": "Two paths to a human decision",
+      "href": "/#/map?diagram=hitl-approval"
+    },
+    {
+      "id": "attack-lab-flow",
+      "label": "Each scenario has its own path",
+      "href": "/#/map?diagram=attack-lab-flow"
+    },
+    {
+      "id": "audit-evidence",
+      "label": "What each decision writes",
+      "href": "/#/map?diagram=audit-evidence"
+    },
+    {
+      "id": "secrets-hub-flow",
+      "label": "Sync names, read values on demand",
+      "href": "/#/map?diagram=secrets-hub-flow"
+    },
+    {
+      "id": "sensor-enforcement",
+      "label": "From watching to terminating",
+      "href": "/#/map?diagram=sensor-enforcement"
     }
   ],
   "stories": [

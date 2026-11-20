@@ -1,0 +1,145 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "cimd-flow",
+  "title": "How a CIMD client is trusted",
+  "lede": "The client's identifier is a URL it controls; Privilege fetches the JSON document there and the admin decides which URLs to trust.",
+  "groups": {
+    "client": {
+      "label": "Client",
+      "color": "blue"
+    },
+    "fetch": {
+      "label": "Privilege fetch",
+      "color": "dark"
+    },
+    "doc": {
+      "label": "Client document",
+      "color": "green"
+    },
+    "admin": {
+      "label": "Admin control",
+      "color": "amber"
+    }
+  },
+  "nodes": [
+    {
+      "id": "url",
+      "group": "client",
+      "label": "Client identifier is an https URL",
+      "sub": [
+        "that the client owner",
+        "controls"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "host",
+      "group": "client",
+      "label": "Document hosted at that URL",
+      "sub": [
+        "must name its own URL"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "fetch",
+      "group": "fetch",
+      "label": "Privilege fetches the URL",
+      "sub": [
+        "read-only, rate limited"
+      ],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "check",
+      "group": "admin",
+      "label": "URL on the accepted list?",
+      "sub": [
+        "MCP Client Documents",
+        "settings"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "trust",
+      "group": "fetch",
+      "label": "Client known: no secret",
+      "sub": [
+        "public client with PKCE,",
+        "token auth none"
+      ],
+      "x": 320,
+      "y": 260
+    },
+    {
+      "id": "reject",
+      "group": "admin",
+      "label": "Missing document reported",
+      "sub": [
+        "or URL not accepted"
+      ],
+      "x": 640,
+      "y": 390
+    }
+  ],
+  "edges": [
+    {
+      "source": "url",
+      "target": "host",
+      "label": "identifier equals the URL"
+    },
+    {
+      "source": "host",
+      "target": "fetch",
+      "label": "JSON: name, redirect URIs, grants"
+    },
+    {
+      "source": "fetch",
+      "target": "check",
+      "label": "is this URL trusted"
+    },
+    {
+      "source": "check",
+      "target": "trust",
+      "label": "accepted: client is known, no secret"
+    },
+    {
+      "source": "check",
+      "target": "reject",
+      "label": "not accepted or fetch failed",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "The identity is a URL",
+      "what": "A client's identifier is an https URL its owner controls; the document there must name that same URL.",
+      "why": "The identifier must equal the URL it was fetched from, or the document is not valid.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Privilege reads the document",
+      "what": "The document describes the client: name, redirect URIs, grant types, response types and token endpoint auth none.",
+      "why": "Public clients use PKCE and hold no secret to steal.",
+      "edges": [
+        1,
+        2
+      ]
+    },
+    {
+      "title": "The admin decides which URLs to trust",
+      "what": "The MCP Client Documents settings hold the accepted document URLs, with a type, a fetch status and a gateway cache period (documented default 24 hours).",
+      "why": "An empty list leaves the feature off and dynamic registration continues as before.",
+      "edges": [
+        3,
+        4
+      ]
+    }
+  ]
+}

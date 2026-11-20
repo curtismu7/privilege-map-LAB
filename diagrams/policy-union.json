@@ -1,0 +1,148 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "policy-union",
+  "title": "Why one policy may not narrow access",
+  "lede": "The effective grant is the union of every non-expired policy that binds the identity, so narrowing one policy may do nothing.",
+  "groups": {
+    "identity": {
+      "label": "Identity",
+      "color": "blue"
+    },
+    "policies": {
+      "label": "Policies",
+      "color": "dark"
+    },
+    "grant": {
+      "label": "Effective grant",
+      "color": "green"
+    },
+    "client": {
+      "label": "Client sees",
+      "color": "grey"
+    }
+  },
+  "nodes": [
+    {
+      "id": "id",
+      "group": "identity",
+      "label": "Agent identity",
+      "sub": [
+        "one app at a time; policies",
+        "are per app"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "p1",
+      "group": "policies",
+      "label": "Policy A: tools 1, 2",
+      "sub": [],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "p2",
+      "group": "policies",
+      "label": "Policy B: tools 2, 3",
+      "sub": [],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "union",
+      "group": "grant",
+      "label": "Union: tools 1, 2, 3",
+      "sub": [
+        "shared tool delivered once"
+      ],
+      "x": 640,
+      "y": 65
+    },
+    {
+      "id": "list",
+      "group": "client",
+      "label": "tools/list shows 1, 2, 3",
+      "sub": [
+        "tools outside the grant are",
+        "removed before the list is",
+        "returned"
+      ],
+      "x": 960,
+      "y": 65
+    },
+    {
+      "id": "none",
+      "group": "grant",
+      "label": "No policy at all: deny",
+      "sub": [
+        "a new app denies everything",
+        "until a policy exists"
+      ],
+      "x": 640,
+      "y": 260
+    }
+  ],
+  "edges": [
+    {
+      "source": "id",
+      "target": "p1",
+      "label": "policy binds the identity"
+    },
+    {
+      "source": "id",
+      "target": "p2",
+      "label": "second policy also binds"
+    },
+    {
+      "source": "p1",
+      "target": "union",
+      "label": "contributes tools 1, 2"
+    },
+    {
+      "source": "p2",
+      "target": "union",
+      "label": "contributes tools 2, 3"
+    },
+    {
+      "source": "union",
+      "target": "list",
+      "label": "filtered tool list returned"
+    },
+    {
+      "source": "id",
+      "target": "none",
+      "label": "no policy exists",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Policies add up",
+      "what": "Creating a policy adds its tools to the identity's combined grant; two policies sharing a tool delivered it once.",
+      "why": "Editing one policy's tools down changed nothing while a broader policy still applied.",
+      "edges": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "title": "The client sees the union",
+      "what": "Tools outside the grant are removed from the tool list before it is returned, so the client cannot tell they exist.",
+      "why": "Denied calls are a bare 403, told apart only in the gateway log.",
+      "edges": [
+        4
+      ]
+    },
+    {
+      "title": "Nothing: deny everything",
+      "what": "An app with no policy denies everything; policies are per app with no inheritance.",
+      "why": "Expiry behaviour is unsettled: one source says an expired policy silently stops contributing, another says it denies like a missing policy.",
+      "edges": [
+        5
+      ]
+    }
+  ]
+}
