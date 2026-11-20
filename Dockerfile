@@ -16,6 +16,7 @@ ENV NODE_ENV=production \
 COPY package.json server.js gatewayReal.js ./
 COPY lib ./lib
 COPY diagrams ./diagrams
+COPY src/data/features.json ./src/data/features.json
 COPY content ./content
 COPY docs/talk-track.md ./docs/talk-track.md
 COPY --from=build /app/dist ./dist
