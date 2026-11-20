@@ -13,7 +13,7 @@ ENV NODE_ENV=production \
     BIND_HOST=0.0.0.0 \
     PORT=5301 \
     DATA_ROOT=/tmp/privilege-map-data
-COPY package.json server.js ./
+COPY package.json server.js gatewayReal.js ./
 COPY lib ./lib
 COPY diagrams ./diagrams
 COPY content ./content
