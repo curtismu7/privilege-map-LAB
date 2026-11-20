@@ -1,0 +1,143 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "virtual-key-path",
+  "title": "A virtual key call to a model",
+  "lede": "The application calls the gateway route for its provider with a virtual key; the gateway swaps in the real key and the caller's key is never forwarded.",
+  "groups": {
+    "app": {
+      "label": "Application",
+      "color": "blue"
+    },
+    "gw": {
+      "label": "Gateway",
+      "color": "dark"
+    },
+    "provider": {
+      "label": "Model provider",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "app",
+      "group": "app",
+      "label": "Application or agent",
+      "sub": [
+        "holds a virtual key,",
+        "never a provider key"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "call",
+      "group": "gw",
+      "label": "Route for its provider",
+      "sub": [
+        "bearer token or",
+        "API-key header"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "checks",
+      "group": "gw",
+      "label": "Checks on the key",
+      "sub": [
+        "valid, guardrail, provider",
+        "match, model allowed"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "swap",
+      "group": "gw",
+      "label": "Swap in the real key",
+      "sub": [
+        "stored in Privilege,",
+        "injected server-side"
+      ],
+      "x": 640,
+      "y": 130
+    },
+    {
+      "id": "model",
+      "group": "provider",
+      "label": "Model answers",
+      "sub": [
+        "caller key never forwarded"
+      ],
+      "x": 640,
+      "y": 260
+    },
+    {
+      "id": "refuse",
+      "group": "gw",
+      "label": "Refusal names its cause",
+      "sub": [
+        "401, 400, 403 or 429 in",
+        "the response body"
+      ],
+      "x": 320,
+      "y": 130
+    }
+  ],
+  "edges": [
+    {
+      "source": "app",
+      "target": "call",
+      "label": "virtual key on the provider route"
+    },
+    {
+      "source": "call",
+      "target": "checks",
+      "label": "gateway validates the key"
+    },
+    {
+      "source": "checks",
+      "target": "swap",
+      "label": "all checks pass"
+    },
+    {
+      "source": "swap",
+      "target": "model",
+      "label": "real provider key attached"
+    },
+    {
+      "source": "checks",
+      "target": "refuse",
+      "label": "a check failed",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Call the provider route",
+      "what": "The application presents the virtual key as a bearer token or API-key header on the route for its provider.",
+      "why": "Applications and agents never hold the real provider key.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "The gateway checks the key",
+      "what": "In the requests tested: key valid (401), guardrail (400 naming the category), provider match (403 wrong provider), model on the list (403 not allowed).",
+      "why": "Model-route refusals name their cause in the response body, unlike bare MCP and A2A 403s.",
+      "edges": [
+        1,
+        4
+      ]
+    },
+    {
+      "title": "The real key is injected",
+      "what": "Privilege stores the provider key and injects it server-side; the caller's gateway key is never forwarded to the provider.",
+      "why": "The request-rate cap is enforced natively: bursts on a capped key were partly refused with 429 rate_limit_exceeded.",
+      "edges": [
+        2,
+        3
+      ]
+    }
+  ]
+}

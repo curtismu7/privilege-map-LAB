@@ -1,0 +1,142 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "a2a-chain",
+  "title": "An agent calling an agent through the gateway",
+  "lede": "A Remote Agent app fronts an A2A agent with the same sign-in, policy and logging model as MCP apps, and a chain keeps every hop auditable.",
+  "groups": {
+    "caller": {
+      "label": "Calling agent",
+      "color": "blue"
+    },
+    "gw": {
+      "label": "Gateway checks",
+      "color": "dark"
+    },
+    "remote": {
+      "label": "Remote agent",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "key",
+      "group": "caller",
+      "label": "Agent key with a2a scope",
+      "sub": [
+        "selected per remote agent"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "card",
+      "group": "remote",
+      "label": "Public agent card",
+      "sub": [
+        "plus a JSON-RPC endpoint"
+      ],
+      "x": 640,
+      "y": 195
+    },
+    {
+      "id": "signin",
+      "group": "gw",
+      "label": "1. Sign-in or valid key",
+      "sub": [
+        "an unsigned call: 401 with",
+        "a sign-in challenge"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "policy",
+      "group": "gw",
+      "label": "2. Policy covers caller and app",
+      "sub": [
+        "signed-in user with none:",
+        "403"
+      ],
+      "x": 320,
+      "y": 130
+    },
+    {
+      "id": "auth",
+      "group": "gw",
+      "label": "3. Auth Mode check",
+      "sub": [
+        "key without a2a scope refused",
+        "by name; the only",
+        "self-describing 403 here"
+      ],
+      "x": 320,
+      "y": 260
+    },
+    {
+      "id": "fwd",
+      "group": "gw",
+      "label": "Forward on any path under",
+      "sub": [
+        "the app"
+      ],
+      "x": 640,
+      "y": 65
+    }
+  ],
+  "edges": [
+    {
+      "source": "key",
+      "target": "signin",
+      "label": "bearer key"
+    },
+    {
+      "source": "signin",
+      "target": "policy",
+      "label": "identity accepted"
+    },
+    {
+      "source": "policy",
+      "target": "auth",
+      "label": "grant present"
+    },
+    {
+      "source": "auth",
+      "target": "fwd",
+      "label": "all three checks pass"
+    },
+    {
+      "source": "card",
+      "target": "signin",
+      "label": "card is public, endpoint is not",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Identify the calling agent",
+      "what": "The calling agent presents an agent key with the a2a scope, selected per remote agent; the agent card is public.",
+      "why": "An unsigned call got a 401 with a sign-in challenge.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Three checks in order",
+      "what": "Sign-in or a valid key, then a policy covering caller and app, then the app's Auth Mode check.",
+      "why": "A signed-in user with no policy got a 403; a key without the a2a scope was refused with a message naming the missing scope.",
+      "edges": [
+        1,
+        2
+      ]
+    },
+    {
+      "title": "Forwarded with the app's credential",
+      "what": "The gateway forwards on any path under the app; the caller's key is never forwarded, only what the Auth Mode supplies.",
+      "why": "A chain three agents deep, each hop with its own key, policy and custodian, answered in under a second; an injection was blocked at the first hop.",
+      "edges": [
+        3,
+        4
+      ]
+    }
+  ]
+}

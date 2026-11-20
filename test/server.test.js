@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import { spawnSync } from 'node:child_process';
 import { startServer } from './support/helpers.mjs';
+import { DEMO_DIAGRAMS } from '../lib/diagrams.js';
 
 // One server for the whole file: a real child process in MODE=mock, with an outbound recorder loaded into it.
 let app;
@@ -93,7 +94,9 @@ test('talk track, stories and diagrams are served, with every cast token resolve
   assert.equal(stories.stories.length, 3);
   assert.doesNotMatch(JSON.stringify([talk, stories]), /\{\{|\}\}/);
   const list = await (await fetch(`${app.base}/api/diagrams`)).json();
-  assert.deepEqual(list.diagrams.map((d) => d.id), ['nhi-entity', 'nhi-checks']);
+  assert.deepEqual(list.diagrams.map((d) => d.id), DEMO_DIAGRAMS);
+  assert.equal(list.diagrams.length, 23);
+  assert.ok(list.diagrams.every((d) => d.available));
   const one = await (await fetch(`${app.base}/api/diagrams/nhi-entity`)).json();
   assert.equal(one.schema, 'diagram-studio/1');
   assert.equal((await fetch(`${app.base}/api/diagrams/not-ours`)).status, 404);

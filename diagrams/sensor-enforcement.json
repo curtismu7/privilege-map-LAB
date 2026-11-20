@@ -1,0 +1,149 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "sensor-enforcement",
+  "title": "From watching to terminating",
+  "lede": "The sensor attaches kernel programs to watch process starts; only Deny policies act, and only enforce mode terminates.",
+  "groups": {
+    "host": {
+      "label": "Host",
+      "color": "grey"
+    },
+    "sensor": {
+      "label": "Privilege sensor",
+      "color": "dark"
+    },
+    "policy": {
+      "label": "Shadow AI policy",
+      "color": "amber"
+    },
+    "result": {
+      "label": "Outcome",
+      "color": "green"
+    }
+  },
+  "nodes": [
+    {
+      "id": "run",
+      "group": "host",
+      "label": "Docker container or Helm",
+      "sub": [
+        "daemonset"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "watch",
+      "group": "sensor",
+      "label": "Kernel programs watch starts",
+      "sub": [
+        "termination is after start,",
+        "not before"
+      ],
+      "x": 320,
+      "y": 0
+    },
+    {
+      "id": "match",
+      "group": "policy",
+      "label": "Deny policy matches",
+      "sub": [
+        "only Deny policies lead to",
+        "termination"
+      ],
+      "x": 640,
+      "y": 0
+    },
+    {
+      "id": "audit",
+      "group": "sensor",
+      "label": "Audit mode",
+      "sub": [
+        "process runs; counted as",
+        "would-kill"
+      ],
+      "x": 960,
+      "y": 0
+    },
+    {
+      "id": "enforce",
+      "group": "sensor",
+      "label": "Enforce mode",
+      "sub": [
+        "terminated; counted as",
+        "killed"
+      ],
+      "x": 960,
+      "y": 130
+    },
+    {
+      "id": "scope",
+      "group": "policy",
+      "label": "Enforce needs a scope",
+      "sub": [
+        "namespace or all namespaces,",
+        "or the sensor refuses to",
+        "start"
+      ],
+      "x": 640,
+      "y": 130
+    }
+  ],
+  "edges": [
+    {
+      "source": "run",
+      "target": "watch",
+      "label": "sensor deployed on the host"
+    },
+    {
+      "source": "watch",
+      "target": "match",
+      "label": "process start observed"
+    },
+    {
+      "source": "match",
+      "target": "audit",
+      "label": "audit: observe only"
+    },
+    {
+      "source": "match",
+      "target": "enforce",
+      "label": "enforce: kill",
+      "dashed": true
+    },
+    {
+      "source": "enforce",
+      "target": "scope",
+      "label": "required before enforce works",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Watch process starts",
+      "what": "The sensor attaches kernel programs to watch process starts; its capability is reported as a tier that comes from kernel features rather than extra privileges.",
+      "why": "Termination happens after the process starts, not before.",
+      "edges": [
+        0,
+        1
+      ]
+    },
+    {
+      "title": "Only Deny policies act",
+      "what": "Only policies with the Deny action lead to termination.",
+      "why": "The docs recommend audit mode first: in audit mode a denied process runs and is counted as would-kill.",
+      "edges": [
+        2,
+        3
+      ]
+    },
+    {
+      "title": "Enforce has preconditions",
+      "what": "Enforce mode terminates and counts as killed, but a sensor refuses to start in enforce mode without a scope (namespace or all namespaces).",
+      "why": "Identity: the Docker guide has the sensor hold its own signing key; the Kubernetes guide uses a cluster-signed service account token. Neither was tested.",
+      "edges": [
+        4
+      ]
+    }
+  ]
+}

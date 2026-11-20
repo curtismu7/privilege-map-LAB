@@ -1,0 +1,150 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "agent-registry-wizard",
+  "title": "The Add Agent wizard",
+  "lede": "Four wizard steps turn a person's decision into a working agent key with scopes, grants, limits and guardrails.",
+  "groups": {
+    "wizard": {
+      "label": "Agent Registry wizard",
+      "color": "dark"
+    },
+    "key": {
+      "label": "Result",
+      "color": "green"
+    },
+    "runtime": {
+      "label": "Agent runtime",
+      "color": "blue"
+    }
+  },
+  "nodes": [
+    {
+      "id": "s1",
+      "group": "wizard",
+      "label": "1. Identity and Access",
+      "sub": [
+        "name, custodian, expiry,",
+        "scopes (llm mcp a2a)"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "s2",
+      "group": "wizard",
+      "label": "2. Gateway and Apps",
+      "sub": [
+        "provider or apps, limits,",
+        "selecting apps is the grant"
+      ],
+      "x": 0,
+      "y": 130
+    },
+    {
+      "id": "s3",
+      "group": "wizard",
+      "label": "3. Runtime Protection",
+      "sub": [
+        "AI Guard for this key,",
+        "not for the app"
+      ],
+      "x": 0,
+      "y": 260
+    },
+    {
+      "id": "s4",
+      "group": "wizard",
+      "label": "4. Review and Create",
+      "sub": [
+        "the key is shown once,",
+        "calling code per scope"
+      ],
+      "x": 0,
+      "y": 390
+    },
+    {
+      "id": "key",
+      "group": "key",
+      "label": "Agent access key",
+      "sub": [
+        "sent as a bearer token",
+        "on every call"
+      ],
+      "x": 0,
+      "y": 520
+    },
+    {
+      "id": "gw",
+      "group": "runtime",
+      "label": "Calls through the gateway",
+      "sub": [
+        "no sign-in, no token",
+        "exchange"
+      ],
+      "x": 320,
+      "y": 520
+    }
+  ],
+  "edges": [
+    {
+      "source": "s1",
+      "target": "s2",
+      "label": "identity saved"
+    },
+    {
+      "source": "s2",
+      "target": "s3",
+      "label": "gateway grant saved"
+    },
+    {
+      "source": "s3",
+      "target": "s4",
+      "label": "guardrail settings saved"
+    },
+    {
+      "source": "s4",
+      "target": "key",
+      "label": "key created: shown once"
+    },
+    {
+      "source": "key",
+      "target": "gw",
+      "label": "Bearer key on every call"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Name the agent and its custodian",
+      "what": "Step 1 sets the agent name (permanent), the custodian it acts as, the expiry and the scopes.",
+      "why": "Renaming means delete and recreate; an expired key is edit-locked until the expiry moves.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "Pick what it reaches",
+      "what": "Step 2 sets, for llm, one provider with allowed models, rate and budget; for mcp or a2a, the apps (and optional tools). Selecting them is the grant.",
+      "why": "The grant policy for the custodian is created on save. The real provider key is stored, not returned.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "Set runtime protection",
+      "what": "Step 3 configures AI Guard for this key.",
+      "why": "AI Guard is per agent key, not per app, so two callers can be treated differently.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Create and hand over the key",
+      "what": "Step 4 shows the key once with calling code per scope. The agent then sends it as a bearer token.",
+      "why": "The key is shown once: lose it and a new key is created. Brand-new keys are picked up immediately.",
+      "edges": [
+        3,
+        4
+      ]
+    }
+  ]
+}
