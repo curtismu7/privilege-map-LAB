@@ -116,5 +116,5 @@ test('grids that auto-fit have a real minimum column width, so cards wrap at 375
 });
 
 test('docker-compose.yml passes a usable SHELF_URL into the container (the shelf button needs it)', () => {
-  assert.match(read('docker-compose.yml'), /^\s*SHELF_URL: \$\{SHELF_URL:-http:\/\/127\.0\.0\.1:4400\}\s*$/m);
+  assert.match(read('docker-compose.yml'), /^\s*SHELF_URL: \$\{SHELF_URL:-https:\/\/local\.ping-devops\.com:8443\/demo-shelf\}\s*$/m);
 });

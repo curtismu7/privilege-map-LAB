@@ -92,7 +92,7 @@ export default function FeatureDiagram({ diagramId }) {
         <button type="button" onClick={() => setStepIndex((i) => Math.max(-1, i - 1))} disabled={stepIndex < 0}>
           Prev
         </button>
-        <button type="button" className="primary" onClick={() => setStepIndex(stepIndex >= steps.length - 1 ? -1 : stepIndex + 1)}>
+        <button type="button" onClick={() => setStepIndex(stepIndex >= steps.length - 1 ? -1 : stepIndex + 1)}>
           {stepIndex >= 0 && stepIndex < steps.length - 1 ? 'Next' : 'Simulate'}
         </button>
         <a className="fdiag__open" href={`#/map?diagram=${encodeURIComponent(diagramId)}`}>
