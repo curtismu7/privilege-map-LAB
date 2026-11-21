@@ -6,6 +6,10 @@ Each `##` heading is one presenter step. Presenter mode shows them in order. Nam
 
 Start with the banner. Everything on this page is documentation and simulation. There is no tenant behind it, no credential, and nothing leaves this machine. The Live button is off because this app has nothing to go live against. If a customer asks "is that your tenant", the answer is no.
 
+## Start with the whole journey
+
+Open the Map page and pick "A simple agent, end to end". Press Simulate once: one builder, one wizard, one key, one {{cast.agent}}, and {{cast.gateway}} in the middle of every call. This is the whole story in one walk; the rest of the deck zooms into parts of it.
+
 ## Start with the identity map
 
 Open the Map page and the first diagram. {{cast.key}} is the agent's whole identity. Press Simulate and walk the arrows: who the key acts as, what it can reach, and what is attached to it. Drag a box to show the diagram is live, then press Reset to put it back.
