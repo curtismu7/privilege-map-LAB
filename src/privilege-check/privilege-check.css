@@ -3,7 +3,7 @@
 /* The card's own tokens: fallbacks live in the definitions (the checker's allowance), uses read var(). */
 :root {
   --pcard-border: var(--border, #d9d9de);
-  --pcard-box: var(--box, #fff);
+  --pcard-box: var(--surface, #fff);
   --pcard-text: var(--text, #16181f);
   --pcard-muted: var(--muted, #555);
   --pcard-error: var(--ping-red, #d20e0f);
