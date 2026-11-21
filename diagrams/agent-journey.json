@@ -1,0 +1,196 @@
+{
+  "schema": "diagram-studio/1",
+  "id": "agent-journey",
+  "title": "A simple agent, end to end",
+  "lede": "One builder, one wizard, one key, one agent: how a governed agent gets made and what happens on its first call.",
+  "groups": {
+    "setup": {
+      "label": "Set up once",
+      "color": "dark"
+    },
+    "runtime": {
+      "label": "Agent runtime",
+      "color": "blue"
+    },
+    "target": {
+      "label": "Granted target",
+      "color": "green"
+    },
+    "refuse": {
+      "label": "Refusal",
+      "color": "amber"
+    }
+  },
+  "nodes": [
+    {
+      "id": "team",
+      "group": "setup",
+      "label": "Builder and custodian",
+      "sub": [
+        "a human owns the agent",
+        "policy is issued to them"
+      ],
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "wizard",
+      "group": "setup",
+      "label": "Add Agent wizard",
+      "sub": [
+        "name, custodian, expiry, scopes,",
+        "apps, limits, AI Guard"
+      ],
+      "x": 0,
+      "y": 130
+    },
+    {
+      "id": "key",
+      "group": "setup",
+      "label": "Agent access key",
+      "sub": [
+        "shown once, calling code",
+        "per scope"
+      ],
+      "x": 0,
+      "y": 260
+    },
+    {
+      "id": "agent",
+      "group": "runtime",
+      "label": "The agent",
+      "sub": [
+        "a script or app holding",
+        "the key"
+      ],
+      "x": 0,
+      "y": 390
+    },
+    {
+      "id": "gw",
+      "group": "runtime",
+      "label": "Privilege gateway",
+      "sub": [
+        "five checks on every call:",
+        "key, scope, grant, limits, guardrail"
+      ],
+      "x": 0,
+      "y": 520
+    },
+    {
+      "id": "tool",
+      "group": "target",
+      "label": "MCP server app",
+      "sub": [
+        "granted tools only, the rest",
+        "are hidden and refused"
+      ],
+      "x": 320,
+      "y": 650
+    },
+    {
+      "id": "model",
+      "group": "target",
+      "label": "Model route",
+      "sub": [
+        "one provider, allowlisted",
+        "models, rate and budget"
+      ],
+      "x": -320,
+      "y": 650
+    },
+    {
+      "id": "refuse",
+      "group": "refuse",
+      "label": "Refused",
+      "sub": [
+        "401, 403, 429 or 400,",
+        "before the target is touched"
+      ],
+      "x": 0,
+      "y": 650
+    }
+  ],
+  "edges": [
+    {
+      "source": "team",
+      "target": "wizard",
+      "label": "builder runs the four-step wizard"
+    },
+    {
+      "source": "wizard",
+      "target": "key",
+      "label": "key created, selecting apps made the grant"
+    },
+    {
+      "source": "key",
+      "target": "agent",
+      "label": "calling code embeds the key"
+    },
+    {
+      "source": "agent",
+      "target": "gw",
+      "label": "Bearer key on every call, no sign-in"
+    },
+    {
+      "source": "gw",
+      "target": "tool",
+      "label": "mcp scope and grant: tools listed and called"
+    },
+    {
+      "source": "gw",
+      "target": "model",
+      "label": "llm scope and allowlist: model reached"
+    },
+    {
+      "source": "gw",
+      "target": "refuse",
+      "label": "a failed check stops the call",
+      "dashed": true
+    }
+  ],
+  "steps": [
+    {
+      "title": "Register the agent",
+      "what": "The builder runs the Add Agent wizard: name, custodian, expiry, scopes, the apps or models it may reach, limits and AI Guard.",
+      "why": "Selecting the apps on the key is the grant; saving creates the grant policy for the custodian.",
+      "edges": [
+        0
+      ]
+    },
+    {
+      "title": "The key is minted",
+      "what": "Step 4 of the wizard shows the key once, with calling code per scope. There is no rotate: rotation is delete and recreate.",
+      "why": "The key is the agent's whole identity, sent as a bearer token on every call.",
+      "edges": [
+        1
+      ]
+    },
+    {
+      "title": "The agent holds the key",
+      "what": "The agent embeds the key in its calling code. It never signs in and never exchanges tokens.",
+      "why": "A revoked or expired key stops the agent instantly, without touching the code.",
+      "edges": [
+        2
+      ]
+    },
+    {
+      "title": "Every call passes the gateway",
+      "what": "The gateway checks the key, scope, grant, limits and guardrail in order. The first failure refuses the call with a status code.",
+      "why": "The caller's key is never forwarded to a backend; the gateway decides before the target sees anything.",
+      "edges": [
+        3,
+        6
+      ]
+    },
+    {
+      "title": "Granted targets answer",
+      "what": "With the mcp scope the agent sees and calls only its granted tools; with the llm scope it reaches only allowlisted models within its caps.",
+      "why": "One agent, one key, deliberate reach: this is the demo's whole story in one walk.",
+      "edges": [
+        4,
+        5
+      ]
+    }
+  ]
+}

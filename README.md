@@ -24,7 +24,7 @@ npm run build
 npm start
 ```
 
-Open http://127.0.0.1:5300 . With no setup at all, mock mode shows every page: the Map (two diagrams), the five feature pages, Stories, and Presenter mode.
+Open http://127.0.0.1:5300 . With no setup at all, mock mode shows every page: the Map (three diagrams), the five feature pages, Stories, and Presenter mode.
 
 For development, `npm run dev` serves the same page on the same port with hot reload.
 

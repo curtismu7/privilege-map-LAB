@@ -95,7 +95,7 @@ test('talk track, stories and diagrams are served, with every cast token resolve
   assert.doesNotMatch(JSON.stringify([talk, stories]), /\{\{|\}\}/);
   const list = await (await fetch(`${app.base}/api/diagrams`)).json();
   assert.deepEqual(list.diagrams.map((d) => d.id), DEMO_DIAGRAMS);
-  assert.equal(list.diagrams.length, 23);
+  assert.equal(list.diagrams.length, 24);
   assert.ok(list.diagrams.every((d) => d.available));
   const one = await (await fetch(`${app.base}/api/diagrams/nhi-entity`)).json();
   assert.equal(one.schema, 'diagram-studio/1');

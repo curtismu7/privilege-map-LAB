@@ -86,7 +86,7 @@
     {
       "id": "map",
       "label": "The identity map and the gateway checks",
-      "description": "Two ReactFlow diagrams: what an agent key is made of, and the five checks on every call. Drag, Simulate, Reset.",
+      "description": "Three ReactFlow diagrams: a simple agent end to end, what an agent key is made of, and the five checks on every call. Drag, Simulate, Reset.",
       "group": "try-it",
       "terms": [
         "nhi",
@@ -213,6 +213,11 @@
       "id": "nhi-checks",
       "label": "What the gateway checks on each call",
       "href": "/#/map?diagram=nhi-checks"
+    },
+    {
+      "id": "agent-journey",
+      "label": "A simple agent, end to end",
+      "href": "/#/map?diagram=agent-journey"
     },
     {
       "id": "agent-registry-wizard",
