@@ -8,7 +8,7 @@ Generated from `src/data/features.json` by `npm run spec`. Edit the data, not th
 ### Identity
 Who the agents, devices and client apps are, and who is accountable for them.
 
-Features: Agent Registry; Privilege Agent (desktop device-bound identity); CIMD client documents
+Features: Agent Registry; The agent journey; Privilege Agent (desktop device-bound identity); CIMD client documents
 
 ### LLM
 How model calls reach providers through the gateway, and what the gateway allows.
@@ -71,6 +71,35 @@ Not verified:
 - With Block Agreement off, a sidecar verdict did not block an A2A message in one test (the call succeeded with an alert only); it was shown to block on the LLM path only.
 - Which console release introduced the non-human-identity custodian option and per-app guardrail settings comes from release notes and was not re-verified on the tenant.
 - The size and composition of the agent fleet seen earlier is a past snapshot and may have changed.
+
+### The agent journey
+
+#### Why we need it
+A presenter needs one picture that joins the pieces: the wizard that mints the key, the agent that holds it, the gateway that checks every call, and the granted targets that answer. Each feature card covers one part; this card is the walk from nothing to a working, governed agent.
+
+#### How it works
+One builder runs the four-step Add Agent wizard: name, custodian, expiry and scopes; the apps or models it may reach (selecting them is the grant, and saving creates the grant policy); the AI Guard settings for this key; then the key is shown once with calling code per scope. The agent embeds the key and sends it as a bearer token on every call, with no sign-in and no token exchange. The gateway runs its five checks in order (key, scope, grant, limits, guardrail) and the first failure refuses the call with a status code before the target is touched. A call that passes reaches only the granted target: with the mcp scope, the granted tools and no others; with the llm scope, allowlisted models within rate and budget caps. The caller's key is never forwarded to a backend.
+
+#### Value to the end user
+Presenter: one diagram and one Simulate press that shows the whole model before the deck zooms in. Operator: the mental model in one line - the key is the identity, the grant is the reach, the gateway is the decision, and the refusal is the control working. Builder: the four steps they will actually click, in order.
+
+#### Components used
+- Agent Registry Add Agent wizard
+- Agent access key
+- Grant policy (created when apps are selected)
+- Per-key AI Guard
+- Privilege gateway (five checks)
+- MCP Server application
+- Model route with an allowlist
+- Gateway log
+
+Sources: Owner note: GATEWAY-SETTING-UP-A-CALLING-AGENT; Owner note: privilege-agent-features; Owner note: AGENT-PRIVILEGE-WHEN-TO-USE-WHAT
+
+Not verified:
+- This card is a walk-through assembled from the other cards and the owner notes; it adds no new measurement.
+- The wizard screens come from documentation and were not walked through in the console for this entry.
+- Whether two keys can share a name during rotation was not tested.
+- Budget refusal was never shown, so budget enforcement is not claimed here either.
 
 ### Privilege Agent (desktop device-bound identity)
 

@@ -42,6 +42,36 @@
     "diagram": "agent-registry-wizard"
   },
   {
+    "id": "the-agent-journey",
+    "name": "The agent journey",
+    "page": "identity",
+    "why": "A presenter needs one picture that joins the pieces: the wizard that mints the key, the agent that holds it, the gateway that checks every call, and the granted targets that answer. Each feature card covers one part; this card is the walk from nothing to a working, governed agent.",
+    "how": "One builder runs the four-step Add Agent wizard: name, custodian, expiry and scopes; the apps or models it may reach (selecting them is the grant, and saving creates the grant policy); the AI Guard settings for this key; then the key is shown once with calling code per scope. The agent embeds the key and sends it as a bearer token on every call, with no sign-in and no token exchange. The gateway runs its five checks in order (key, scope, grant, limits, guardrail) and the first failure refuses the call with a status code before the target is touched. A call that passes reaches only the granted target: with the mcp scope, the granted tools and no others; with the llm scope, allowlisted models within rate and budget caps. The caller's key is never forwarded to a backend.",
+    "userValue": "Presenter: one diagram and one Simulate press that shows the whole model before the deck zooms in. Operator: the mental model in one line - the key is the identity, the grant is the reach, the gateway is the decision, and the refusal is the control working. Builder: the four steps they will actually click, in order.",
+    "components": [
+      "Agent Registry Add Agent wizard",
+      "Agent access key",
+      "Grant policy (created when apps are selected)",
+      "Per-key AI Guard",
+      "Privilege gateway (five checks)",
+      "MCP Server application",
+      "Model route with an allowlist",
+      "Gateway log"
+    ],
+    "sources": [
+      "Owner note: GATEWAY-SETTING-UP-A-CALLING-AGENT",
+      "Owner note: privilege-agent-features",
+      "Owner note: AGENT-PRIVILEGE-WHEN-TO-USE-WHAT"
+    ],
+    "unverified": [
+      "This card is a walk-through assembled from the other cards and the owner notes; it adds no new measurement.",
+      "The wizard screens come from documentation and were not walked through in the console for this entry.",
+      "Whether two keys can share a name during rotation was not tested.",
+      "Budget refusal was never shown, so budget enforcement is not claimed here either."
+    ],
+    "diagram": "agent-journey"
+  },
+  {
     "id": "privilege-agent-desktop-device-bound-identity",
     "name": "Privilege Agent (desktop device-bound identity)",
     "page": "identity",
