@@ -28,12 +28,10 @@ html {
   font-size: 1.1875rem;
 }
 
-.shell-brand {
-  display: inline-flex;
+.shell-brand  { display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
-}
+  gap: 10px; }
 
 .shell-logo {
   display: inline-grid;
